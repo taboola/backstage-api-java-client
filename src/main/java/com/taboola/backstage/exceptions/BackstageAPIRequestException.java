@@ -10,11 +10,7 @@ import com.taboola.backstage.model.APIError;
  */
 public class BackstageAPIRequestException extends BackstageAPIException {
 
-    public BackstageAPIRequestException(APIError error, String message, Object... params) {
-        super(error, message, params);
-    }
-
-    public BackstageAPIRequestException(APIError error, String message, Throwable t, Object... params) {
-        super(error, message, t, params);
+    public BackstageAPIRequestException(String actionName, int responseCode, APIError error) {
+        super(error, "Failed to perform API call [%s] with response code [%d]", actionName, responseCode);
     }
 }

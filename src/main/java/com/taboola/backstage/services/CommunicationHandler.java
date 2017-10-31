@@ -33,8 +33,8 @@ public final class CommunicationHandler {
 
     private static final Logger logger = LogManager.getLogger(CommunicationHandler.class);
     private static final int UNAUTHORIZED_HTTP_STATUS_CODE = 401;
+    private static final int BAD_REQUEST_HTTP_STATUS_CODE = 400;
     private static final int INTERNAL_SERVER_ERROR_HTTP_STATUS_CODE = 500;
-    private static final int VERSION_NOT_SUPPORTED_HTTP_STATUS_CODE = 506;
 
     private final ObjectMapper objectMapper;
 
@@ -117,21 +117,21 @@ public final class CommunicationHandler {
             if(response.isSuccessful()) {
                 obj = response.body();
             } else {
-                //TODO organize backstage API exception
-                if(response.code() == UNAUTHORIZED_HTTP_STATUS_CODE) {
-                    throw new BackstageAPITokenExpiredException("Failed to perform API call [%s], access token is expired or invalid please re-authenticate", actionName);
+                int responseCode = response.code();
+                if(responseCode == UNAUTHORIZED_HTTP_STATUS_CODE) {
+                    throw new BackstageAPITokenExpiredException(actionName, responseCode);
 
-                } else if(response.code() >= INTERNAL_SERVER_ERROR_HTTP_STATUS_CODE && response.code() <= VERSION_NOT_SUPPORTED_HTTP_STATUS_CODE) {
-                    throw new BackstageAPIConnectivityException("Failed to perform API call [%s], might be due to internet connectivity issues or Taboola server error", actionName);
+                } else if(responseCode >= BAD_REQUEST_HTTP_STATUS_CODE && responseCode < INTERNAL_SERVER_ERROR_HTTP_STATUS_CODE) {
+                    throw new BackstageAPIRequestException(actionName, responseCode, parseError(response));
 
-                } else {
-                    throw new BackstageAPIRequestException(parseError(response), "Failed to perform API call [%s]", actionName);
                 }
+
+                throw new BackstageAPIConnectivityException(actionName, responseCode);
             }
 
         } catch (IOException e) {
             logger.error(e);
-            throw new BackstageAPIConnectivityException("Failed to perform API call [%s], might be due to internet connectivity issues", actionName);
+            throw new BackstageAPIConnectivityException(actionName);
         }
 
         return obj;
@@ -142,7 +142,7 @@ public final class CommunicationHandler {
         try {
             return objectMapper.readValue(errorBody.bytes(), APIError.class);
         } catch (Throwable e) {
-            logger.error("Failed to parse API error response object [{}]", errorResponse.message());
+            logger.warn("Failed to parse API error response object [{}]", errorResponse.message());
             return new APIError(errorResponse.message(), errorResponse.code());
         }
     }

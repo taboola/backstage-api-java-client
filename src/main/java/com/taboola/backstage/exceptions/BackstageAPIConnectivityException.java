@@ -9,8 +9,11 @@ package com.taboola.backstage.exceptions;
  */
 public class BackstageAPIConnectivityException extends BackstageAPIException {
 
+    public BackstageAPIConnectivityException(String actionName) {
+        super("Failed to perform API call [%s], might be due to internet connectivity issues", actionName);
+    }
 
-    public BackstageAPIConnectivityException(String message, Object... params) {
-        super(message, params);
+    public BackstageAPIConnectivityException(String actionName, int responseCode) {
+        super("Failed to perform API call [%s] with response code [%d], might be due to internet connectivity issues", actionName, responseCode);
     }
 }
