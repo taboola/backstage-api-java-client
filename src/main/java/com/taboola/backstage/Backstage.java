@@ -1,5 +1,6 @@
 package com.taboola.backstage;
 
+import com.taboola.backstage.internal.CommunicationFactory;
 import com.taboola.backstage.services.*;
 
 /**

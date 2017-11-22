@@ -1,9 +1,8 @@
-package com.taboola.backstage.services;
+package com.taboola.backstage.internal;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.taboola.backstage.internal.*;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
