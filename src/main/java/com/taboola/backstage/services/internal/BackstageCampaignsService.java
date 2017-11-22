@@ -1,8 +1,8 @@
 package com.taboola.backstage.services.internal;
 
+import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.media.campaigns.Campaign;
-import retrofit2.Call;
 import retrofit2.http.*;
 
 /**
@@ -15,25 +15,25 @@ public interface BackstageCampaignsService {
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns")
     @Headers("Content-Type: application/json")
-    Call<Campaign> createCampaign(@Header("Authorization") String accessToken,
+    Campaign createCampaign(@Header("Authorization") String accessToken,
                                   @Path("account_id") String accountId,
-                                  @Body Campaign campaign);
+                                  @Body Campaign campaign) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns")
     @Headers("Content-Type: application/json")
-    Call<Results<Campaign>> getAllCampaigns(@Header("Authorization") String authToken,
-                                            @Path("account_id") String accountId);
+    Results<Campaign> getAllCampaigns(@Header("Authorization") String authToken,
+                                            @Path("account_id") String accountId) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}")
     @Headers("Content-Type: application/json")
-    Call<Campaign> getCampaign(@Header("Authorization") String authToken,
+    Campaign getCampaign(@Header("Authorization") String authToken,
                                @Path("account_id") String accountId,
-                               @Path("campaign_id") String campaignId);
+                               @Path("campaign_id") String campaignId) throws BackstageAPIException;
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}")
     @Headers("Content-Type: application/json")
-    Call<Campaign> updateCampaign(@Header("Authorization") String accessToken,
+    Campaign updateCampaign(@Header("Authorization") String accessToken,
                                   @Path("account_id") String accountId,
                                   @Path("campaign_id") String campaignId,
-                                  @Body Campaign campaign);
+                                  @Body Campaign campaign) throws BackstageAPIException;
 }

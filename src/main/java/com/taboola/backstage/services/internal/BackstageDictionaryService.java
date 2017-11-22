@@ -1,8 +1,8 @@
 package com.taboola.backstage.services.internal;
 
+import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.dictionary.Resource;
-import retrofit2.Call;
 import retrofit2.http.*;
 
 /**
@@ -15,29 +15,29 @@ public interface BackstageDictionaryService {
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/{dictionary_suffix}")
     @Headers("Content-Type: application/json")
-    Call<Results<Resource>> custom(@Header("Authorization") String authToken, @Path(value = "dictionary_suffix", encoded = true) String dictionarySuffix);
+    Results<Resource> custom(@Header("Authorization") String authToken, @Path(value = "dictionary_suffix", encoded = true) String dictionarySuffix) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources")
     @Headers("Content-Type: application/json")
-    Call<Results<Resource>> getRoot(@Header("Authorization") String authToken);
+    Results<Resource> getRoot(@Header("Authorization") String authToken) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/countries")
     @Headers("Content-Type: application/json")
-    Call<Results<Resource>> getCountries(@Header("Authorization") String authToken);
+    Results<Resource> getCountries(@Header("Authorization") String authToken) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/countries/{country_code}/regions")
     @Headers("Content-Type: application/json")
-    Call<Results<Resource>> getSpecificCountryRegions(@Header("Authorization") String authToken, @Path("country_code") String countryCode);
+    Results<Resource> getSpecificCountryRegions(@Header("Authorization") String authToken, @Path("country_code") String countryCode) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/countries/{country_code}/postal")
     @Headers("Content-Type: application/json")
-    Call<Results<Resource>> getSpecificCountryPostals(@Header("Authorization") String authToken, @Path("country_code") String countryCode);
+    Results<Resource> getSpecificCountryPostals(@Header("Authorization") String authToken, @Path("country_code") String countryCode) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/countries/US/dma")
     @Headers("Content-Type: application/json")
-    Call<Results<Resource>> getUnitedStatesDMA(@Header("Authorization") String authToken);
+    Results<Resource> getUnitedStatesDMA(@Header("Authorization") String authToken) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/platforms")
     @Headers("Content-Type: application/json")
-    Call<Results<Resource>> getPlatforms(@Header("Authorization") String authToken);
+    Results<Resource> getPlatforms(@Header("Authorization") String authToken) throws BackstageAPIException;
 }

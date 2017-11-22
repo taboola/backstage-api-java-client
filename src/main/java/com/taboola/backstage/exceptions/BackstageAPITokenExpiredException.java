@@ -8,7 +8,7 @@ package com.taboola.backstage.exceptions;
  */
 public class BackstageAPITokenExpiredException extends BackstageAPIException {
 
-    public BackstageAPITokenExpiredException(String message, Object... params) {
-        super(message, params);
+    public BackstageAPITokenExpiredException() {
+        super("Token is expired");
     }
 }

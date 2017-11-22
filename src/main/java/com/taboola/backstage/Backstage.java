@@ -95,14 +95,14 @@ public class Backstage {
 
         public Backstage build() {
             organizeState();
-            CommunicationHandler communicator = new CommunicationHandler(baseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
+            CommunicationFactory communicator = new CommunicationFactory(baseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
             return new Backstage(
-                new CampaignsServiceImpl(communicator),
-                new AuthenticationServiceImpl(communicator),
-                new UserServiceImpl(communicator),
-                new CampaignItemsServiceImpl(communicator),
-                new DictionaryServiceImpl(communicator),
-                new ReportsServiceImpl(communicator)
+                new CampaignsServiceImpl(communicator.getCampaignsService()),
+                new AuthenticationServiceImpl(communicator.getAuthService()),
+                new UserServiceImpl(communicator.getAccountService()),
+                new CampaignItemsServiceImpl(communicator.getCampaignItemService()),
+                new DictionaryServiceImpl(communicator.getDictionaryService()),
+                new ReportsServiceImpl(communicator.getMediaReportsService())
             );
         }
 

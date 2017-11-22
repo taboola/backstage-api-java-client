@@ -1,8 +1,8 @@
 package com.taboola.backstage.services.internal;
 
+import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.auth.Token;
 import com.taboola.backstage.model.auth.TokenDetails;
-import retrofit2.Call;
 import retrofit2.http.*;
 
 /**
@@ -15,20 +15,20 @@ public interface BackstageAuthenticationService {
 
     @POST("/backstage/oauth/token")
     @FormUrlEncoded
-    Call<Token> getAuthToken(@Field("client_id") String clientId,
+    Token getAuthToken(@Field("client_id") String clientId,
                              @Field("client_secret") String clientSecret,
-                             @Field("grant_type") String grantType);
+                             @Field("grant_type") String grantType) throws BackstageAPIException;
 
     @POST("/backstage/oauth/token")
     @FormUrlEncoded
-    Call<Token> getAuthToken(@Field("client_id") String clientId,
+    Token getAuthToken(@Field("client_id") String clientId,
                              @Field("client_secret") String clientSecret,
                              @Field("username") String username,
                              @Field("password") String password,
-                             @Field("grant_type") String grantType);
+                             @Field("grant_type") String grantType) throws BackstageAPIException;
 
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/token-details")
     @Headers("Content-Type: application/json")
-    Call<TokenDetails> getTokenDetails(@Header("Authorization") String authToken);
+    TokenDetails getTokenDetails(@Header("Authorization") String authToken) throws BackstageAPIException;
 }

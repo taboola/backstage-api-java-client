@@ -8,7 +8,7 @@ import com.taboola.backstage.model.APIError;
  * Time: 12:23 AM
  * By Taboola
  */
-public abstract class BackstageAPIException extends Exception {
+public abstract class BackstageAPIException extends RuntimeException {
 
     private APIError error = APIError.EMPTY;
 

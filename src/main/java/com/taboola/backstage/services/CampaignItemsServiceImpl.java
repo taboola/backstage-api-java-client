@@ -6,6 +6,7 @@ import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.services.internal.BackstageCampaignItemsService;
 
 /**
  * Created by vladi
@@ -15,65 +16,57 @@ import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
  */
 public class CampaignItemsServiceImpl implements CampaignItemsService {
 
-    private final CommunicationHandler communicationHandler;
+    private final BackstageCampaignItemsService service;
 
-    public CampaignItemsServiceImpl(CommunicationHandler communicationHandler) {
-        this.communicationHandler = communicationHandler;
+    public CampaignItemsServiceImpl(BackstageCampaignItemsService service) {
+        this.service = service;
     }
 
     @Override
     public CampaignItem createItem(BackstageAuthentication auth, String accountId, String campaignId, CampaignItem item) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("create campaign item",
-                () -> communicationHandler.getCampaignItemService().createItem(accessToken, accountId, campaignId, item));
+        return service.createItem(accessToken, accountId, campaignId, item);
     }
 
     @Override
     public Results<CampaignItem> readItems(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("read campaign items",
-                 () -> communicationHandler.getCampaignItemService().readItems(accessToken, accountId, campaignId));
+        return service.readItems(accessToken, accountId, campaignId);
     }
 
     @Override
     public Results<CampaignItem> readRSSChildrenItems(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("read campaign RSS children items",
-              () -> communicationHandler.getCampaignItemService().readRSSChildrenItems(accessToken, accountId, campaignId, itemId));
+        return service.readRSSChildrenItems(accessToken, accountId, campaignId, itemId);
     }
 
     @Override
     public CampaignItem readSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, Long childId) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("read campaign specific RSS child item",
-                () -> communicationHandler.getCampaignItemService().readSpecificRSSChildItem(accessToken, accountId, campaignId, itemId, childId));
+        return service.readSpecificRSSChildItem(accessToken, accountId, campaignId, itemId, childId);
     }
 
     @Override
     public CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, Long childId, CampaignItem campaignItem) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("update campaign specific RSS child item",
-                () -> communicationHandler.getCampaignItemService().updateSpecificRSSChildItem(accessToken, accountId, campaignId, itemId, childId, campaignItem));
+        return service.updateSpecificRSSChildItem(accessToken, accountId, campaignId, itemId, childId, campaignItem);
     }
 
     @Override
     public CampaignItem readItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("read campaign item",
-                () -> communicationHandler.getCampaignItemService().readItem(accessToken, accountId, campaignId, itemId));
+        return service.readItem(accessToken, accountId, campaignId, itemId);
     }
 
     @Override
     public CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, CampaignItem item) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("update campaign item",
-                () -> communicationHandler.getCampaignItemService().updateItem(accessToken, accountId, campaignId, itemId, item));
+        return service.updateItem(accessToken, accountId, campaignId, itemId, item);
     }
 
     @Override
     public CampaignItem deleteItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("delete campaign item",
-                () -> communicationHandler.getCampaignItemService().deleteItem(accessToken, accountId, campaignId, itemId));
+        return service.deleteItem(accessToken, accountId, campaignId, itemId);
     }
 }

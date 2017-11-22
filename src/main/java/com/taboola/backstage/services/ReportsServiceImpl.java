@@ -7,6 +7,7 @@ import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.reports.ReportFilter;
 import com.taboola.backstage.model.media.reports.TopCampaignContentOptionalFilters;
 import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
+import com.taboola.backstage.services.internal.BackstageMediaReportsService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,10 +25,10 @@ public class ReportsServiceImpl implements ReportsService {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
 
-    private final CommunicationHandler communicationHandler;
+    private final BackstageMediaReportsService mediaReportsService;
 
-    public ReportsServiceImpl(CommunicationHandler communicationHandler) {
-        this.communicationHandler = communicationHandler;
+    public ReportsServiceImpl(BackstageMediaReportsService mediaReportsService) {
+        this.mediaReportsService = mediaReportsService;
     }
 
     @Override
@@ -39,11 +40,10 @@ public class ReportsServiceImpl implements ReportsService {
     public TopCampaignContentReport getTopCampaignContentReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
                                                                 Map<TopCampaignContentOptionalFilters, String> filters) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return communicationHandler.request("get top campaign content report",
-                () -> communicationHandler.getMediaReportsService().getTopCampaignContentReport(accessToken, accountId,
+        return mediaReportsService.getTopCampaignContentReport(accessToken, accountId,
                                                                                                 DATE_TIME_FORMATTER.format(startDate),
                                                                                                 DATE_TIME_FORMATTER.format(endDate),
-                                                                                                formatOptionalFilters(filters)));
+                                                                                                formatOptionalFilters(filters));
     }
 
     //TODO support campaign summary dimensions

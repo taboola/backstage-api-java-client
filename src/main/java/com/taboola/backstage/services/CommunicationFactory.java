@@ -3,25 +3,16 @@ package com.taboola.backstage.services;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
-import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
-import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.services.internal.*;
-import com.taboola.backstage.model.APIError;
 import com.taboola.backstage.services.internal.interceptors.UserAgentInterceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 /**
  * Created by vladi
@@ -29,12 +20,9 @@ import java.util.function.Supplier;
  * Time: 10:54 PM
  * By Taboola
  */
-public final class CommunicationHandler {
+public final class CommunicationFactory {
 
-    private static final Logger logger = LogManager.getLogger(CommunicationHandler.class);
-    private static final int UNAUTHORIZED_HTTP_STATUS_CODE = 401;
-    private static final int BAD_REQUEST_HTTP_STATUS_CODE = 400;
-    private static final int INTERNAL_SERVER_ERROR_HTTP_STATUS_CODE = 500;
+    private static final Logger logger = LogManager.getLogger(CommunicationFactory.class);
 
     private final ObjectMapper objectMapper;
 
@@ -45,7 +33,7 @@ public final class CommunicationHandler {
     private final BackstageDictionaryService dictionaryService;
     private final BackstageMediaReportsService mediaReportsService;
 
-    public CommunicationHandler(String backstageBaseUrl, long connectionTimeoutMillis, long readTimeoutMillis, long writeTimeoutMillis, String userAgent) {
+    public CommunicationFactory(String backstageBaseUrl, long connectionTimeoutMillis, long readTimeoutMillis, long writeTimeoutMillis, String userAgent) {
         this.objectMapper = createObjectMapper();
 
         Retrofit retrofit = createRetrofit(backstageBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
@@ -81,69 +69,32 @@ public final class CommunicationHandler {
         return new Retrofit.Builder()
                             .baseUrl(backstageBaseUrl)
                             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+                            .addCallAdapterFactory(new SynchronousCallAdapterFactory(objectMapper))
                             .client(client)
                             .build();
     }
 
-    BackstageAuthenticationService getAuthService() {
+    public BackstageAuthenticationService getAuthService() {
         return authService;
     }
 
-    BackstageCampaignsService getCampaignsService() {
+    public BackstageCampaignsService getCampaignsService() {
         return campaignsService;
     }
 
-    BackstageAccountService getAccountService() {
+    public BackstageAccountService getAccountService() {
         return accountService;
     }
 
-    BackstageCampaignItemsService getCampaignItemService() {
+    public BackstageCampaignItemsService getCampaignItemService() {
         return campaignItemService;
     }
 
-    BackstageDictionaryService getDictionaryService() {
+    public BackstageDictionaryService getDictionaryService() {
         return dictionaryService;
     }
 
-    BackstageMediaReportsService getMediaReportsService() {
+    public BackstageMediaReportsService getMediaReportsService() {
         return mediaReportsService;
-    }
-
-    <T> T request(String actionName, Supplier<Call<T>> supplier) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
-        Call<T> call = supplier.get();
-        T obj;
-        try {
-            Response<T> response = call.execute();
-            if(response.isSuccessful()) {
-                obj = response.body();
-            } else {
-                int responseCode = response.code();
-                if(responseCode == UNAUTHORIZED_HTTP_STATUS_CODE) {
-                    throw new BackstageAPITokenExpiredException(actionName, responseCode);
-
-                } else if(responseCode >= BAD_REQUEST_HTTP_STATUS_CODE && responseCode < INTERNAL_SERVER_ERROR_HTTP_STATUS_CODE) {
-                    throw new BackstageAPIRequestException(actionName, responseCode, parseError(response));
-
-                }
-
-                throw new BackstageAPIConnectivityException(actionName, responseCode);
-            }
-
-        } catch (IOException e) {
-            logger.error(e);
-            throw new BackstageAPIConnectivityException(actionName);
-        }
-
-        return obj;
-    }
-
-    private APIError parseError(Response errorResponse) {
-        ResponseBody errorBody = errorResponse.errorBody();
-        try {
-            return objectMapper.readValue(errorBody.bytes(), APIError.class);
-        } catch (Throwable e) {
-            logger.warn("Failed to parse API error response object [{}]", errorResponse.message());
-            return new APIError(errorResponse.message(), errorResponse.code());
-        }
     }
 }
