@@ -1,5 +1,7 @@
 package com.taboola.backstage.model;
 
+import java.util.Objects;
+
 /**
  * Created by vladi
  * Date: 10/16/2017
@@ -43,5 +45,20 @@ public class Account {
         ", name='" + name + '\'' +
         ", accountId='" + accountId + '\'' +
         '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(id, account.id) &&
+        Objects.equals(name, account.name) &&
+        Objects.equals(accountId, account.accountId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, accountId);
     }
 }

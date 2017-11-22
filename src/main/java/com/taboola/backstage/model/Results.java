@@ -1,6 +1,7 @@
 package com.taboola.backstage.model;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Created by vladi
@@ -11,6 +12,14 @@ import java.util.Collection;
 public class Results<T> {
 
     private Collection<T> results;
+
+    public Results() {
+        //for serialization
+    }
+
+    public Results(Collection<T> results) {
+        this.results = results;
+    }
 
     public Collection<T> getResults() {
         return results;
@@ -25,5 +34,18 @@ public class Results<T> {
         return "Results{" +
         "results=" + results +
         '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Results<?> results1 = (Results<?>) o;
+        return Objects.equals(results, results1.results);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(results);
     }
 }

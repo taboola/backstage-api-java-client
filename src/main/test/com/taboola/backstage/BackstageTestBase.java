@@ -1,8 +1,11 @@
 package com.taboola.backstage;
 
+import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.GrantType;
 import com.taboola.backstage.model.auth.Token;
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  * Created by vladi
@@ -12,6 +15,7 @@ import com.taboola.backstage.model.auth.Token;
  */
 public abstract class BackstageTestBase {
 
+    protected static final PodamFactory factory = new PodamFactoryImpl();
 
     protected BackstageAuthentication generateDummyPasswordBackstageAuth() {
         return new BackstageAuthentication("DummyClientId", "DummyClientSecret",
@@ -23,12 +27,16 @@ public abstract class BackstageTestBase {
                         null, null, GrantType.CLIENT_CREDENTIALS, generateDummyToken());
     }
 
-    protected Token generateDummyToken(){
+    protected Token generateDummyToken() {
         Token token = new Token();
         token.setAccessToken("accesstoken");
         token.setExpiresIn(1000);
         token.setRefreshToken("refreshtoken");
         token.setTokenType("bearer");
         return token;
+    }
+
+    protected Account generateDummyAccount() {
+        return factory.manufacturePojo(Account.class);
     }
 }
