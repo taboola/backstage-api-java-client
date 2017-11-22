@@ -6,7 +6,7 @@ import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dictionary.Resource;
-import com.taboola.backstage.services.internal.BackstageDictionaryService;
+import com.taboola.backstage.internal.BackstageDictionaryEndpoint;
 
 /**
  * Created by vladi
@@ -16,51 +16,51 @@ import com.taboola.backstage.services.internal.BackstageDictionaryService;
  */
 public class DictionaryServiceImpl implements DictionaryService {
 
-    private final BackstageDictionaryService service;
+    private final BackstageDictionaryEndpoint endpoint;
 
-    public DictionaryServiceImpl(BackstageDictionaryService service) {
-        this.service = service;
+    public DictionaryServiceImpl(BackstageDictionaryEndpoint endpoint) {
+        this.endpoint = endpoint;
     }
 
     @Override
     public Results<Resource> custom(BackstageAuthentication auth, String ... resourceName) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.custom(accessToken, String.join("/", resourceName));
+        return endpoint.custom(accessToken, String.join("/", resourceName));
     }
 
     @Override
     public Results<Resource> getRoot(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.getRoot(accessToken);
+        return endpoint.getRoot(accessToken);
     }
 
     @Override
     public Results<Resource> getCountries(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.getCountries(accessToken);
+        return endpoint.getCountries(accessToken);
     }
 
     @Override
     public Results<Resource> getSpecificCountryRegions(BackstageAuthentication auth, String countryCode) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.getSpecificCountryRegions(accessToken, countryCode);
+        return endpoint.getSpecificCountryRegions(accessToken, countryCode);
     }
 
     @Override
     public Results<Resource> getSpecificCountryPostals(BackstageAuthentication auth, String countryCode) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.getSpecificCountryPostals(accessToken, countryCode);
+        return endpoint.getSpecificCountryPostals(accessToken, countryCode);
     }
 
     @Override
     public Results<Resource> getUnitedStatesDMA(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.getUnitedStatesDMA(accessToken);
+        return endpoint.getUnitedStatesDMA(accessToken);
     }
 
     @Override
     public Results<Resource> getPlatforms(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.getPlatforms(accessToken);
+        return endpoint.getPlatforms(accessToken);
     }
 }

@@ -1,4 +1,4 @@
-package com.taboola.backstage.services.internal;
+package com.taboola.backstage.internal;
 
 import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
@@ -11,7 +11,7 @@ import retrofit2.http.*;
  * Time: 10:48 PM
  * By Taboola
  */
-public interface BackstageCampaignsService {
+public interface BackstageCampaignsEndpoint {
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns")
     @Headers("Content-Type: application/json")

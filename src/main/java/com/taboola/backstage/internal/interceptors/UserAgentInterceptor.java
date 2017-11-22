@@ -1,4 +1,4 @@
-package com.taboola.backstage.services.internal.interceptors;
+package com.taboola.backstage.internal.interceptors;
 
 import okhttp3.Interceptor;
 import okhttp3.Response;

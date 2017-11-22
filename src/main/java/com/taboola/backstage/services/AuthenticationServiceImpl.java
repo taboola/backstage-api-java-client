@@ -7,7 +7,7 @@ import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.GrantType;
 import com.taboola.backstage.model.auth.Token;
 import com.taboola.backstage.model.auth.TokenDetails;
-import com.taboola.backstage.services.internal.BackstageAuthenticationService;
+import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
 
 
 import static com.taboola.backstage.model.auth.GrantType.CLIENT_CREDENTIALS;
@@ -21,10 +21,10 @@ import static com.taboola.backstage.model.auth.GrantType.PASSWORD_AUTHENTICATION
  */
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private final BackstageAuthenticationService service;
+    private final BackstageAuthenticationEndpoint endpoint;
 
-    public AuthenticationServiceImpl(BackstageAuthenticationService service) {
-        this.service = service;
+    public AuthenticationServiceImpl(BackstageAuthenticationEndpoint endpoint) {
+        this.endpoint = endpoint;
     }
 
     @Override
@@ -44,17 +44,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public TokenDetails getTokenDetails(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
-        return service.getTokenDetails(auth.getToken().getAccessTokenForHeader());
+        return endpoint.getTokenDetails(auth.getToken().getAccessTokenForHeader());
     }
 
     private BackstageAuthentication authenticate(String clientId, String clientSecret, String username, String password, GrantType grantType) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         Token token;
         switch (grantType) {
             case CLIENT_CREDENTIALS:
-                token = service.getAuthToken(clientId, clientSecret, grantType.getValue());
+                token = endpoint.getAuthToken(clientId, clientSecret, grantType.getValue());
                 break;
             case PASSWORD_AUTHENTICATION:
-                token = service.getAuthToken(clientId, clientSecret, username, password, grantType.getValue());
+                token = endpoint.getAuthToken(clientId, clientSecret, username, password, grantType.getValue());
                 break;
             default:
                     throw new IllegalStateException("Unknown grant type, seems like a bug");

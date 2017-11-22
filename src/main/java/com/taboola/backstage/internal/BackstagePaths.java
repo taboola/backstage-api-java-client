@@ -1,4 +1,4 @@
-package com.taboola.backstage.services.internal;
+package com.taboola.backstage.internal;
 
 /**
  * Created by vladi

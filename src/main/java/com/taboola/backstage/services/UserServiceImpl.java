@@ -6,7 +6,7 @@ import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.services.internal.BackstageAccountService;
+import com.taboola.backstage.internal.BackstageAccountEndpoint;
 
 /**
  * Created by vladi
@@ -16,15 +16,15 @@ import com.taboola.backstage.services.internal.BackstageAccountService;
  */
 public class UserServiceImpl implements UserService {
 
-    private final BackstageAccountService accountService;
+    private final BackstageAccountEndpoint accountEndpoint;
 
-    public UserServiceImpl(BackstageAccountService accountService) {
-        this.accountService = accountService;
+    public UserServiceImpl(BackstageAccountEndpoint accountEndpoint) {
+        this.accountEndpoint = accountEndpoint;
     }
 
     @Override
     public Results<Account> readAllowedAccounts(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return accountService.getUserAllowedAccounts(accessToken);
+        return accountEndpoint.getUserAllowedAccounts(accessToken);
     }
 }

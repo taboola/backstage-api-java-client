@@ -8,7 +8,7 @@ import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.GrantType;
 import com.taboola.backstage.model.auth.Token;
 import com.taboola.backstage.model.auth.TokenDetails;
-import com.taboola.backstage.services.internal.BackstageAuthenticationService;
+import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,20 +28,20 @@ import static org.mockito.Mockito.*;
 public class AuthenticationServiceImplTest extends BackstageTestBase {
 
     private AuthenticationServiceImpl testInstance;
-    private BackstageAuthenticationService internalAuthServiceMock;
+    private BackstageAuthenticationEndpoint authEndpointMock;
 
     @Before
     public void beforeTest() {
-        internalAuthServiceMock = mock(BackstageAuthenticationService.class);
-        testInstance = new AuthenticationServiceImpl(internalAuthServiceMock);
+        authEndpointMock = mock(BackstageAuthenticationEndpoint.class);
+        testInstance = new AuthenticationServiceImpl(authEndpointMock);
 
-        reset(internalAuthServiceMock);
+        reset(authEndpointMock);
     }
 
     @Test
     public void testClientCredentials() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException, IOException {
         Token expectedToken = generateDummyToken();
-        when(internalAuthServiceMock.getAuthToken("DummyClientId", "DummyClientSecret", GrantType.CLIENT_CREDENTIALS.getValue())).thenReturn(expectedToken);
+        when(authEndpointMock.getAuthToken("DummyClientId", "DummyClientSecret", GrantType.CLIENT_CREDENTIALS.getValue())).thenReturn(expectedToken);
 
         BackstageAuthentication actual = testInstance.clientCredentials("DummyClientId", "DummyClientSecret");
 
@@ -52,14 +52,14 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         assertNull("Invalid password", actual.getPassword());
         assertEquals("Invalid token", expectedToken, actual.getToken());
 
-        verify(internalAuthServiceMock, times(1)).getAuthToken(any(), any(), any());
-        verify(internalAuthServiceMock, times(0)).getAuthToken(any(), any(), any(), any(), any());
+        verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any());
+        verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any(), any(), any());
     }
 
     @Test
     public void testPasswordAuthentication() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException {
         Token expectedToken = generateDummyToken();
-        when(internalAuthServiceMock.getAuthToken("DummyClientId", "DummyClientSecret", "username", "pass", GrantType.PASSWORD_AUTHENTICATION.getValue())).thenReturn(expectedToken);
+        when(authEndpointMock.getAuthToken("DummyClientId", "DummyClientSecret", "username", "pass", GrantType.PASSWORD_AUTHENTICATION.getValue())).thenReturn(expectedToken);
 
         BackstageAuthentication actual = testInstance.passwordAuthentication("DummyClientId", "DummyClientSecret", "username", "pass");
         assertEquals("Invalid client id", "DummyClientId", actual.getClientId());
@@ -69,8 +69,8 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         assertEquals("Invalid password", "pass", actual.getPassword());
         assertEquals("Invalid token", expectedToken, actual.getToken());
 
-        verify(internalAuthServiceMock, times(0)).getAuthToken(any(), any(), any());
-        verify(internalAuthServiceMock, times(1)).getAuthToken(any(), any(), any(), any(), any());
+        verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any());
+        verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any(), any(), any());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
 
         Token expectedReAuthedToken = generateDummyToken();
         expectedReAuthedToken.setAccessToken("reauthenticated_token_clientcred");
-        when(internalAuthServiceMock.getAuthToken(existingAuth.getClientId(), existingAuth.getClientSecret(), existingAuth.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
+        when(authEndpointMock.getAuthToken(existingAuth.getClientId(), existingAuth.getClientSecret(), existingAuth.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
 
         BackstageAuthentication reAuthenticatedAuth = testInstance.reAuthenticate(existingAuth);
         assertEquals("Invalid grand type", GrantType.CLIENT_CREDENTIALS, reAuthenticatedAuth.getGrantType());
@@ -89,8 +89,8 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         assertNull("Invalid password", reAuthenticatedAuth.getPassword());
         assertEquals("Invalid token", expectedReAuthedToken, reAuthenticatedAuth.getToken());
 
-        verify(internalAuthServiceMock, times(1)).getAuthToken(any(), any(), any());
-        verify(internalAuthServiceMock, times(0)).getAuthToken(any(), any(), any(), any(), any());
+        verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any());
+        verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any(), any(), any());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
 
         Token expectedReAuthedToken = generateDummyToken();
         expectedReAuthedToken.setAccessToken("reauthenticated_token_pass");
-        when(internalAuthServiceMock.getAuthToken(existingAuth.getClientId(), existingAuth.getClientSecret(), existingAuth.getUsername(), existingAuth.getPassword(), existingAuth.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
+        when(authEndpointMock.getAuthToken(existingAuth.getClientId(), existingAuth.getClientSecret(), existingAuth.getUsername(), existingAuth.getPassword(), existingAuth.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
 
         BackstageAuthentication reAuthenticatedAuth = testInstance.reAuthenticate(existingAuth);
         assertEquals("Invalid grand type", GrantType.PASSWORD_AUTHENTICATION, reAuthenticatedAuth.getGrantType());
@@ -109,8 +109,8 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         assertEquals("Invalid password", existingAuth.getPassword(), reAuthenticatedAuth.getPassword());
         assertEquals("Invalid token", expectedReAuthedToken, reAuthenticatedAuth.getToken());
 
-        verify(internalAuthServiceMock, times(0)).getAuthToken(any(), any(), any());
-        verify(internalAuthServiceMock, times(1)).getAuthToken(any(), any(), any(), any(), any());
+        verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any());
+        verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any(), any(), any());
     }
 
     @Test
@@ -118,14 +118,14 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         BackstageAuthentication auth = generateDummyPasswordBackstageAuth();
 
         TokenDetails expected = new TokenDetails();
-        when(internalAuthServiceMock.getTokenDetails(auth.getToken().getAccessTokenForHeader())).thenReturn(expected);
+        when(authEndpointMock.getTokenDetails(auth.getToken().getAccessTokenForHeader())).thenReturn(expected);
 
         TokenDetails actual = testInstance.getTokenDetails(auth);
         assertEquals("Invalid token details", expected, actual);
 
 
-        verify(internalAuthServiceMock, times(0)).getAuthToken(any(), any(), any());
-        verify(internalAuthServiceMock, times(0)).getAuthToken(any(), any(), any(), any(), any());
-        verify(internalAuthServiceMock, times(1)).getTokenDetails(any());
+        verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any());
+        verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any(), any(), any());
+        verify(authEndpointMock, times(1)).getTokenDetails(any());
     }
 }

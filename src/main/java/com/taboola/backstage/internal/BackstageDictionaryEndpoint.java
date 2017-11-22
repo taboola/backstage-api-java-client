@@ -1,4 +1,4 @@
-package com.taboola.backstage.services.internal;
+package com.taboola.backstage.internal;
 
 import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
@@ -11,7 +11,7 @@ import retrofit2.http.*;
  * Time: 11:27 PM
  * By Taboola
  */
-public interface BackstageDictionaryService {
+public interface BackstageDictionaryEndpoint {
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/{dictionary_suffix}")
     @Headers("Content-Type: application/json")

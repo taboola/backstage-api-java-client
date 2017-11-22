@@ -7,7 +7,7 @@ import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.reports.ReportFilter;
 import com.taboola.backstage.model.media.reports.TopCampaignContentOptionalFilters;
 import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
-import com.taboola.backstage.services.internal.BackstageMediaReportsService;
+import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,10 +25,10 @@ public class ReportsServiceImpl implements ReportsService {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
 
-    private final BackstageMediaReportsService mediaReportsService;
+    private final BackstageMediaReportsEndpoint mediaReportsEndpoint;
 
-    public ReportsServiceImpl(BackstageMediaReportsService mediaReportsService) {
-        this.mediaReportsService = mediaReportsService;
+    public ReportsServiceImpl(BackstageMediaReportsEndpoint mediaReportsEndpoint) {
+        this.mediaReportsEndpoint = mediaReportsEndpoint;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ReportsServiceImpl implements ReportsService {
     public TopCampaignContentReport getTopCampaignContentReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
                                                                 Map<TopCampaignContentOptionalFilters, String> filters) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return mediaReportsService.getTopCampaignContentReport(accessToken, accountId,
+        return mediaReportsEndpoint.getTopCampaignContentReport(accessToken, accountId,
                                                                                                 DATE_TIME_FORMATTER.format(startDate),
                                                                                                 DATE_TIME_FORMATTER.format(endDate),
                                                                                                 formatOptionalFilters(filters));

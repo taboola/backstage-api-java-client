@@ -1,4 +1,4 @@
-package com.taboola.backstage.services.internal;
+package com.taboola.backstage.internal;
 
 import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
@@ -13,7 +13,7 @@ import retrofit2.http.Headers;
  * Time: 11:24 PM
  * By Taboola
  */
-public interface BackstageAccountService {
+public interface BackstageAccountEndpoint {
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/users/current/allowed-accounts")
     @Headers("Content-Type: application/json")

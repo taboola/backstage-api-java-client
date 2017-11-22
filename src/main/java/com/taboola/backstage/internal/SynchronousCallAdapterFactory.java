@@ -1,4 +1,4 @@
-package com.taboola.backstage.services.internal;
+package com.taboola.backstage.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;

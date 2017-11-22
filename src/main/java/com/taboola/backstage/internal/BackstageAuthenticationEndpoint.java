@@ -1,4 +1,4 @@
-package com.taboola.backstage.services.internal;
+package com.taboola.backstage.internal;
 
 import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.auth.Token;
@@ -11,7 +11,7 @@ import retrofit2.http.*;
  * Time: 10:23 PM
  * By Taboola
  */
-public interface BackstageAuthenticationService {
+public interface BackstageAuthenticationEndpoint {
 
     @POST("/backstage/oauth/token")
     @FormUrlEncoded

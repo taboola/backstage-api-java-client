@@ -1,4 +1,4 @@
-package com.taboola.backstage.services.internal;
+package com.taboola.backstage.internal;
 
 import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
@@ -12,7 +12,7 @@ import java.util.Map;
  * Time: 11:27 PM
  * By Taboola
  */
-public interface BackstageMediaReportsService {
+public interface BackstageMediaReportsEndpoint {
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/reports/top-campaign-content/dimensions/item_breakdown")
     @Headers("Content-Type: application/json")

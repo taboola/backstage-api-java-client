@@ -3,8 +3,8 @@ package com.taboola.backstage.services;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.taboola.backstage.services.internal.*;
-import com.taboola.backstage.services.internal.interceptors.UserAgentInterceptor;
+import com.taboola.backstage.internal.*;
+import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.apache.logging.log4j.LogManager;
@@ -26,23 +26,23 @@ public final class CommunicationFactory {
 
     private final ObjectMapper objectMapper;
 
-    private final BackstageAuthenticationService authService;
-    private final BackstageCampaignsService campaignsService;
-    private final BackstageAccountService accountService;
-    private final BackstageCampaignItemsService campaignItemService;
-    private final BackstageDictionaryService dictionaryService;
-    private final BackstageMediaReportsService mediaReportsService;
+    private final BackstageAuthenticationEndpoint authService;
+    private final BackstageCampaignsEndpoint campaignsService;
+    private final BackstageAccountEndpoint accountService;
+    private final BackstageCampaignItemsEndpoint campaignItemService;
+    private final BackstageDictionaryEndpoint dictionaryService;
+    private final BackstageMediaReportsEndpoint mediaReportsService;
 
     public CommunicationFactory(String backstageBaseUrl, long connectionTimeoutMillis, long readTimeoutMillis, long writeTimeoutMillis, String userAgent) {
         this.objectMapper = createObjectMapper();
 
         Retrofit retrofit = createRetrofit(backstageBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
-        this.authService = retrofit.create(BackstageAuthenticationService.class);
-        this.campaignsService = retrofit.create(BackstageCampaignsService.class);
-        this.accountService = retrofit.create(BackstageAccountService.class);
-        this.campaignItemService = retrofit.create(BackstageCampaignItemsService.class);
-        this.dictionaryService = retrofit.create(BackstageDictionaryService.class);
-        this.mediaReportsService = retrofit.create(BackstageMediaReportsService.class);
+        this.authService = retrofit.create(BackstageAuthenticationEndpoint.class);
+        this.campaignsService = retrofit.create(BackstageCampaignsEndpoint.class);
+        this.accountService = retrofit.create(BackstageAccountEndpoint.class);
+        this.campaignItemService = retrofit.create(BackstageCampaignItemsEndpoint.class);
+        this.dictionaryService = retrofit.create(BackstageDictionaryEndpoint.class);
+        this.mediaReportsService = retrofit.create(BackstageMediaReportsEndpoint.class);
     }
 
     private ObjectMapper createObjectMapper() {
@@ -74,27 +74,27 @@ public final class CommunicationFactory {
                             .build();
     }
 
-    public BackstageAuthenticationService getAuthService() {
+    public BackstageAuthenticationEndpoint getAuthService() {
         return authService;
     }
 
-    public BackstageCampaignsService getCampaignsService() {
+    public BackstageCampaignsEndpoint getCampaignsService() {
         return campaignsService;
     }
 
-    public BackstageAccountService getAccountService() {
+    public BackstageAccountEndpoint getAccountService() {
         return accountService;
     }
 
-    public BackstageCampaignItemsService getCampaignItemService() {
+    public BackstageCampaignItemsEndpoint getCampaignItemService() {
         return campaignItemService;
     }
 
-    public BackstageDictionaryService getDictionaryService() {
+    public BackstageDictionaryEndpoint getDictionaryService() {
         return dictionaryService;
     }
 
-    public BackstageMediaReportsService getMediaReportsService() {
+    public BackstageMediaReportsEndpoint getMediaReportsService() {
         return mediaReportsService;
     }
 }

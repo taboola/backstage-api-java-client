@@ -6,7 +6,7 @@ import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
-import com.taboola.backstage.services.internal.BackstageCampaignsService;
+import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
 
 /**
  * Created by vladi
@@ -16,34 +16,34 @@ import com.taboola.backstage.services.internal.BackstageCampaignsService;
  */
 public class CampaignsServiceImpl implements CampaignsService {
 
-    private final BackstageCampaignsService service;
+    private final BackstageCampaignsEndpoint endpoint;
 
-    public CampaignsServiceImpl(BackstageCampaignsService service) {
-        this.service = service;
+    public CampaignsServiceImpl(BackstageCampaignsEndpoint endpoint) {
+        this.endpoint = endpoint;
     }
 
     @Override
     public Campaign create(BackstageAuthentication auth, String accountId, Campaign campaign) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.createCampaign(accessToken, accountId, campaign);
+        return endpoint.createCampaign(accessToken, accountId, campaign);
     }
 
     @Override
     public Campaign read(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.getCampaign(accessToken, accountId, campaignId);
+        return endpoint.getCampaign(accessToken, accountId, campaignId);
     }
 
     @Override
     public Results<Campaign> read(BackstageAuthentication auth, String accountId) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.getAllCampaigns(accessToken, accountId);
+        return endpoint.getAllCampaigns(accessToken, accountId);
     }
 
     @Override
     public Campaign update(BackstageAuthentication auth, String accountId, String campaignId, Campaign campaign) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return service.updateCampaign(accessToken, accountId, campaignId,  campaign);
+        return endpoint.updateCampaign(accessToken, accountId, campaignId,  campaign);
     }
 
 }
