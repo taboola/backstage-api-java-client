@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.dictionary;
 
+import java.util.Objects;
+
 /**
  * Created by vladi
  * Date: 10/17/2017
@@ -33,5 +35,19 @@ public class Resource {
         "name='" + name + '\'' +
         ", value='" + value + '\'' +
         '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Resource resource = (Resource) o;
+        return Objects.equals(name, resource.name) &&
+        Objects.equals(value, resource.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value);
     }
 }

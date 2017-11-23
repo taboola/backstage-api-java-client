@@ -1,6 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by vladi
@@ -235,5 +236,39 @@ public class Campaign {
         ", spent=" + spent +
         ", status='" + status + '\'' +
         '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Campaign campaign = (Campaign) o;
+        return Objects.equals(id, campaign.id) &&
+        Objects.equals(advertiserId, campaign.advertiserId) &&
+        Objects.equals(name, campaign.name) &&
+        Objects.equals(brandingText, campaign.brandingText) &&
+        Objects.equals(trackingCode, campaign.trackingCode) &&
+        Objects.equals(cpc, campaign.cpc) &&
+        Objects.equals(dailyCap, campaign.dailyCap) &&
+        Objects.equals(dailyAdDeliveryMode, campaign.dailyAdDeliveryMode) &&
+        Objects.equals(publisherBidModifier, campaign.publisherBidModifier) &&
+        Objects.equals(spendingLimit, campaign.spendingLimit) &&
+        Objects.equals(spendingLimitModel, campaign.spendingLimitModel) &&
+        Objects.equals(countryTargeting, campaign.countryTargeting) &&
+        Objects.equals(subCountryTargeting, campaign.subCountryTargeting) &&
+        Objects.equals(platformTargeting, campaign.platformTargeting) &&
+        Objects.equals(publisherTargeting, campaign.publisherTargeting) &&
+        Objects.equals(comments, campaign.comments) &&
+        Objects.equals(startDate, campaign.startDate) &&
+        Objects.equals(endDate, campaign.endDate) &&
+        Objects.equals(approvalState, campaign.approvalState) &&
+        Objects.equals(isActive, campaign.isActive) &&
+        Objects.equals(spent, campaign.spent) &&
+        Objects.equals(status, campaign.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryMode, publisherBidModifier, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, comments, startDate, endDate, approvalState, isActive, spent, status);
     }
 }

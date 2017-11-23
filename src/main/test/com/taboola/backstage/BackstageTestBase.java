@@ -4,6 +4,10 @@ import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.GrantType;
 import com.taboola.backstage.model.auth.Token;
+import com.taboola.backstage.model.dictionary.Resource;
+import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -38,5 +42,21 @@ public abstract class BackstageTestBase {
 
     protected Account generateDummyAccount() {
         return factory.manufacturePojo(Account.class);
+    }
+
+    protected Campaign generateDummyCampaign() {
+        return factory.manufacturePojo(Campaign.class);
+    }
+
+    protected CampaignItem generateDummyCamppaignItem() {
+        return factory.manufacturePojo(CampaignItem.class);
+    }
+
+    protected Resource generateDummyResource() {
+        return factory.manufacturePojo(Resource.class);
+    }
+
+    protected TopCampaignContentReport generateDummyTopCampaignContentReport() {
+        return factory.manufacturePojo(TopCampaignContentReport.class);
     }
 }

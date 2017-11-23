@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
+import java.util.Objects;
+
 /**
  * Created by vladi
  * Date: 9/12/2017
@@ -103,5 +105,26 @@ public class CampaignItem {
         ", isActive=" + isActive +
         ", status='" + status + '\'' +
         '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CampaignItem that = (CampaignItem) o;
+        return Objects.equals(id, that.id) &&
+        Objects.equals(campaignId, that.campaignId) &&
+        Objects.equals(type, that.type) &&
+        Objects.equals(url, that.url) &&
+        Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
+        Objects.equals(title, that.title) &&
+        Objects.equals(approvalState, that.approvalState) &&
+        Objects.equals(isActive, that.isActive) &&
+        Objects.equals(status, that.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive, status);
     }
 }
