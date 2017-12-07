@@ -10,10 +10,10 @@ This Java client is based on Taboola Backstage API v1.0.
 
 Please refer to the Taboola Backstage API documentation for more details.
 
-### 1. Getting Started
+## 1. Getting Started
 
 
-##### 1.1 Perform Authentication
+### 1.1 Perform Authentication
 First you will need _BackstageAuthentication.java_ object
 ```
 Backstage backstage = Backstage.builder().build();
@@ -22,7 +22,7 @@ BackstageAuthentication clientAuth = backstage.authenticationService()
                                               .clientCredentials("your_client_id", "your_client_secret");
 ```
 
-##### 1.2 Perform API call using services
+### 1.2 Perform API call using services
 Once you have _BackstageAuthentication.java_ object you will be able to perform all 
 API calls by using services which can be found on _Backstage.java_ object
 ```
@@ -31,7 +31,7 @@ backstage.campaignsService().read(clientAuth, myAccountId);
 ```
 
 
-### 2. Full Example - Read campaign items 
+## 2. Full Example - Read campaign items 
 ```
 Backstage backstage = Backstage.builder().build();
 
