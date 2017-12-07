@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.reports;
 
+import java.util.Objects;
+
 /**
  * Created by vladi
  * Date: 10/27/2017
@@ -142,6 +144,33 @@ public class TopCampaignContentRow {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TopCampaignContentRow that = (TopCampaignContentRow) o;
+        return Objects.equals(item, that.item) &&
+        Objects.equals(itemName, that.itemName) &&
+        Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
+        Objects.equals(url, that.url) &&
+        Objects.equals(campaigns, that.campaigns) &&
+        Objects.equals(campaignName, that.campaignName) &&
+        Objects.equals(contentProvider, that.contentProvider) &&
+        Objects.equals(contentProviderName, that.contentProviderName) &&
+        Objects.equals(impressions, that.impressions) &&
+        Objects.equals(ctr, that.ctr) &&
+        Objects.equals(clicks, that.clicks) &&
+        Objects.equals(cpc, that.cpc) &&
+        Objects.equals(cpm, that.cpm) &&
+        Objects.equals(spent, that.spent) &&
+        Objects.equals(currency, that.currency);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider, contentProviderName, impressions, ctr, clicks, cpc, cpm, spent, currency);
     }
 
     @Override
