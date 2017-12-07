@@ -4,8 +4,7 @@ import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.media.reports.TopCampaignContentOptionalFilters;
-import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
+import com.taboola.backstage.model.media.reports.*;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -24,4 +23,10 @@ public interface ReportsService {
     TopCampaignContentReport getTopCampaignContentReport(BackstageAuthentication auth, String accountId,
                                                          LocalDate startDate, LocalDate endDate,
                                                          Map<TopCampaignContentOptionalFilters, String> filters) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate, CampaignSummaryDimensions dimension) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+
+    CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
+                                                   CampaignSummaryDimensions dimension, Map<CampaignSummaryOptionalFilters, String> filters) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }

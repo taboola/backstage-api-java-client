@@ -4,9 +4,7 @@ import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.media.reports.ReportFilter;
-import com.taboola.backstage.model.media.reports.TopCampaignContentOptionalFilters;
-import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
+import com.taboola.backstage.model.media.reports.*;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 
 import java.time.LocalDate;
@@ -46,7 +44,21 @@ public class ReportsServiceImpl implements ReportsService {
                                                                                                 formatOptionalFilters(filters));
     }
 
-    //TODO support campaign summary dimensions
+    //TODO split campaign summary report to separate dimensions instead of monolith report to ease its use
+
+    @Override
+    public CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate, CampaignSummaryDimensions dimension) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return getCampaignSummeryReport(auth, accountId, startDate, endDate, dimension, Collections.emptyMap());
+    }
+
+    @Override
+    public CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
+                                                          CampaignSummaryDimensions dimension, Map<CampaignSummaryOptionalFilters, String> filters) {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return mediaReportsEndpoint.getCampaignSummary(accessToken, accountId, dimension.getName(),
+                                                        DATE_TIME_FORMATTER.format(startDate), DATE_TIME_FORMATTER.format(endDate),
+                                                        formatOptionalFilters(filters));
+    }
 
     private <T extends ReportFilter> Map<String, String> formatOptionalFilters(Map<T, String> filters) {
         return filters.entrySet().stream().collect(Collectors.toMap(e -> e.getKey().getName(), Map.Entry::getValue));
