@@ -1,8 +1,8 @@
 ## Backstage API Java Client
 
 ### Table of Contents
-1. [Getting Started](#2-tetting-started)
-2. [Full Example - Read campaign items ](#3-full-example-read-campaign-items)
+1. [Getting Started](#1-getting-started)
+2. [Full Example - Read campaign items ](#2-full-example---read-campaign-items)
 
 ### Intro
 The Taboola Backstage API allow you to manage your campaign, items and view reports.
