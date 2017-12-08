@@ -1,6 +1,7 @@
 package com.taboola.backstage;
 
 import com.taboola.backstage.model.Account;
+import com.taboola.backstage.model.auth.AuthenticationDetails;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.GrantType;
 import com.taboola.backstage.model.auth.Token;
@@ -22,13 +23,21 @@ public abstract class BackstageTestBase {
     protected static final PodamFactory factory = new PodamFactoryImpl();
 
     protected BackstageAuthentication generateDummyPasswordBackstageAuth() {
-        return new BackstageAuthentication("DummyClientId", "DummyClientSecret",
-                        "DummyUsername", "DummyPassword", GrantType.PASSWORD_AUTHENTICATION, generateDummyToken());
+        return new BackstageAuthentication(generateDummyPasswordAuthenticationDetails(), generateDummyToken());
     }
 
     protected BackstageAuthentication generateDummyClientCredentialsBackstageAuth() {
-        return new BackstageAuthentication("DummyClientId", "DummyClientSecret",
-                        null, null, GrantType.CLIENT_CREDENTIALS, generateDummyToken());
+        return new BackstageAuthentication(generateDummyClientCredAuthenticationDetails(), generateDummyToken());
+    }
+
+    protected AuthenticationDetails generateDummyPasswordAuthenticationDetails() {
+        return new AuthenticationDetails("DummyClientId", "DummyClientSecret",
+        "DummyUsername", "DummyPassword", GrantType.PASSWORD_AUTHENTICATION);
+    }
+
+    protected AuthenticationDetails generateDummyClientCredAuthenticationDetails() {
+        return new AuthenticationDetails("DummyClientId", "DummyClientSecret",
+        null, null, GrantType.CLIENT_CREDENTIALS);
     }
 
     protected Token generateDummyToken() {

@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.auth;
 
+import java.util.Objects;
+
 /**
  * Created by vladi
  * Date: 9/12/2017
@@ -8,41 +10,16 @@ package com.taboola.backstage.model.auth;
  */
 public class BackstageAuthentication {
 
-    private final String clientId;
-    private final String clientSecret;
-    private final String username;
-    private final String password;
-    private final GrantType grantType;
-    private final Token token;
+    private Token token;
+    private AuthenticationDetails details;
 
-    public BackstageAuthentication(String clientId, String clientSecret,
-                                   String username, String password, GrantType grantType, Token token) {
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-        this.username = username;
-        this.password = password;
-        this.grantType = grantType;
+    public BackstageAuthentication(AuthenticationDetails details, Token token) {
+        this.details = details;
         this.token = token;
     }
 
-    public String getClientId() {
-        return clientId;
-    }
-
-    public String getClientSecret() {
-        return clientSecret;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public GrantType getGrantType() {
-        return grantType;
+    public AuthenticationDetails getDetails() {
+        return details;
     }
 
     public Token getToken() {
@@ -50,13 +27,23 @@ public class BackstageAuthentication {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BackstageAuthentication that = (BackstageAuthentication) o;
+        return Objects.equals(details, that.details) &&
+        Objects.equals(token, that.token);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(details, token);
+    }
+
+    @Override
     public String toString() {
         return "BackstageAuthentication{" +
-        ", clientId='" + clientId + '\'' +
-        ", clientSecret='************'" +
-        ", username='" + username + '\'' +
-        ", password='************'" +
-        ", grantType=" + grantType +
+        "details=" + details +
         ", token=" + token +
         '}';
     }

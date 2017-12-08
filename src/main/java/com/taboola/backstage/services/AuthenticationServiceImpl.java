@@ -3,10 +3,7 @@ package com.taboola.backstage.services;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
-import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.auth.GrantType;
-import com.taboola.backstage.model.auth.Token;
-import com.taboola.backstage.model.auth.TokenDetails;
+import com.taboola.backstage.model.auth.*;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
 
 
@@ -39,7 +36,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public BackstageAuthentication reAuthenticate(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
-        return authenticate(auth.getClientId(), auth.getClientSecret(), auth.getUsername(), auth.getPassword(), auth.getGrantType());
+        AuthenticationDetails details = auth.getDetails();
+        return authenticate(details.getClientId(), details.getClientSecret(), details.getUsername(), details.getPassword(), details.getGrantType());
     }
 
     @Override
@@ -60,6 +58,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     throw new IllegalStateException("Unknown grant type, seems like a bug");
         }
 
-        return new BackstageAuthentication(clientId, clientSecret, username, password, grantType, token);
+        return new BackstageAuthentication(new AuthenticationDetails(clientId, clientSecret, username, password, grantType), token);
     }
 }

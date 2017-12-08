@@ -4,10 +4,7 @@ import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
-import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.auth.GrantType;
-import com.taboola.backstage.model.auth.Token;
-import com.taboola.backstage.model.auth.TokenDetails;
+import com.taboola.backstage.model.auth.*;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,14 +40,14 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         Token expectedToken = generateDummyToken();
         when(authEndpointMock.getAuthToken("DummyClientId", "DummyClientSecret", GrantType.CLIENT_CREDENTIALS.getValue())).thenReturn(expectedToken);
 
-        BackstageAuthentication actual = testInstance.clientCredentials("DummyClientId", "DummyClientSecret");
-
+        BackstageAuthentication auth = testInstance.clientCredentials("DummyClientId", "DummyClientSecret");
+        AuthenticationDetails actual = auth.getDetails();
         assertEquals("Invalid client id", "DummyClientId", actual.getClientId());
         assertEquals("Invalid client secret", "DummyClientSecret", actual.getClientSecret());
         assertEquals("Invalid grand type", GrantType.CLIENT_CREDENTIALS, actual.getGrantType());
         assertNull("Invalid username", actual.getUsername());
         assertNull("Invalid password", actual.getPassword());
-        assertEquals("Invalid token", expectedToken, actual.getToken());
+        assertEquals("Invalid token", expectedToken, auth.getToken());
 
         verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any());
         verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any(), any(), any());
@@ -61,13 +58,14 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         Token expectedToken = generateDummyToken();
         when(authEndpointMock.getAuthToken("DummyClientId", "DummyClientSecret", "username", "pass", GrantType.PASSWORD_AUTHENTICATION.getValue())).thenReturn(expectedToken);
 
-        BackstageAuthentication actual = testInstance.passwordAuthentication("DummyClientId", "DummyClientSecret", "username", "pass");
+        BackstageAuthentication auth = testInstance.passwordAuthentication("DummyClientId", "DummyClientSecret", "username", "pass");
+        AuthenticationDetails actual = auth.getDetails();
         assertEquals("Invalid client id", "DummyClientId", actual.getClientId());
         assertEquals("Invalid client secret", "DummyClientSecret", actual.getClientSecret());
         assertEquals("Invalid grand type", GrantType.PASSWORD_AUTHENTICATION, actual.getGrantType());
         assertEquals("Invalid username", "username", actual.getUsername());
         assertEquals("Invalid password", "pass", actual.getPassword());
-        assertEquals("Invalid token", expectedToken, actual.getToken());
+        assertEquals("Invalid token", expectedToken, auth.getToken());
 
         verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any());
         verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any(), any(), any());
@@ -76,17 +74,18 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     @Test
     public void testReAuthenticate_ClientCredentials() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException {
         BackstageAuthentication existingAuth = generateDummyClientCredentialsBackstageAuth();
-
+        AuthenticationDetails existingAuthDetails = existingAuth.getDetails();
         Token expectedReAuthedToken = generateDummyToken();
         expectedReAuthedToken.setAccessToken("reauthenticated_token_clientcred");
-        when(authEndpointMock.getAuthToken(existingAuth.getClientId(), existingAuth.getClientSecret(), existingAuth.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
+        when(authEndpointMock.getAuthToken(existingAuthDetails.getClientId(), existingAuthDetails.getClientSecret(), existingAuthDetails.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
 
         BackstageAuthentication reAuthenticatedAuth = testInstance.reAuthenticate(existingAuth);
-        assertEquals("Invalid grand type", GrantType.CLIENT_CREDENTIALS, reAuthenticatedAuth.getGrantType());
-        assertEquals("Invalid client id", existingAuth.getClientId(), reAuthenticatedAuth.getClientId());
-        assertEquals("Invalid client secret", existingAuth.getClientSecret(), reAuthenticatedAuth.getClientSecret());
-        assertNull("Invalid username", reAuthenticatedAuth.getUsername());
-        assertNull("Invalid password", reAuthenticatedAuth.getPassword());
+        AuthenticationDetails reAuthenticatedDetails = reAuthenticatedAuth.getDetails();
+        assertEquals("Invalid grand type", GrantType.CLIENT_CREDENTIALS, reAuthenticatedDetails.getGrantType());
+        assertEquals("Invalid client id", existingAuthDetails.getClientId(), reAuthenticatedDetails.getClientId());
+        assertEquals("Invalid client secret", existingAuthDetails.getClientSecret(), reAuthenticatedDetails.getClientSecret());
+        assertNull("Invalid username", reAuthenticatedDetails.getUsername());
+        assertNull("Invalid password", reAuthenticatedDetails.getPassword());
         assertEquals("Invalid token", expectedReAuthedToken, reAuthenticatedAuth.getToken());
 
         verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any());
@@ -96,17 +95,19 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     @Test
     public void testReAuthenticate_PasswordAuthentication() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException {
         BackstageAuthentication existingAuth = generateDummyPasswordBackstageAuth();
+        AuthenticationDetails existingAuthDetails = existingAuth.getDetails();
 
         Token expectedReAuthedToken = generateDummyToken();
         expectedReAuthedToken.setAccessToken("reauthenticated_token_pass");
-        when(authEndpointMock.getAuthToken(existingAuth.getClientId(), existingAuth.getClientSecret(), existingAuth.getUsername(), existingAuth.getPassword(), existingAuth.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
+        when(authEndpointMock.getAuthToken(existingAuthDetails.getClientId(), existingAuthDetails.getClientSecret(), existingAuthDetails.getUsername(), existingAuthDetails.getPassword(), existingAuthDetails.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
 
         BackstageAuthentication reAuthenticatedAuth = testInstance.reAuthenticate(existingAuth);
-        assertEquals("Invalid grand type", GrantType.PASSWORD_AUTHENTICATION, reAuthenticatedAuth.getGrantType());
-        assertEquals("Invalid client id", existingAuth.getClientId(), reAuthenticatedAuth.getClientId());
-        assertEquals("Invalid client secret", existingAuth.getClientSecret(), reAuthenticatedAuth.getClientSecret());
-        assertEquals("Invalid username", existingAuth.getUsername(), reAuthenticatedAuth.getUsername());
-        assertEquals("Invalid password", existingAuth.getPassword(), reAuthenticatedAuth.getPassword());
+        AuthenticationDetails reAuthenticatedDetails = reAuthenticatedAuth.getDetails();
+        assertEquals("Invalid grand type", GrantType.PASSWORD_AUTHENTICATION, reAuthenticatedDetails.getGrantType());
+        assertEquals("Invalid client id", existingAuthDetails.getClientId(), reAuthenticatedDetails.getClientId());
+        assertEquals("Invalid client secret", existingAuthDetails.getClientSecret(), reAuthenticatedDetails.getClientSecret());
+        assertEquals("Invalid username", existingAuthDetails.getUsername(), reAuthenticatedDetails.getUsername());
+        assertEquals("Invalid password", existingAuthDetails.getPassword(), reAuthenticatedDetails.getPassword());
         assertEquals("Invalid token", expectedReAuthedToken, reAuthenticatedAuth.getToken());
 
         verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any());
