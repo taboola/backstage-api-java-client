@@ -3,7 +3,7 @@ package com.taboola.backstage.internal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
-import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
+import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.APIError;
 import okhttp3.ResponseBody;
 import org.apache.logging.log4j.LogManager;
@@ -60,7 +60,7 @@ public class SynchronousCallAdapterFactory  extends CallAdapter.Factory {
                     } else {
                         int responseCode = response.code();
                         if(responseCode == UNAUTHORIZED_HTTP_STATUS_CODE) {
-                            throw new BackstageAPITokenExpiredException();
+                            throw new BackstageAPIUnauthorizedException();
 
                         } else if(responseCode >= BAD_REQUEST_HTTP_STATUS_CODE && responseCode < INTERNAL_SERVER_ERROR_HTTP_STATUS_CODE) {
                             throw new BackstageAPIRequestException(responseCode, parseError(response));

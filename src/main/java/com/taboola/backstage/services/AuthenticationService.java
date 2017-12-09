@@ -2,7 +2,7 @@ package com.taboola.backstage.services;
 
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
-import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
+import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.TokenDetails;
 
@@ -14,12 +14,12 @@ import com.taboola.backstage.model.auth.TokenDetails;
  */
 public interface AuthenticationService {
 
-    BackstageAuthentication clientCredentials(String clientId, String clientSecret) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    BackstageAuthentication clientCredentials(String clientId, String clientSecret) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
-    BackstageAuthentication passwordAuthentication(String clientId, String clientSecret, String username, String password) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    BackstageAuthentication passwordAuthentication(String clientId, String clientSecret, String username, String password) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
-    BackstageAuthentication reAuthenticate(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    BackstageAuthentication reAuthenticate(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
-    TokenDetails getTokenDetails(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    TokenDetails getTokenDetails(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
 }

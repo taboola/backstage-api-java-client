@@ -3,7 +3,7 @@ package com.taboola.backstage.services;
 import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
-import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
+import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.auth.*;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testClientCredentials() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException, IOException {
+    public void testClientCredentials() throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, IOException {
         Token expectedToken = generateDummyToken();
         when(authEndpointMock.getAuthToken("DummyClientId", "DummyClientSecret", GrantType.CLIENT_CREDENTIALS.getValue())).thenReturn(expectedToken);
 
@@ -54,7 +54,7 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testPasswordAuthentication() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException {
+    public void testPasswordAuthentication() throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException {
         Token expectedToken = generateDummyToken();
         when(authEndpointMock.getAuthToken("DummyClientId", "DummyClientSecret", "username", "pass", GrantType.PASSWORD_AUTHENTICATION.getValue())).thenReturn(expectedToken);
 
@@ -72,7 +72,7 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testReAuthenticate_ClientCredentials() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException {
+    public void testReAuthenticate_ClientCredentials() throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException {
         BackstageAuthentication existingAuth = generateDummyClientCredentialsBackstageAuth();
         AuthenticationDetails existingAuthDetails = existingAuth.getDetails();
         Token expectedReAuthedToken = generateDummyToken();
@@ -93,7 +93,7 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testReAuthenticate_PasswordAuthentication() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException {
+    public void testReAuthenticate_PasswordAuthentication() throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException {
         BackstageAuthentication existingAuth = generateDummyPasswordBackstageAuth();
         AuthenticationDetails existingAuthDetails = existingAuth.getDetails();
 
@@ -115,7 +115,7 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testGetTokenDetails() throws BackstageAPIRequestException, BackstageAPITokenExpiredException, BackstageAPIConnectivityException {
+    public void testGetTokenDetails() throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException {
         BackstageAuthentication auth = generateDummyPasswordBackstageAuth();
 
         TokenDetails expected = new TokenDetails();

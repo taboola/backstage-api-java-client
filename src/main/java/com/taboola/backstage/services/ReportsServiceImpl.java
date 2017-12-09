@@ -2,7 +2,7 @@ package com.taboola.backstage.services;
 
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
-import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
+import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.reports.*;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
@@ -30,13 +30,13 @@ public class ReportsServiceImpl implements ReportsService {
     }
 
     @Override
-    public TopCampaignContentReport getTopCampaignContentReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public TopCampaignContentReport getTopCampaignContentReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         return getTopCampaignContentReport(auth, accountId, startDate, endDate, Collections.emptyMap());
     }
 
     @Override
     public TopCampaignContentReport getTopCampaignContentReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
-                                                                Map<TopCampaignContentOptionalFilters, String> filters) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+                                                                Map<TopCampaignContentOptionalFilters, String> filters) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return mediaReportsEndpoint.getTopCampaignContentReport(accessToken, accountId,
                                                                                                 DATE_TIME_FORMATTER.format(startDate),
@@ -47,7 +47,7 @@ public class ReportsServiceImpl implements ReportsService {
     //TODO split campaign summary report to separate dimensions instead of monolith report to ease its use
 
     @Override
-    public CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate, CampaignSummaryDimensions dimension) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate, CampaignSummaryDimensions dimension) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         return getCampaignSummeryReport(auth, accountId, startDate, endDate, dimension, Collections.emptyMap());
     }
 

@@ -10,24 +10,24 @@ public class APIError {
 
     public static final APIError EMPTY = new APIError();
 
-    private int statusCode;
+    private int httpStatus;
     private String message;
 
     public APIError() {
         //for jackson
     }
 
-    public APIError(String message, int statusCode) {
+    public APIError(String message, int httpStatus) {
         this.message = message;
-        this.statusCode = statusCode;
+        this.httpStatus = httpStatus;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public int getHttpStatus() {
+        return httpStatus;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setHttpStatus(int httpStatus) {
+        this.httpStatus = httpStatus;
     }
 
     public String getMessage() {
@@ -41,7 +41,7 @@ public class APIError {
     @Override
     public String toString() {
         return "APIError{" +
-        "statusCode=" + statusCode +
+        "httpStatus=" + httpStatus +
         ", message='" + message + '\'' +
         '}';
     }

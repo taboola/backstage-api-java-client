@@ -2,7 +2,7 @@ package com.taboola.backstage.services;
 
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
-import com.taboola.backstage.exceptions.BackstageAPITokenExpiredException;
+import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.auth.*;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
 
@@ -25,27 +25,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public BackstageAuthentication clientCredentials(String clientId, String clientSecret) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public BackstageAuthentication clientCredentials(String clientId, String clientSecret) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         return authenticate(clientId, clientSecret, null, null, CLIENT_CREDENTIALS);
     }
 
     @Override
-    public BackstageAuthentication passwordAuthentication(String clientId, String clientSecret, String username, String password) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public BackstageAuthentication passwordAuthentication(String clientId, String clientSecret, String username, String password) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         return authenticate(clientId, clientSecret, username, password, PASSWORD_AUTHENTICATION);
     }
 
     @Override
-    public BackstageAuthentication reAuthenticate(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public BackstageAuthentication reAuthenticate(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         AuthenticationDetails details = auth.getDetails();
         return authenticate(details.getClientId(), details.getClientSecret(), details.getUsername(), details.getPassword(), details.getGrantType());
     }
 
     @Override
-    public TokenDetails getTokenDetails(BackstageAuthentication auth) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public TokenDetails getTokenDetails(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         return endpoint.getTokenDetails(auth.getToken().getAccessTokenForHeader());
     }
 
-    private BackstageAuthentication authenticate(String clientId, String clientSecret, String username, String password, GrantType grantType) throws BackstageAPITokenExpiredException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    private BackstageAuthentication authenticate(String clientId, String clientSecret, String username, String password, GrantType grantType) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         Token token;
         switch (grantType) {
             case CLIENT_CREDENTIALS:

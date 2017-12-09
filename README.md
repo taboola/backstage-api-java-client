@@ -53,13 +53,13 @@ try {
     }
     
 } catch (BackstageAPITokenExpiredException e) {
-    //handle token is expired
+    //handle HTTP status 401 : token is expired or bad credentials
     
 } catch (BackstageAPIConnectivityException e) {
     //handle connectivity issues
     
 } catch (BackstageAPIRequestException e) {
-    //handle bad request
+    //handle HTTP status 400 : bad request
 }
 ```
 
