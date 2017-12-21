@@ -52,7 +52,7 @@ try {
         //do something with campaign item...
     }
     
-} catch (BackstageAPITokenExpiredException e) {
+} catch (BackstageAPIUnauthorizedException e) {
     //handle HTTP status 401 : token is expired or bad credentials
     
 } catch (BackstageAPIConnectivityException e) {
