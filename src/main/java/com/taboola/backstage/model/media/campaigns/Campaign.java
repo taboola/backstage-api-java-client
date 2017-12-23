@@ -18,10 +18,10 @@ public class Campaign {
     private String trackingCode;
     private Double cpc;
     private Double dailyCap;
-    private String dailyAdDeliveryMode;
+    private DailyAdDeliveryMode dailyAdDeliveryMode;
     private PublisherBidModifier publisherBidModifier;
     private Double spendingLimit;
-    private String spendingLimitModel;
+    private SpendingLimitModel spendingLimitModel;
     private CampaignTargeting countryTargeting;
     private CampaignTargeting subCountryTargeting;
     private CampaignTargeting platformTargeting;
@@ -29,10 +29,10 @@ public class Campaign {
     private String comments;
     private Date startDate;
     private Date endDate;
-    private String approvalState;
+    private CampaignApprovalState approvalState;
     private Boolean isActive;
     private Double spent;
-    private String status;
+    private CampaignStatus status;
 
     public String getId() {
         return id;
@@ -90,11 +90,11 @@ public class Campaign {
         this.dailyCap = dailyCap;
     }
 
-    public String getDailyAdDeliveryMode() {
+    public DailyAdDeliveryMode getDailyAdDeliveryMode() {
         return dailyAdDeliveryMode;
     }
 
-    public void setDailyAdDeliveryMode(String dailyAdDeliveryMode) {
+    public void setDailyAdDeliveryMode(DailyAdDeliveryMode dailyAdDeliveryMode) {
         this.dailyAdDeliveryMode = dailyAdDeliveryMode;
     }
 
@@ -114,11 +114,11 @@ public class Campaign {
         this.spendingLimit = spendingLimit;
     }
 
-    public String getSpendingLimitModel() {
+    public SpendingLimitModel getSpendingLimitModel() {
         return spendingLimitModel;
     }
 
-    public void setSpendingLimitModel(String spendingLimitModel) {
+    public void setSpendingLimitModel(SpendingLimitModel spendingLimitModel) {
         this.spendingLimitModel = spendingLimitModel;
     }
 
@@ -178,19 +178,19 @@ public class Campaign {
         this.endDate = endDate;
     }
 
-    public String getApprovalState() {
+    public CampaignApprovalState getApprovalState() {
         return approvalState;
     }
 
-    public void setApprovalState(String approvalState) {
+    public void setApprovalState(CampaignApprovalState approvalState) {
         this.approvalState = approvalState;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 
@@ -202,11 +202,11 @@ public class Campaign {
         this.spent = spent;
     }
 
-    public String getStatus() {
+    public CampaignStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CampaignStatus status) {
         this.status = status;
     }
 

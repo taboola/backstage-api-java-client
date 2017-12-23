@@ -16,9 +16,9 @@ public class CampaignItem {
     private String url;
     private String thumbnailUrl;
     private String title;
-    private String approvalState;
+    private ItemApprovalState approvalState;
     private Boolean isActive;
-    private String status;
+    private ItemStatus status;
 
     public String getId() {
         return id;
@@ -68,27 +68,27 @@ public class CampaignItem {
         this.title = title;
     }
 
-    public String getApprovalState() {
+    public ItemApprovalState getApprovalState() {
         return approvalState;
     }
 
-    public void setApprovalState(String approvalState) {
+    public void setApprovalState(ItemApprovalState approvalState) {
         this.approvalState = approvalState;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 
-    public String getStatus() {
+    public ItemStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ItemStatus status) {
         this.status = status;
     }
 
