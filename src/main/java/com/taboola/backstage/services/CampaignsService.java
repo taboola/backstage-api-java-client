@@ -8,10 +8,10 @@ import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 
 /**
- * Created by vladi
- * Date: 10/14/2017
- * Time: 12:21 AM
- * By Taboola
+ * {@link Campaign} entity CRUD operations
+ *
+ * @author vladi By Taboola
+ * @version 1.0
  */
 public interface CampaignsService {
 
