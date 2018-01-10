@@ -10,7 +10,7 @@ import com.taboola.backstage.model.media.campaigns.Campaign;
 /**
  * {@link Campaign} entity CRUD operations
  *
- * @author vladi By Taboola
+ * @author vladi
  * @version 1.0
  */
 public interface CampaignsService {
