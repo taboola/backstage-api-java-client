@@ -55,6 +55,7 @@ public class ReportsServiceImpl implements ReportsService {
     public CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
                                                           CampaignSummaryDimensions dimension, Map<CampaignSummaryOptionalFilters, String> filters) {
         String accessToken = auth.getToken().getAccessTokenForHeader();
+        //TODO verify correct use of filters based on spec and save HTTP call
         return mediaReportsEndpoint.getCampaignSummary(accessToken, accountId, dimension.getName(),
                                                         DATE_TIME_FORMATTER.format(startDate), DATE_TIME_FORMATTER.format(endDate),
                                                         formatOptionalFilters(filters));
