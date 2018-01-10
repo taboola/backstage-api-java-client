@@ -8,12 +8,21 @@ import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 
 /**
- * Created by vladi
- * Date: 10/16/2017
- * Time: 11:19 PM
- * By Taboola
+ * User service allow fetching data regarding user relations
+ *
+ * @author vladi
+ * @version 1.0
  */
 public interface UserService {
 
+    /**
+     * Read collection of allowed user's {@link Account}
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @return Collection of {@link Account}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
     Results<Account> readAllowedAccounts(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }
