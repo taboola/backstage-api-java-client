@@ -46,7 +46,7 @@ public interface CampaignsService {
      *
      * @param auth Authentication object {@link BackstageAuthentication}
      * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
-     * @return Fully populated {@link Campaign} pojo
+     * @return Fully populated collection of {@link Campaign} pojos
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
