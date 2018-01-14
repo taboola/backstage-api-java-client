@@ -1,10 +1,7 @@
 package com.taboola.backstage;
 
 import com.taboola.backstage.model.Account;
-import com.taboola.backstage.model.auth.AuthenticationDetails;
-import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.auth.GrantType;
-import com.taboola.backstage.model.auth.Token;
+import com.taboola.backstage.model.auth.*;
 import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
@@ -30,14 +27,13 @@ public abstract class BackstageTestBase {
         return new BackstageAuthentication(generateDummyClientCredAuthenticationDetails(), generateDummyToken());
     }
 
-    protected AuthenticationDetails generateDummyPasswordAuthenticationDetails() {
-        return new AuthenticationDetails("DummyClientId", "DummyClientSecret",
-        "DummyUsername", "DummyPassword", GrantType.PASSWORD_AUTHENTICATION);
+    protected PasswordAuthenticationDetails generateDummyPasswordAuthenticationDetails() {
+        return new PasswordAuthenticationDetails("DummyClientId", "DummyClientSecret",
+        "DummyUsername", "DummyPassword");
     }
 
-    protected AuthenticationDetails generateDummyClientCredAuthenticationDetails() {
-        return new AuthenticationDetails("DummyClientId", "DummyClientSecret",
-        null, null, GrantType.CLIENT_CREDENTIALS);
+    protected ClientCredentialAuthenticationDetails generateDummyClientCredAuthenticationDetails() {
+        return new ClientCredentialAuthenticationDetails("DummyClientId", "DummyClientSecret");
     }
 
     protected Token generateDummyToken() {

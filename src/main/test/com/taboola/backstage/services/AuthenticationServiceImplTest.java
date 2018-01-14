@@ -12,7 +12,6 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -41,12 +40,10 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         when(authEndpointMock.getAuthToken("DummyClientId", "DummyClientSecret", GrantType.CLIENT_CREDENTIALS.getValue())).thenReturn(expectedToken);
 
         BackstageAuthentication auth = testInstance.clientCredentials("DummyClientId", "DummyClientSecret");
-        AuthenticationDetails actual = auth.getDetails();
+        ClientCredentialAuthenticationDetails actual = (ClientCredentialAuthenticationDetails) auth.getDetails();
         assertEquals("Invalid client id", "DummyClientId", actual.getClientId());
         assertEquals("Invalid client secret", "DummyClientSecret", actual.getClientSecret());
         assertEquals("Invalid grand type", GrantType.CLIENT_CREDENTIALS, actual.getGrantType());
-        assertNull("Invalid username", actual.getUsername());
-        assertNull("Invalid password", actual.getPassword());
         assertEquals("Invalid token", expectedToken, auth.getToken());
 
         verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any());
@@ -59,7 +56,7 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         when(authEndpointMock.getAuthToken("DummyClientId", "DummyClientSecret", "username", "pass", GrantType.PASSWORD_AUTHENTICATION.getValue())).thenReturn(expectedToken);
 
         BackstageAuthentication auth = testInstance.passwordAuthentication("DummyClientId", "DummyClientSecret", "username", "pass");
-        AuthenticationDetails actual = auth.getDetails();
+        PasswordAuthenticationDetails actual = (PasswordAuthenticationDetails) auth.getDetails();
         assertEquals("Invalid client id", "DummyClientId", actual.getClientId());
         assertEquals("Invalid client secret", "DummyClientSecret", actual.getClientSecret());
         assertEquals("Invalid grand type", GrantType.PASSWORD_AUTHENTICATION, actual.getGrantType());
@@ -74,18 +71,16 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     @Test
     public void testReAuthenticate_ClientCredentials() throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException {
         BackstageAuthentication existingAuth = generateDummyClientCredentialsBackstageAuth();
-        AuthenticationDetails existingAuthDetails = existingAuth.getDetails();
+        ClientCredentialAuthenticationDetails existingAuthDetails = (ClientCredentialAuthenticationDetails) existingAuth.getDetails();
         Token expectedReAuthedToken = generateDummyToken();
         expectedReAuthedToken.setAccessToken("reauthenticated_token_clientcred");
         when(authEndpointMock.getAuthToken(existingAuthDetails.getClientId(), existingAuthDetails.getClientSecret(), existingAuthDetails.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
 
         BackstageAuthentication reAuthenticatedAuth = testInstance.reAuthenticate(existingAuth);
-        AuthenticationDetails reAuthenticatedDetails = reAuthenticatedAuth.getDetails();
+        ClientCredentialAuthenticationDetails reAuthenticatedDetails = (ClientCredentialAuthenticationDetails) reAuthenticatedAuth.getDetails();
         assertEquals("Invalid grand type", GrantType.CLIENT_CREDENTIALS, reAuthenticatedDetails.getGrantType());
         assertEquals("Invalid client id", existingAuthDetails.getClientId(), reAuthenticatedDetails.getClientId());
         assertEquals("Invalid client secret", existingAuthDetails.getClientSecret(), reAuthenticatedDetails.getClientSecret());
-        assertNull("Invalid username", reAuthenticatedDetails.getUsername());
-        assertNull("Invalid password", reAuthenticatedDetails.getPassword());
         assertEquals("Invalid token", expectedReAuthedToken, reAuthenticatedAuth.getToken());
 
         verify(authEndpointMock, times(1)).getAuthToken(any(), any(), any());
@@ -95,14 +90,14 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
     @Test
     public void testReAuthenticate_PasswordAuthentication() throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException {
         BackstageAuthentication existingAuth = generateDummyPasswordBackstageAuth();
-        AuthenticationDetails existingAuthDetails = existingAuth.getDetails();
+        PasswordAuthenticationDetails existingAuthDetails = (PasswordAuthenticationDetails) existingAuth.getDetails();
 
         Token expectedReAuthedToken = generateDummyToken();
         expectedReAuthedToken.setAccessToken("reauthenticated_token_pass");
         when(authEndpointMock.getAuthToken(existingAuthDetails.getClientId(), existingAuthDetails.getClientSecret(), existingAuthDetails.getUsername(), existingAuthDetails.getPassword(), existingAuthDetails.getGrantType().getValue())).thenReturn(expectedReAuthedToken);
 
         BackstageAuthentication reAuthenticatedAuth = testInstance.reAuthenticate(existingAuth);
-        AuthenticationDetails reAuthenticatedDetails = reAuthenticatedAuth.getDetails();
+        PasswordAuthenticationDetails reAuthenticatedDetails = (PasswordAuthenticationDetails) reAuthenticatedAuth.getDetails();
         assertEquals("Invalid grand type", GrantType.PASSWORD_AUTHENTICATION, reAuthenticatedDetails.getGrantType());
         assertEquals("Invalid client id", existingAuthDetails.getClientId(), reAuthenticatedDetails.getClientId());
         assertEquals("Invalid client secret", existingAuthDetails.getClientSecret(), reAuthenticatedDetails.getClientSecret());
@@ -128,5 +123,29 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
         verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any());
         verify(authEndpointMock, times(0)).getAuthToken(any(), any(), any(), any(), any());
         verify(authEndpointMock, times(1)).getTokenDetails(any());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testInvalidDowncast_PasswordAuthentication() {
+        BackstageAuthentication invalidInstance = new BackstageAuthentication(new AuthenticationDetails(GrantType.PASSWORD_AUTHENTICATION) {
+            @Override
+            public GrantType getGrantType() {
+                return super.getGrantType();
+            }
+        }, new Token());
+
+        testInstance.reAuthenticate(invalidInstance);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testInvalidDowncast_ClientCredentials() {
+        BackstageAuthentication invalidInstance = new BackstageAuthentication(new AuthenticationDetails(GrantType.CLIENT_CREDENTIALS) {
+            @Override
+            public GrantType getGrantType() {
+                return super.getGrantType();
+            }
+        }, new Token());
+
+        testInstance.reAuthenticate(invalidInstance);
     }
 }
