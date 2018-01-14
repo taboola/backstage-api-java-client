@@ -67,8 +67,9 @@ public final class CommunicationFactory {
 
         return new Retrofit.Builder()
                             .baseUrl(backstageBaseUrl)
+                            .addConverterFactory(StringConverterFactory.create())
                             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
-                            .addCallAdapterFactory(new SynchronousCallAdapterFactory(objectMapper))
+                            .addCallAdapterFactory(SynchronousCallAdapterFactory.create(objectMapper))
                             .client(client)
                             .build();
     }

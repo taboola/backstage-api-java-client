@@ -32,7 +32,11 @@ public class SynchronousCallAdapterFactory  extends CallAdapter.Factory {
 
     private final ObjectMapper objectMapper;
 
-    public SynchronousCallAdapterFactory(ObjectMapper objectMapper) {
+    public static SynchronousCallAdapterFactory create(ObjectMapper objectMapper) {
+        return new SynchronousCallAdapterFactory(objectMapper);
+    }
+
+    private SynchronousCallAdapterFactory(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
