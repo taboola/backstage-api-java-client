@@ -1,5 +1,7 @@
 package com.taboola.backstage.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.internal.BackstageDictionaryEndpoint;
 import com.taboola.backstage.model.Results;
@@ -25,6 +27,7 @@ public class DictionaryServiceImplTest extends BackstageTestBase {
 
     private DictionaryServiceImpl testInstance;
     private BackstageDictionaryEndpoint endpointMock;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Before
     public void beforeTest() {
@@ -35,14 +38,15 @@ public class DictionaryServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testCustom() {
+    public void testCustomResource() throws JsonProcessingException {
         Resource resource = generateDummyResource();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         Results<Resource> results = new Results<>(Collections.singleton(resource));
-        when(endpointMock.custom(auth.getToken().getAccessTokenForHeader(), "countries/US")).thenReturn(results);
+        String expected = objectMapper.writeValueAsString(results);
+        when(endpointMock.custom(auth.getToken().getAccessTokenForHeader(), "countries/US")).thenReturn(expected);
 
-        Results<Resource> actual = testInstance.custom(auth, "countries", "US");
-        assertEquals("Invalid custom resource", results, actual);
+        String actual = testInstance.custom(auth, "countries", "US");
+        assertEquals("Invalid customResource resource", expected, actual);
         verify(endpointMock, times(1)).custom(any(), any());
     }
 

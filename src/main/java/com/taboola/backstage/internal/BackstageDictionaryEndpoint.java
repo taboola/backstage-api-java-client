@@ -15,7 +15,7 @@ public interface BackstageDictionaryEndpoint {
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/{dictionary_suffix}")
     @Headers("Content-Type: application/json")
-    Results<Resource> custom(@Header("Authorization") String authToken, @Path(value = "dictionary_suffix", encoded = true) String dictionarySuffix) throws BackstageAPIException;
+    String custom(@Header("Authorization") String authToken, @Path(value = "dictionary_suffix", encoded = true) String dictionarySuffix) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources")
     @Headers("Content-Type: application/json")

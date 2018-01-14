@@ -23,7 +23,7 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public Results<Resource> custom(BackstageAuthentication auth, String ... resourceName) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public String custom(BackstageAuthentication auth, String ... resourceName) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.custom(accessToken, String.join("/", resourceName));
     }
