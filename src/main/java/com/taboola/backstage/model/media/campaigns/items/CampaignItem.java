@@ -12,7 +12,7 @@ public class CampaignItem {
 
     private String id;
     private String campaignId;
-    private String type;
+    private ItemType type;
     private String url;
     private String thumbnailUrl;
     private String title;
@@ -36,11 +36,11 @@ public class CampaignItem {
         this.campaignId = campaignId;
     }
 
-    public String getType() {
+    public ItemType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ItemType type) {
         this.type = type;
     }
 
