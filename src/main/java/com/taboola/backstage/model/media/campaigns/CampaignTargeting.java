@@ -2,6 +2,7 @@ package com.taboola.backstage.model.media.campaigns;
 
 import com.taboola.backstage.annotations.ReadOnly;
 import com.taboola.backstage.annotations.Required;
+import com.taboola.backstage.model.media.campaigns.targeting.Type;
 
 import java.util.List;
 
@@ -38,12 +39,6 @@ public class CampaignTargeting {
     private List<String> value;
     @ReadOnly
     private String href;
-
-    public enum Type {
-        INCLUDE,
-        EXCLUDE,
-        ALL
-    }
 
     public Type getType() {
         return type;

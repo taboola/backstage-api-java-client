@@ -18,11 +18,13 @@ public class Backstage {
     private final DictionaryService dictionaryService;
     private final ReportsService reportsService;
     private final AccountsService accountsService;
+    private final CampaignPostalTargetingService campaignPostalCodeTargetingService;
 
     private Backstage(CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
                       CampaignItemsService campaignItemsService, DictionaryService dictionaryService,
-                      ReportsService reportsService, AccountsService accountsService) {
+                      ReportsService reportsService, AccountsService accountsService,
+                      CampaignPostalTargetingService campaignPostalCodeTargetingService) {
 
         this.campaignsService = campaignsService;
         this.authenticationService = authenticationService;
@@ -31,6 +33,7 @@ public class Backstage {
         this.dictionaryService = dictionaryService;
         this.reportsService = reportsService;
         this.accountsService = accountsService;
+        this.campaignPostalCodeTargetingService = campaignPostalCodeTargetingService;
     }
 
     public static BackstageBuilder builder() {
@@ -63,6 +66,10 @@ public class Backstage {
 
     public AccountsService accountsService() {
         return accountsService;
+    }
+
+    public CampaignPostalTargetingService campaignPostalCodeTargetingService() {
+        return campaignPostalCodeTargetingService;
     }
 
     //TODO support async services
@@ -112,7 +119,8 @@ public class Backstage {
                 new CampaignItemsServiceImpl(communicator.getCampaignItemService()),
                 new DictionaryServiceImpl(communicator.getDictionaryService()),
                 new ReportsServiceImpl(communicator.getMediaReportsService()),
-                new AccountsServiceImpl(communicator.getAccountService())
+                new AccountsServiceImpl(communicator.getAccountService()),
+                new CampaignPostalTargetingServiceImpl(communicator.getCampaignPostalCodeTargeting())
             );
         }
 

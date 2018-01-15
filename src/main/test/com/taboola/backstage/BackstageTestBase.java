@@ -5,6 +5,7 @@ import com.taboola.backstage.model.auth.*;
 import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
 import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -63,5 +64,9 @@ public abstract class BackstageTestBase {
 
     protected TopCampaignContentReport generateDummyTopCampaignContentReport() {
         return factory.manufacturePojo(TopCampaignContentReport.class);
+    }
+
+    protected PostalTargeting generateDummyPostalCodeTargeting() {
+        return factory.manufacturePojo(PostalTargeting.class);
     }
 }

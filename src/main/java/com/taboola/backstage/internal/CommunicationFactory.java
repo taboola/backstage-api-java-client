@@ -31,6 +31,7 @@ public final class CommunicationFactory {
     private final BackstageCampaignItemsEndpoint campaignItemService;
     private final BackstageDictionaryEndpoint dictionaryService;
     private final BackstageMediaReportsEndpoint mediaReportsService;
+    private final BackstagePostalTargetingEndpoint campaignPostalCodeTargeting;
 
     public CommunicationFactory(String backstageBaseUrl, long connectionTimeoutMillis, long readTimeoutMillis, long writeTimeoutMillis, String userAgent) {
         this.objectMapper = createObjectMapper();
@@ -42,6 +43,7 @@ public final class CommunicationFactory {
         this.campaignItemService = retrofit.create(BackstageCampaignItemsEndpoint.class);
         this.dictionaryService = retrofit.create(BackstageDictionaryEndpoint.class);
         this.mediaReportsService = retrofit.create(BackstageMediaReportsEndpoint.class);
+        this.campaignPostalCodeTargeting = retrofit.create(BackstagePostalTargetingEndpoint.class);
     }
 
     private ObjectMapper createObjectMapper() {
@@ -96,5 +98,9 @@ public final class CommunicationFactory {
 
     public BackstageMediaReportsEndpoint getMediaReportsService() {
         return mediaReportsService;
+    }
+
+    public BackstagePostalTargetingEndpoint getCampaignPostalCodeTargeting() {
+        return campaignPostalCodeTargeting;
     }
 }
