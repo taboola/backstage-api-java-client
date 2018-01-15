@@ -1,5 +1,8 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
+import com.taboola.backstage.annotations.ReadOnly;
+import com.taboola.backstage.annotations.Required;
+
 import java.util.Objects;
 
 /**
@@ -10,14 +13,19 @@ import java.util.Objects;
  */
 public class CampaignItem {
 
+    @ReadOnly
     private String id;
+    @ReadOnly
     private String campaignId;
+    @ReadOnly
     private ItemType type;
+    @Required
     private String url;
     private String thumbnailUrl;
     private String title;
     private ItemApprovalState approvalState;
     private Boolean isActive;
+    @ReadOnly
     private ItemStatus status;
 
     public String getId() {

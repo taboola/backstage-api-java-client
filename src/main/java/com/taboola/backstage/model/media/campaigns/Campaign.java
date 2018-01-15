@@ -1,5 +1,9 @@
 package com.taboola.backstage.model.media.campaigns;
 
+import com.taboola.backstage.annotations.Final;
+import com.taboola.backstage.annotations.ReadOnly;
+import com.taboola.backstage.annotations.Required;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,27 +15,40 @@ import java.util.Objects;
  */
 public class Campaign {
 
+    @ReadOnly
     private String id;
+    @ReadOnly
     private String advertiserId;
+    @Required
     private String name;
+    @Required
     private String brandingText;
     private String trackingCode;
+    @Required
     private Double cpc;
     private Double dailyCap;
     private DailyAdDeliveryMode dailyAdDeliveryMode;
     private PublisherBidModifier publisherBidModifier;
+    @Required
     private Double spendingLimit;
+    @Required
     private SpendingLimitModel spendingLimitModel;
     private CampaignTargeting countryTargeting;
     private CampaignTargeting subCountryTargeting;
     private CampaignTargeting platformTargeting;
     private CampaignTargeting publisherTargeting;
+    @ReadOnly
+    private CampaignTargeting postalCodeTargeting;
     private String comments;
+    @Final
     private Date startDate;
     private Date endDate;
+    @ReadOnly
     private CampaignApprovalState approvalState;
     private Boolean isActive;
+    @ReadOnly
     private Double spent;
+    @ReadOnly
     private CampaignStatus status;
 
     public String getId() {
@@ -154,6 +171,14 @@ public class Campaign {
         this.publisherTargeting = publisherTargeting;
     }
 
+    public CampaignTargeting getPostalCodeTargeting() {
+        return postalCodeTargeting;
+    }
+
+    public void setPostalCodeTargeting(CampaignTargeting postalCodeTargeting) {
+        this.postalCodeTargeting = postalCodeTargeting;
+    }
+
     public String getComments() {
         return comments;
     }
@@ -228,6 +253,7 @@ public class Campaign {
         ", subCountryTargeting=" + subCountryTargeting +
         ", platformTargeting=" + platformTargeting +
         ", publisherTargeting=" + publisherTargeting +
+        ", postalCodeTargeting=" + postalCodeTargeting +
         ", comments='" + comments + '\'' +
         ", startDate=" + startDate +
         ", endDate=" + endDate +
@@ -258,6 +284,7 @@ public class Campaign {
         Objects.equals(subCountryTargeting, campaign.subCountryTargeting) &&
         Objects.equals(platformTargeting, campaign.platformTargeting) &&
         Objects.equals(publisherTargeting, campaign.publisherTargeting) &&
+        Objects.equals(postalCodeTargeting, campaign.postalCodeTargeting) &&
         Objects.equals(comments, campaign.comments) &&
         Objects.equals(startDate, campaign.startDate) &&
         Objects.equals(endDate, campaign.endDate) &&
@@ -269,6 +296,6 @@ public class Campaign {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryMode, publisherBidModifier, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, comments, startDate, endDate, approvalState, isActive, spent, status);
+        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryMode, publisherBidModifier, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, postalCodeTargeting, comments, startDate, endDate, approvalState, isActive, spent, status);
     }
 }
