@@ -32,23 +32,23 @@ public interface BackstageCampaignItemsEndpoint {
     Results<CampaignItem> readRSSChildrenItems(@Header("Authorization") String accessToken,
                                                      @Path("account_id") String accountId,
                                                      @Path("campaign_id") String campaignId,
-                                                     @Path("item_id") Long itemId) throws BackstageAPIException;
+                                                     @Path("item_id") String itemId) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/items/{item_id}/children/{child_id}")
     @Headers("Content-Type: application/json")
     CampaignItem readSpecificRSSChildItem(@Header("Authorization") String accessToken,
                                                         @Path("account_id") String accountId,
                                                         @Path("campaign_id") String campaignId,
-                                                        @Path("item_id") Long itemId,
-                                                        @Path("child_id") Long childId) throws BackstageAPIException;
+                                                        @Path("item_id") String itemId,
+                                                        @Path("child_id") String childId) throws BackstageAPIException;
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/items/{item_id}/children/{child_id}")
     @Headers("Content-Type: application/json")
     CampaignItem updateSpecificRSSChildItem(@Header("Authorization") String accessToken,
                                                   @Path("account_id") String accountId,
                                                   @Path("campaign_id") String campaignId,
-                                                  @Path("item_id") Long itemId,
-                                                  @Path("child_id") Long childId,
+                                                  @Path("item_id") String itemId,
+                                                  @Path("child_id") String childId,
                                                   @Body CampaignItem campaignItem) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/items/{item_id}")
@@ -56,14 +56,14 @@ public interface BackstageCampaignItemsEndpoint {
     CampaignItem readItem(@Header("Authorization") String accessToken,
                                  @Path("account_id") String accountId,
                                  @Path("campaign_id") String campaignId,
-                                 @Path("item_id") Long itemId) throws BackstageAPIException;
+                                 @Path("item_id") String itemId) throws BackstageAPIException;
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/items/{item_id}")
     @Headers("Content-Type: application/json")
     CampaignItem updateItem(@Header("Authorization") String accessToken,
                                    @Path("account_id") String accountId,
                                    @Path("campaign_id") String campaignId,
-                                   @Path("item_id") Long itemId,
+                                   @Path("item_id") String itemId,
                                    @Body CampaignItem item) throws BackstageAPIException;
 
     @DELETE(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/items/{item_id}")
@@ -71,5 +71,5 @@ public interface BackstageCampaignItemsEndpoint {
     CampaignItem deleteItem(@Header("Authorization") String accessToken,
                                   @Path("account_id") String accountId,
                                   @Path("campaign_id") String campaignId,
-                                  @Path("item_id") Long itemId) throws BackstageAPIException;
+                                  @Path("item_id") String itemId) throws BackstageAPIException;
 }

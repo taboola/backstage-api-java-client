@@ -88,7 +88,7 @@ public interface CampaignItemsService {
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    Results<CampaignItem> readRSSChildrenItems(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException;
+    Results<CampaignItem> readRSSChildrenItems(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException;
 
     /**
      * Fetch a specific child {@link CampaignItem} of {@link CampaignItem} of type RSS
@@ -102,7 +102,7 @@ public interface CampaignItemsService {
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    CampaignItem readSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, Long childId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignItem readSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, String childId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Update a child of an RSS {@link CampaignItem}
@@ -117,7 +117,7 @@ public interface CampaignItemsService {
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, Long childId, CampaignItem campaignItem) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, String childId, CampaignItem campaignItem) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Fetch a single {@link CampaignItem} associated with a certain {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
@@ -130,7 +130,7 @@ public interface CampaignItemsService {
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    CampaignItem readItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignItem readItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Update an existing {@link CampaignItem}
@@ -144,7 +144,7 @@ public interface CampaignItemsService {
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, CampaignItem item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignItem item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Move an existing {@link CampaignItem} to a 'STOPPED' status.
@@ -163,5 +163,5 @@ public interface CampaignItemsService {
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    CampaignItem deleteItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignItem deleteItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }

@@ -35,37 +35,37 @@ public class CampaignItemsServiceImpl implements CampaignItemsService {
     }
 
     @Override
-    public Results<CampaignItem> readRSSChildrenItems(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException {
+    public Results<CampaignItem> readRSSChildrenItems(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIRequestException, BackstageAPIUnauthorizedException, BackstageAPIConnectivityException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.readRSSChildrenItems(accessToken, accountId, campaignId, itemId);
     }
 
     @Override
-    public CampaignItem readSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, Long childId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignItem readSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, String childId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.readSpecificRSSChildItem(accessToken, accountId, campaignId, itemId, childId);
     }
 
     @Override
-    public CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, Long childId, CampaignItem campaignItem) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, String childId, CampaignItem campaignItem) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.updateSpecificRSSChildItem(accessToken, accountId, campaignId, itemId, childId, campaignItem);
     }
 
     @Override
-    public CampaignItem readItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignItem readItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.readItem(accessToken, accountId, campaignId, itemId);
     }
 
     @Override
-    public CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId, CampaignItem item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignItem item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.updateItem(accessToken, accountId, campaignId, itemId, item);
     }
 
     @Override
-    public CampaignItem deleteItem(BackstageAuthentication auth, String accountId, String campaignId, Long itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignItem deleteItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.deleteItem(accessToken, accountId, campaignId, itemId);
     }
