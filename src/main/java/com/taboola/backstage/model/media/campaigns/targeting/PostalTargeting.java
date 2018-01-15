@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.targeting;
 
+import com.taboola.backstage.annotations.Required;
+
 import java.util.Collection;
 import java.util.Objects;
 
@@ -11,7 +13,9 @@ import java.util.Objects;
  */
 public class PostalTargeting {
 
+    @Required
     private Type type;
+    @Required
     private Collection<String> collection;
 
     public PostalTargeting() {
