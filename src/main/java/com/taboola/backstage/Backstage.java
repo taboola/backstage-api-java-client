@@ -17,11 +17,12 @@ public class Backstage {
     private final CampaignItemsService campaignItemsService;
     private final DictionaryService dictionaryService;
     private final ReportsService reportsService;
+    private final AccountsService accountsService;
 
     private Backstage(CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
                       CampaignItemsService campaignItemsService, DictionaryService dictionaryService,
-                      ReportsService reportsService) {
+                      ReportsService reportsService, AccountsService accountsService) {
 
         this.campaignsService = campaignsService;
         this.authenticationService = authenticationService;
@@ -29,6 +30,7 @@ public class Backstage {
         this.campaignItemsService = campaignItemsService;
         this.dictionaryService = dictionaryService;
         this.reportsService = reportsService;
+        this.accountsService = accountsService;
     }
 
     public static BackstageBuilder builder() {
@@ -57,6 +59,10 @@ public class Backstage {
 
     public ReportsService reportsService() {
         return reportsService;
+    }
+
+    public AccountsService accountsService() {
+        return accountsService;
     }
 
     public static class BackstageBuilder {
@@ -103,7 +109,8 @@ public class Backstage {
                 new UserServiceImpl(communicator.getAccountService()),
                 new CampaignItemsServiceImpl(communicator.getCampaignItemService()),
                 new DictionaryServiceImpl(communicator.getDictionaryService()),
-                new ReportsServiceImpl(communicator.getMediaReportsService())
+                new ReportsServiceImpl(communicator.getMediaReportsService()),
+                new AccountsServiceImpl(communicator.getAccountService())
             );
         }
 

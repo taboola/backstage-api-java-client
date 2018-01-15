@@ -18,4 +18,8 @@ public interface BackstageAccountEndpoint {
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/users/current/allowed-accounts")
     @Headers("Content-Type: application/json")
     Results<Account> getUserAllowedAccounts(@Header("Authorization") String accessToken) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/taboola-network/publishers")
+    @Headers("Content-Type: application/json")
+    Results<Account> getAvailablePublishersUnderTaboolaNetwork(@Header("Authorization") String accessToken) throws BackstageAPIException;
 }
