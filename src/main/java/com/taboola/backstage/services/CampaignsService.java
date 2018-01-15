@@ -16,7 +16,7 @@ import com.taboola.backstage.model.media.campaigns.Campaign;
 public interface CampaignsService {
 
     /**
-     * Create campaign entity
+     * Create {@link Campaign} entity
      *
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId Under which {@link com.taboola.backstage.model.Account Account} the campaign is going to be created. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}

@@ -24,6 +24,17 @@ import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
  *    <br> {@link CampaignItemsService#updateSpecificRSSChildItem} - Update a child of an RSS Item
  * </p>
  *
+ *
+ * <p>
+ *    <br>The type field defines the type of Item at hand. It is a read-only field, and its value is
+ *    automatically determined from the URL supplied when creating the Item.
+ *    There are two possible types of items:
+ *    <br>⚫ ITEM - A simple Item, referencing a specific URL of a web page (e.g. link to an article).
+ *    <br>⚫ RSS - An item with a URL referencing an RSS feed (we support mRSS format). This Item
+ *    will have Children Items - an Item for each URL in its feed.
+ *    <br>The handling of both these types is similar, with minor differences in the request URL.
+ * </p>
+ *
  * @author vladi
  * @version 1.0
  */
@@ -31,6 +42,18 @@ public interface CampaignItemsService {
 
     /**
      * Create a new {@link CampaignItem} in a specific {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}.
+     *
+     * <p>
+     *    When creating a new Item, the only field acceptable is the url field. After sending the
+     *    appropriate request, a new Item resource is created with a status of CRAWLING. As long as an Item
+     *    has the CRAWLING status, it is in read-only state - no field can be modified.
+     *    For the client-app to know when the Item has stopped crawling, and is available for edit, it
+     *    needs to poll the server every couple of seconds (10 seconds is a good number to choose),
+     *    requesting the Item each time, and checking whether its status has changed.
+     *    Once the Item has its status changed from CRAWLING, it becomes available for edit.
+     * </p>
+     *
+     *
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
      * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
@@ -125,6 +148,12 @@ public interface CampaignItemsService {
 
     /**
      * Move an existing {@link CampaignItem} to a 'STOPPED' status.
+     *
+     * <p>
+     *    Deleting Items is not possible in Taboola's system. Instead, the Item status is set to
+     *    STOPPED, it will stop appearing in the Campaign's items list and will not be served as an ad.
+     * </p>
+     *
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
      * @param campaignId {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} Id. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign#getId()} object
