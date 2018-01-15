@@ -65,6 +65,8 @@ public class Backstage {
         return accountsService;
     }
 
+    //TODO support async services
+
     public static class BackstageBuilder {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
