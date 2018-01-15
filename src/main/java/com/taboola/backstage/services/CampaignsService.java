@@ -10,6 +10,14 @@ import com.taboola.backstage.model.media.campaigns.Campaign;
 /**
  * {@link Campaign} entity CRUD operations
  *
+ * <p>
+ *    The following operations are available via the API:
+ *    <br> {@link CampaignsService#read(BackstageAuthentication auth, String accountId) read} 1. Fetch a List of Campaigns - Fetch a list of Campaigns associated with a specific partner account.
+ *    <br> {@link CampaignsService#read(BackstageAuthentication auth, String accountId, String campaignId) read} 2. Fetch a Single Campaign - Fetch a single Campaign resource using the Campaign ID.
+ *    <br> {@link CampaignsService#create} 3. Create a Campaign - Create a new Campaign under a specific partner account.
+ *    <br> {@link CampaignsService#update} 4. Update a Campaign - Update an existing Campaign of a specific partner account.
+ * </p>
+ *
  * @author vladi
  * @version 1.0
  */
