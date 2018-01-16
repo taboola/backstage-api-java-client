@@ -1,19 +1,19 @@
-package com.taboola.backstage.services;
+package test.com.taboola.backstage.services;
 
-import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.internal.BackstageCampaignItemsEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.services.CampaignItemsServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import test.com.taboola.backstage.BackstageTestBase;
 
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 /**
  * Created by vladi

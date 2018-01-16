@@ -1,13 +1,14 @@
-package com.taboola.backstage.services;
+package test.com.taboola.backstage.services;
 
-import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
-import com.taboola.backstage.model.auth.*;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
+import com.taboola.backstage.model.auth.*;
+import com.taboola.backstage.services.AuthenticationServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import test.com.taboola.backstage.BackstageTestBase;
 
 import java.io.IOException;
 

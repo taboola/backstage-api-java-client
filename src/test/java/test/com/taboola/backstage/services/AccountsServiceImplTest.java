@@ -1,36 +1,35 @@
-package com.taboola.backstage.services;
+package test.com.taboola.backstage.services;
 
-import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
+import com.taboola.backstage.services.AccountsServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import test.com.taboola.backstage.BackstageTestBase;
 
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by vladi
- * Date: 11/22/2017
- * Time: 11:21 PM
+ * Date: 1/15/2018
+ * Time: 11:20 PM
  * By Taboola
  */
-public class UserServiceImplTest extends BackstageTestBase {
+public class AccountsServiceImplTest extends BackstageTestBase {
 
     private BackstageAccountEndpoint accountsEndpointMock;
-    private UserServiceImpl testInstance;
+    private AccountsServiceImpl testInstance;
 
     @Before
     public void beforeTest() {
         accountsEndpointMock = mock(BackstageAccountEndpoint.class);
-        testInstance = new UserServiceImpl(accountsEndpointMock);
+        testInstance = new AccountsServiceImpl(accountsEndpointMock);
 
         reset(accountsEndpointMock);
     }
@@ -39,10 +38,10 @@ public class UserServiceImplTest extends BackstageTestBase {
     public void testReadAllowedAccounts(){
         Account account = generateDummyAccount();
         Results<Account> expected = new Results<>(Collections.singleton(account));
-        when(accountsEndpointMock.getUserAllowedAccounts(any())).thenReturn(expected);
+        when(accountsEndpointMock.getAvailablePublishersUnderTaboolaNetwork(any())).thenReturn(expected);
 
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        Results<Account> actual = testInstance.readAllowedAccounts(auth);
+        Results<Account> actual = testInstance.readPublishersUnderTaboolaNetwork(auth);
         assertEquals("Invalid accounts", expected, actual);
     }
 }

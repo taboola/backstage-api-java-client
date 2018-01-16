@@ -1,7 +1,10 @@
-package com.taboola.backstage;
+package test.com.taboola.backstage;
 
 import com.taboola.backstage.model.Account;
-import com.taboola.backstage.model.auth.*;
+import com.taboola.backstage.model.auth.BackstageAuthentication;
+import com.taboola.backstage.model.auth.ClientCredentialAuthenticationDetails;
+import com.taboola.backstage.model.auth.PasswordAuthenticationDetails;
+import com.taboola.backstage.model.auth.Token;
 import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
