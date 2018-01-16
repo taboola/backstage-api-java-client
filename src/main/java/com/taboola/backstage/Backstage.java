@@ -5,10 +5,45 @@ import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.services.*;
 
 /**
- * Created by vladi
- * Date: 10/13/2017
- * Time: 11:37 PM
- * By Taboola
+ * Backstage is the gateway object to all services.
+ * <br>
+ * In order to get {@link Backstage} object use its builder as following:
+ * <pre>
+ * {@code
+ * Backstage backstage = Backstage.builder().build();
+ * }
+ *</pre>
+ *
+ * Example : getting all {@link com.taboola.backstage.model.media.campaigns.Campaign Campaigns} that belong to my account id
+ * <pre>
+ * {@code
+ *  Backstage backstage = Backstage.builder().build();
+ *
+ *  try {
+ *      //establish authentication
+ *      BackstageAuthentication clientAuth = backstage.authenticationService().clientCredentials("your_client_id...",
+ *                                                                                               "your_client_secret...");
+ *      //know your account ID in advance or by fetching token details
+ *      String accountId = backstage.authenticationService().getTokenDetails(clientAuth).getAccountId();
+ *
+ *      //get all your account campaigns
+ *      Results<Campaign> campaignResults = backstage.campaignsService().read(clientAuth, accountId);
+ *      //do something...
+ *
+ *   } catch (BackstageAPIUnauthorizedException e) {
+ *      //handle HTTP status 401 : token is expired or bad credentials
+ *
+ *   } catch (BackstageAPIRequestException e) {
+ *      //handle HTTP status 4xx
+ *
+ *   } catch (BackstageAPIConnectivityException e) {
+ *      //handle connectivity issues
+ *   }
+ * }
+ * </pre>
+ *
+ * @author vladi
+ * @version 1.0
  */
 public class Backstage {
 
