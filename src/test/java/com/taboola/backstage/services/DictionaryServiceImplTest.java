@@ -1,4 +1,4 @@
-package test.com.taboola.backstage.services;
+package com.taboola.backstage.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,10 +6,9 @@ import com.taboola.backstage.internal.BackstageDictionaryEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dictionary.Resource;
-import com.taboola.backstage.services.DictionaryServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import test.com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.BackstageTestBase;
 
 import java.util.Collections;
 

@@ -1,4 +1,4 @@
-package test.com.taboola.backstage;
+package com.taboola.backstage;
 
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.auth.BackstageAuthentication;

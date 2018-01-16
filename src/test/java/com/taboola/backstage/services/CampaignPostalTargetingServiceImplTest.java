@@ -1,12 +1,11 @@
-package test.com.taboola.backstage.services;
+package com.taboola.backstage.services;
 
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
-import com.taboola.backstage.services.CampaignPostalTargetingServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import test.com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.BackstageTestBase;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;

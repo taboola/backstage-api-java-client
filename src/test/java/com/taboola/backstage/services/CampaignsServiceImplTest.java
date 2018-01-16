@@ -1,13 +1,12 @@
-package test.com.taboola.backstage.services;
+package com.taboola.backstage.services;
 
 import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
-import com.taboola.backstage.services.CampaignsServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import test.com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.BackstageTestBase;
 
 import java.util.Collections;
 

@@ -1,11 +1,10 @@
-package test.com.taboola.backstage.internal;
+package com.taboola.backstage.internal;
 
-import com.taboola.backstage.internal.StringConverterFactory;
 import okhttp3.ResponseBody;
 import org.junit.Assert;
 import org.junit.Test;
 import retrofit2.Converter;
-import test.com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.BackstageTestBase;
 
 /**
  * Created by vladi

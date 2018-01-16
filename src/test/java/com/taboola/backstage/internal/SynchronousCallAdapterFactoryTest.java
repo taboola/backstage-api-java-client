@@ -1,14 +1,13 @@
-package test.com.taboola.backstage.internal;
+package com.taboola.backstage.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.taboola.backstage.internal.SynchronousCallAdapterFactory;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
-import test.com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.BackstageTestBase;
 
 /**
  * Created by vladi
