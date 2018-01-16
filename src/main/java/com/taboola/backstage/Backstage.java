@@ -1,6 +1,7 @@
 package com.taboola.backstage;
 
 import com.taboola.backstage.internal.CommunicationFactory;
+import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.services.*;
 
 /**
@@ -111,7 +112,8 @@ public class Backstage {
 
         public Backstage build() {
             organizeState();
-            CommunicationFactory communicator = new CommunicationFactory(baseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
+            CommunicationConfig config = new CommunicationConfig(baseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
+            CommunicationFactory communicator = new CommunicationFactory(config);
             return new Backstage(
                 new CampaignsServiceImpl(communicator.getCampaignsService()),
                 new AuthenticationServiceImpl(communicator.getAuthService()),

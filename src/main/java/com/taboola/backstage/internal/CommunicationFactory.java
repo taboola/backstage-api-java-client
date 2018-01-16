@@ -3,6 +3,7 @@ package com.taboola.backstage.internal;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -33,10 +34,10 @@ public final class CommunicationFactory {
     private final BackstageMediaReportsEndpoint mediaReportsService;
     private final BackstagePostalTargetingEndpoint campaignPostalCodeTargeting;
 
-    public CommunicationFactory(String backstageBaseUrl, long connectionTimeoutMillis, long readTimeoutMillis, long writeTimeoutMillis, String userAgent) {
+    public CommunicationFactory(CommunicationConfig config) {
         this.objectMapper = createObjectMapper();
 
-        Retrofit retrofit = createRetrofit(backstageBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
+        Retrofit retrofit = createRetrofit(config);
         this.authService = retrofit.create(BackstageAuthenticationEndpoint.class);
         this.campaignsService = retrofit.create(BackstageCampaignsEndpoint.class);
         this.accountService = retrofit.create(BackstageAccountEndpoint.class);
@@ -53,7 +54,7 @@ public final class CommunicationFactory {
         return objectMapper;
     }
 
-    private Retrofit createRetrofit(String backstageBaseUrl, long connectionTimeoutMillis, long readTimeoutMillis, long writeTimeoutMillis, String userAgent) {
+    private Retrofit createRetrofit(CommunicationConfig config) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(logger::info);
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
@@ -61,14 +62,14 @@ public final class CommunicationFactory {
 
         OkHttpClient client = new OkHttpClient.Builder()
                                     .addInterceptor(loggingInterceptor)
-                                    .addInterceptor(new UserAgentInterceptor(userAgent))
-                                    .readTimeout(readTimeoutMillis, TimeUnit.MILLISECONDS)
-                                    .writeTimeout(writeTimeoutMillis, TimeUnit.MILLISECONDS)
-                                    .connectTimeout(connectionTimeoutMillis, TimeUnit.MILLISECONDS)
+                                    .addInterceptor(new UserAgentInterceptor(config.getUserAgent()))
+                                    .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
+                                    .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
+                                    .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
                                     .build();
 
         return new Retrofit.Builder()
-                            .baseUrl(backstageBaseUrl)
+                            .baseUrl(config.getBackstageBaseUrl())
                             .addConverterFactory(StringConverterFactory.create())
                             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                             .addCallAdapterFactory(SynchronousCallAdapterFactory.create(objectMapper))
