@@ -6,7 +6,7 @@ package com.taboola.backstage.model.media.campaigns;
  * Time: 10:35 PM
  * By Taboola
  */
-public enum DailyAdDeliveryMode {
+public enum DailyAdDeliveryModel {
     BALANCED,
     ACCELERATED,
     STRICT

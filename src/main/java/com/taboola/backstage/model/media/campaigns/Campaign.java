@@ -27,7 +27,7 @@ public class Campaign {
     @Required
     private Double cpc;
     private Double dailyCap;
-    private DailyAdDeliveryMode dailyAdDeliveryMode;
+    private DailyAdDeliveryModel dailyAdDeliveryModel;
     private PublisherBidModifier publisherBidModifier;
     @Required
     private Double spendingLimit;
@@ -107,12 +107,12 @@ public class Campaign {
         this.dailyCap = dailyCap;
     }
 
-    public DailyAdDeliveryMode getDailyAdDeliveryMode() {
-        return dailyAdDeliveryMode;
+    public DailyAdDeliveryModel getDailyAdDeliveryModel() {
+        return dailyAdDeliveryModel;
     }
 
-    public void setDailyAdDeliveryMode(DailyAdDeliveryMode dailyAdDeliveryMode) {
-        this.dailyAdDeliveryMode = dailyAdDeliveryMode;
+    public void setDailyAdDeliveryModel(DailyAdDeliveryModel dailyAdDeliveryModel) {
+        this.dailyAdDeliveryModel = dailyAdDeliveryModel;
     }
 
     public PublisherBidModifier getPublisherBidModifier() {
@@ -245,7 +245,7 @@ public class Campaign {
         ", trackingCode='" + trackingCode + '\'' +
         ", cpc=" + cpc +
         ", dailyCap=" + dailyCap +
-        ", dailyAdDeliveryMode='" + dailyAdDeliveryMode + '\'' +
+        ", dailyAdDeliveryModel='" + dailyAdDeliveryModel + '\'' +
         ", publisherBidModifier=" + publisherBidModifier +
         ", spendingLimit=" + spendingLimit +
         ", spendingLimitModel='" + spendingLimitModel + '\'' +
@@ -276,7 +276,7 @@ public class Campaign {
         Objects.equals(trackingCode, campaign.trackingCode) &&
         Objects.equals(cpc, campaign.cpc) &&
         Objects.equals(dailyCap, campaign.dailyCap) &&
-        Objects.equals(dailyAdDeliveryMode, campaign.dailyAdDeliveryMode) &&
+        Objects.equals(dailyAdDeliveryModel, campaign.dailyAdDeliveryModel) &&
         Objects.equals(publisherBidModifier, campaign.publisherBidModifier) &&
         Objects.equals(spendingLimit, campaign.spendingLimit) &&
         Objects.equals(spendingLimitModel, campaign.spendingLimitModel) &&
@@ -296,6 +296,6 @@ public class Campaign {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryMode, publisherBidModifier, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, postalCodeTargeting, comments, startDate, endDate, approvalState, isActive, spent, status);
+        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, postalCodeTargeting, comments, startDate, endDate, approvalState, isActive, spent, status);
     }
 }
