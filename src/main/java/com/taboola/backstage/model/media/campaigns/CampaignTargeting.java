@@ -63,4 +63,13 @@ public class CampaignTargeting {
     public void setHref(String href) {
         this.href = href;
     }
+
+    @Override
+    public String toString() {
+        return "CampaignTargeting{" +
+        "type=" + type +
+        ", value=" + value +
+        ", href='" + href + '\'' +
+        '}';
+    }
 }
