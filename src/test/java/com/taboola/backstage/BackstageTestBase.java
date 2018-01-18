@@ -54,11 +54,30 @@ public abstract class BackstageTestBase {
     }
 
     protected Campaign generateDummyCampaign() {
-        return factory.manufacturePojo(Campaign.class);
+        Campaign campaign = factory.manufacturePojo(Campaign.class);
+        campaign.setId(null);
+        campaign.setAdvertiserId(null);
+        campaign.setName(null);
+        campaign.setBrandingText(null);
+        campaign.setCpc(null);
+        campaign.setSpendingLimit(null);
+        campaign.setSpendingLimitModel(null);
+        campaign.setPostalCodeTargeting(null);
+        campaign.setStartDate(null);
+        campaign.setApprovalState(null);
+        campaign.setSpent(null);
+        campaign.setStatus(null);
+        return campaign;
     }
 
     protected CampaignItem generateDummyCamppaignItem() {
-        return factory.manufacturePojo(CampaignItem.class);
+        CampaignItem item = factory.manufacturePojo(CampaignItem.class);
+        item.setId(null);
+        item.setCampaignId(null);
+        item.setType(null);
+        item.setUrl(null);
+        item.setStatus(null);
+        return item;
     }
 
     protected Resource generateDummyResource() {

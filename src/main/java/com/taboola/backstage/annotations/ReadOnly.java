@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * By Taboola
  */
 @Documented
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface ReadOnly {
 }

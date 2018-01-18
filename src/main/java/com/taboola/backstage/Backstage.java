@@ -119,6 +119,7 @@ public class Backstage {
         private Long writeTimeoutMillis;
         private Long connectionTimeoutMillis;
         private Long readTimeoutMillis;
+        private Boolean performClientValidations;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
@@ -145,19 +146,24 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setPerformClientValidations(Boolean performClientValidations) {
+            this.performClientValidations = performClientValidations;
+            return this;
+        }
+
         public Backstage build() {
             organizeState();
             CommunicationConfig config = new CommunicationConfig(baseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
             CommunicationFactory communicator = new CommunicationFactory(config);
             return new Backstage(
-                new CampaignsServiceImpl(communicator.getCampaignsService()),
+                new CampaignsServiceImpl(performClientValidations, communicator.getCampaignsService()),
                 new AuthenticationServiceImpl(communicator.getAuthService()),
                 new UserServiceImpl(communicator.getAccountService()),
-                new CampaignItemsServiceImpl(communicator.getCampaignItemService()),
+                new CampaignItemsServiceImpl(performClientValidations, communicator.getCampaignItemService()),
                 new DictionaryServiceImpl(communicator.getDictionaryService()),
                 new ReportsServiceImpl(communicator.getMediaReportsService()),
                 new AccountsServiceImpl(communicator.getAccountService()),
-                new CampaignPostalTargetingServiceImpl(communicator.getCampaignPostalCodeTargeting())
+                new CampaignPostalTargetingServiceImpl(performClientValidations, communicator.getCampaignPostalCodeTargeting())
             );
         }
 
@@ -180,6 +186,10 @@ public class Backstage {
 
             if(userAgent == null) {
                 userAgent = DEFAULT_USER_AGENT;
+            }
+
+            if(performClientValidations == null) {
+                performClientValidations = true;
             }
         }
 

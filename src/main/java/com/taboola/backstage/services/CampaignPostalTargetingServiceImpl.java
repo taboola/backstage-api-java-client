@@ -4,6 +4,7 @@ import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
+import com.taboola.backstage.internal.FieldsValidator;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
 
@@ -16,9 +17,11 @@ import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
 public class CampaignPostalTargetingServiceImpl implements CampaignPostalTargetingService {
 
     private final BackstagePostalTargetingEndpoint endpoint;
+    private final Boolean performClientValidations;
 
-    public CampaignPostalTargetingServiceImpl(BackstagePostalTargetingEndpoint endpoint) {
+    public CampaignPostalTargetingServiceImpl(Boolean performClientValidations, BackstagePostalTargetingEndpoint endpoint) {
         this.endpoint = endpoint;
+        this.performClientValidations = performClientValidations;
     }
 
     @Override
@@ -29,6 +32,9 @@ public class CampaignPostalTargetingServiceImpl implements CampaignPostalTargeti
 
     @Override
     public PostalTargeting update(BackstageAuthentication auth, String accountId, String campaignId, PostalTargeting targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performClientValidations) {
+            FieldsValidator.validateCreateOperation(targeting);
+        }
         String accessTokenForHeader = auth.getToken().getAccessTokenForHeader();
         return endpoint.update(accessTokenForHeader, accountId, campaignId, targeting);
     }

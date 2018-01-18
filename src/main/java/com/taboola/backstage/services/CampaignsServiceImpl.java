@@ -3,6 +3,7 @@ package com.taboola.backstage.services;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
+import com.taboola.backstage.internal.FieldsValidator;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
@@ -17,13 +18,18 @@ import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
 public class CampaignsServiceImpl implements CampaignsService {
 
     private final BackstageCampaignsEndpoint endpoint;
+    private final Boolean performValidations;
 
-    public CampaignsServiceImpl(BackstageCampaignsEndpoint endpoint) {
+    public CampaignsServiceImpl(Boolean performValidations, BackstageCampaignsEndpoint endpoint) {
         this.endpoint = endpoint;
+        this.performValidations = performValidations;
     }
 
     @Override
     public Campaign create(BackstageAuthentication auth, String accountId, Campaign campaign) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateCreateOperation(campaign);
+        }
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.createCampaign(accessToken, accountId, campaign);
     }
@@ -42,6 +48,9 @@ public class CampaignsServiceImpl implements CampaignsService {
 
     @Override
     public Campaign update(BackstageAuthentication auth, String accountId, String campaignId, Campaign campaign) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateUpdateOperation(campaign);
+        }
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.updateCampaign(accessToken, accountId, campaignId,  campaign);
     }

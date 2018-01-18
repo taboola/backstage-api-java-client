@@ -25,7 +25,7 @@ public class CampaignPostalTargetingServiceImplTest extends BackstageTestBase {
     @Before
     public void beforeTest() {
         endpointMock = mock(BackstagePostalTargetingEndpoint.class);
-        testInstance = new CampaignPostalTargetingServiceImpl(endpointMock);
+        testInstance = new CampaignPostalTargetingServiceImpl(true, endpointMock);
 
         reset(endpointMock);
     }
@@ -44,6 +44,20 @@ public class CampaignPostalTargetingServiceImplTest extends BackstageTestBase {
     @Test
     public void testUpdate() {
         PostalTargeting postalCodeTargeting = generateDummyPostalCodeTargeting();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.update(auth.getToken().getAccessTokenForHeader(),"accountId", "2", postalCodeTargeting)).thenReturn(postalCodeTargeting);
+
+        PostalTargeting actual = testInstance.update(auth, "accountId", "2", postalCodeTargeting);
+        assertEquals("Invalid postal code targeting", postalCodeTargeting, actual);
+        verify(endpointMock, times(1)).update(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testUpdate_performNoValidations() {
+        testInstance = new CampaignPostalTargetingServiceImpl(false, endpointMock);
+        PostalTargeting postalCodeTargeting = generateDummyPostalCodeTargeting();
+        postalCodeTargeting.setCollection(null);
+        postalCodeTargeting.setType(null);
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         when(endpointMock.update(auth.getToken().getAccessTokenForHeader(),"accountId", "2", postalCodeTargeting)).thenReturn(postalCodeTargeting);
 
