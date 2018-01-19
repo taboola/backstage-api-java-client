@@ -2,7 +2,7 @@
 
 ### Table of Contents
 1. [Getting Started](#1-getting-started)
-2. [Full Example - Read campaign items ](#2-full-example---read-campaign-items)
+2. [Full Example - Create first campaign and item ](#2-full-example---create-first-campaign-and-item)
 
 ### Intro
 The Taboola Backstage API allow you to manage your campaign, items and view reports.
