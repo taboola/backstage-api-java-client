@@ -31,38 +31,53 @@ backstage.campaignsService().read(clientAuth, myAccountId);
 ```
 
 
-## 2. Full Example - Read campaign items 
+## 2. Full Example - Create first campaign and item
 ```
 Backstage backstage = Backstage.builder().build();
 
 try {
     //establish authentication
-    BackstageAuthentication clientAuth = backstage.authenticationService().clientCredentials("your_client_id...", "your_client_secret...");
-    
-    //know your account ID in advance or by fetching token details
-    //how to: String accountId = backstage.authenticationService().getTokenDetails(clientAuth).getAccountId();
+    BackstageAuthentication clientAuth = backstage.authenticationService()
+                                                  .clientCredentials("your_client_id...", "your_client_secret...");
+
+    //know your account ID in advance or by fetching it
+    //how to get user's assigned account: String accountId = backstage.authenticationService().getTokenDetails(clientAuth).getAccountId();
+    //how to get user's all allowed accounts: Results<Account> myAccounts = backstage.userService().readAllowedAccounts(clientAuth);
     String accountId = "your_account_id";
-    
-    //get all your account campaigns
-    Results<Campaign> campaignResults = backstage.campaignsService().read(clientAuth, accountId);
-    
-    //get all your campaign items
-    for(Campaign currCampaign : campaignResults.getResults()) {
-        Results<CampaignItem> campaignItemResults = backstage.campaignItemsService().readItems(clientAuth, accountId, currCampaign.getId());
-        //do something with campaign item...
+
+    //configure campaign
+    CampaignOperation createCampaignOperation = CampaignOperation.create()
+                                                    .setName("My Campaign")
+                                                    .setStartDate(new Date())
+                                                    .setCpc(1.0d)
+                                                    .setBrandingText("My Branding Text")
+                                                    .setSpendingLimit(100d)
+                                                    .setSpendingLimitModel(SpendingLimitModel.ENTIRE);
+
+    //create campaign
+    Campaign campaign = backstage.campaignsService().create(clientAuth, accountId, createCampaignOperation);
+
+    //configure item
+    CampaignItemOperation campaignItemOperation = CampaignItemOperation.create()
+                                                    .setUrl("http://www.example.com");
+
+    //create item
+    CampaignItem item = backstage.campaignItemsService().createItem(clientAuth, accountId,
+                                                                    campaign.getId(), campaignItemOperation);
+
+    //polling when crawler done crawling our supplied URL
+    while(ItemStatus.CRAWLING.equals(item.getStatus())) {
+        Thread.sleep(10_000L);
+        item = backstage.campaignItemsService().readItem(clientAuth, accountId, campaign.getId(), item.getId());
     }
-    
+
+    //item done crawling, do something...
+
 } catch (BackstageAPIUnauthorizedException e) {
-    //handle HTTP status 401 : token is expired or bad credentials
-    
+    logger.warn("Token is expired or bad credentials", e);
 } catch (BackstageAPIRequestException e) {
-   //handle HTTP status 4xx
-   
+    logger.warn("Bad request", e);
 } catch (BackstageAPIConnectivityException e) {
-    //handle connectivity issues
+    logger.warn("Connectivity issues", e);
 }
 ```
-
-
-//TODO add bintray repo to download jar....
-
