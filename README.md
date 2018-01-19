@@ -65,7 +65,7 @@ try {
     CampaignItem item = backstage.campaignItemsService().createItem(clientAuth, accountId,
                                                                     campaign.getId(), campaignItemOperation);
 
-    //polling when crawler done crawling our supplied URL
+    //polling until Taboola crawler done crawling our supplied URL
     while(ItemStatus.CRAWLING.equals(item.getStatus())) {
         Thread.sleep(10_000L);
         item = backstage.campaignItemsService().readItem(clientAuth, accountId, campaign.getId(), item.getId());
