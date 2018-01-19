@@ -14,90 +14,55 @@ import java.util.Objects;
 public class CampaignItem {
 
     @ReadOnly
-    private String id;
+    protected String id;
     @ReadOnly
-    private String campaignId;
+    protected String campaignId;
     @ReadOnly
-    private ItemType type;
+    protected ItemType type;
     @Required
-    private String url;
-    private String thumbnailUrl;
-    private String title;
-    private ItemApprovalState approvalState;
-    private Boolean isActive;
+    protected String url;
+    protected String thumbnailUrl;
+    protected String title;
     @ReadOnly
-    private ItemStatus status;
+    protected ItemApprovalState approvalState;
+    protected Boolean isActive;
+    @ReadOnly
+    protected ItemStatus status;
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getCampaignId() {
         return campaignId;
     }
 
-    public void setCampaignId(String campaignId) {
-        this.campaignId = campaignId;
-    }
-
     public ItemType getType() {
         return type;
-    }
-
-    public void setType(ItemType type) {
-        this.type = type;
     }
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getThumbnailUrl() {
         return thumbnailUrl;
-    }
-
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public ItemApprovalState getApprovalState() {
         return approvalState;
-    }
-
-    public void setApprovalState(ItemApprovalState approvalState) {
-        this.approvalState = approvalState;
     }
 
     public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean active) {
-        isActive = active;
-    }
-
     public ItemStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(ItemStatus status) {
-        this.status = status;
     }
 
     @Override

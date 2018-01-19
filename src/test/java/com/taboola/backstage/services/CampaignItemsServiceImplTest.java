@@ -4,8 +4,7 @@ import com.taboola.backstage.internal.BackstageCampaignItemsEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
-import com.taboola.backstage.model.media.campaigns.items.ItemStatus;
-import com.taboola.backstage.model.media.campaigns.items.ItemType;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import org.junit.Before;
 import org.junit.Test;
 import com.taboola.backstage.BackstageTestBase;
@@ -37,32 +36,32 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
 
     @Test
     public void testCreateItem() {
-        CampaignItem campaignItem = new CampaignItem();
-        campaignItem.setUrl("http://www.dummy.com");
+        CampaignItemOperation campaignItemOperation = generateDummyCampaignItemOperation();
+        campaignItemOperation.setUrl("http://www.dummy.com");
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.createItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", campaignItem)).thenReturn(campaignItem);
+        when(endpointMock.createItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", campaignItemOperation)).thenReturn(campaignItemOperation);
 
-        CampaignItem actual = testInstance.createItem(auth, "accountId", "1", campaignItem);
-        assertEquals("Invalid campaign item", campaignItem, actual);
+        CampaignItem actual = testInstance.createItem(auth, "accountId", "1", campaignItemOperation);
+        assertEquals("Invalid campaign item", campaignItemOperation, actual);
         verify(endpointMock, times(1)).createItem(any(), any(), any(), any());
     }
 
     @Test
     public void testCreateItem_notPerformingValidations() {
         testInstance = new CampaignItemsServiceImpl(false, endpointMock);
-        CampaignItem campaignItem = new CampaignItem();
-        campaignItem.setUrl(null);
+        CampaignItemOperation campaignItemOperation = generateDummyCampaignItemOperation();
+        campaignItemOperation.setUrl(null);
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.createItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", campaignItem)).thenReturn(campaignItem);
+        when(endpointMock.createItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", campaignItemOperation)).thenReturn(campaignItemOperation);
 
-        CampaignItem actual = testInstance.createItem(auth, "accountId", "1", campaignItem);
-        assertEquals("Invalid campaign item", campaignItem, actual);
+        CampaignItem actual = testInstance.createItem(auth, "accountId", "1", campaignItemOperation);
+        assertEquals("Invalid campaign item", campaignItemOperation, actual);
         verify(endpointMock, times(1)).createItem(any(), any(), any(), any());
     }
 
     @Test
     public void testReadItems() {
-        CampaignItem campaignItem = generateDummyCamppaignItem();
+        CampaignItem campaignItem = generateDummyCampaignItem();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         Results<CampaignItem> results = new Results<>(Collections.singleton(campaignItem));
         when(endpointMock.readItems(auth.getToken().getAccessTokenForHeader(),"accountId", "1")).thenReturn(results);
@@ -74,7 +73,7 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
 
     @Test
     public void testReadRSSChildrenItems() {
-        CampaignItem campaignItem = generateDummyCamppaignItem();
+        CampaignItem campaignItem = generateDummyCampaignItem();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         Results<CampaignItem> results = new Results<>(Collections.singleton(campaignItem));
         when(endpointMock.readRSSChildrenItems(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2")).thenReturn(results);
@@ -86,7 +85,7 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
 
     @Test
     public void testReadSpecificRSSChildItem() {
-        CampaignItem campaignItem = generateDummyCamppaignItem();
+        CampaignItem campaignItem = generateDummyCampaignItem();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         when(endpointMock.readSpecificRSSChildItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", "3")).thenReturn(campaignItem);
 
@@ -97,12 +96,12 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
 
     @Test
     public void testUpdateSpecificRSSChildItem() {
-        CampaignItem campaignItem = generateDummyCamppaignItem();
+        CampaignItemOperation campaignItemOperation = generateDummyCampaignItemOperation();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.updateSpecificRSSChildItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", "3", campaignItem)).thenReturn(campaignItem);
+        when(endpointMock.updateSpecificRSSChildItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", "3", campaignItemOperation)).thenReturn(campaignItemOperation);
 
-        CampaignItem actual = testInstance.updateSpecificRSSChildItem(auth, "accountId", "1", "2", "3", campaignItem);
-        assertEquals("Invalid updated campaign RSS specific child item", campaignItem, actual);
+        CampaignItem actual = testInstance.updateSpecificRSSChildItem(auth, "accountId", "1", "2", "3", campaignItemOperation);
+        assertEquals("Invalid updated campaign RSS specific child item", campaignItemOperation, actual);
         verify(endpointMock, times(1)).updateSpecificRSSChildItem(any(), any(), any(), any(), any(), any());
     }
 
@@ -110,21 +109,18 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
     @Test
     public void testUpdateSpecificRSSChildItem_notPerformingValidations() {
         testInstance = new CampaignItemsServiceImpl(false, endpointMock);
-        CampaignItem campaignItem = generateDummyCamppaignItem();
-        campaignItem.setId("1");
-        campaignItem.setType(ItemType.ITEM);
-        campaignItem.setStatus(ItemStatus.CRAWLING);
+        CampaignItemOperation campaignItemOperation = generateDummyCampaignItemOperation();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.updateSpecificRSSChildItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", "3", campaignItem)).thenReturn(campaignItem);
+        when(endpointMock.updateSpecificRSSChildItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", "3", campaignItemOperation)).thenReturn(campaignItemOperation);
 
-        CampaignItem actual = testInstance.updateSpecificRSSChildItem(auth, "accountId", "1", "2", "3", campaignItem);
-        assertEquals("Invalid updated campaign RSS specific child item", campaignItem, actual);
+        CampaignItem actual = testInstance.updateSpecificRSSChildItem(auth, "accountId", "1", "2", "3", campaignItemOperation);
+        assertEquals("Invalid updated campaign RSS specific child item", campaignItemOperation, actual);
         verify(endpointMock, times(1)).updateSpecificRSSChildItem(any(), any(), any(), any(), any(), any());
     }
 
     @Test
     public void testReadItem() {
-        CampaignItem campaignItem = generateDummyCamppaignItem();
+        CampaignItem campaignItem = generateDummyCampaignItem();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         when(endpointMock.readItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2")).thenReturn(campaignItem);
 
@@ -135,12 +131,12 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
 
     @Test
     public void testUpdateItem() {
-        CampaignItem campaignItem = generateDummyCamppaignItem();
+        CampaignItemOperation campaignItemOperation = generateDummyCampaignItemOperation();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.updateItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", campaignItem)).thenReturn(campaignItem);
+        when(endpointMock.updateItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", campaignItemOperation)).thenReturn(campaignItemOperation);
 
-        CampaignItem actual = testInstance.updateItem(auth, "accountId", "1", "2", campaignItem);
-        assertEquals("Invalid campaign item", campaignItem, actual);
+        CampaignItem actual = testInstance.updateItem(auth, "accountId", "1", "2", campaignItemOperation);
+        assertEquals("Invalid campaign item", campaignItemOperation, actual);
         verify(endpointMock, times(1)).updateItem(any(), any(), any(), any(), any());
     }
 
@@ -148,21 +144,18 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
     @Test
     public void testUpdateItem_notPerformingValidations() {
         testInstance = new CampaignItemsServiceImpl(false, endpointMock);
-        CampaignItem campaignItem = generateDummyCamppaignItem();
-        campaignItem.setId("1");
-        campaignItem.setType(ItemType.ITEM);
-        campaignItem.setStatus(ItemStatus.CRAWLING);
+        CampaignItemOperation campaignItemOperation = generateDummyCampaignItemOperation();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.updateItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", campaignItem)).thenReturn(campaignItem);
+        when(endpointMock.updateItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", campaignItemOperation)).thenReturn(campaignItemOperation);
 
-        CampaignItem actual = testInstance.updateItem(auth, "accountId", "1", "2", campaignItem);
-        assertEquals("Invalid campaign item", campaignItem, actual);
+        CampaignItem actual = testInstance.updateItem(auth, "accountId", "1", "2", campaignItemOperation);
+        assertEquals("Invalid campaign item", campaignItemOperation, actual);
         verify(endpointMock, times(1)).updateItem(any(), any(), any(), any(), any());
     }
 
     @Test
     public void testDeleteItem() {
-        CampaignItem campaignItem = generateDummyCamppaignItem();
+        CampaignItem campaignItem = generateDummyCampaignItem();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         when(endpointMock.deleteItem(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2")).thenReturn(campaignItem);
 

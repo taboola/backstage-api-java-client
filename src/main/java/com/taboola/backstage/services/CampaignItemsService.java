@@ -6,6 +6,7 @@ import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 
 /**
  * {@link CampaignItem} entity CRUD operations
@@ -57,13 +58,13 @@ public interface CampaignItemsService {
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
      * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
-     * @param item {@link CampaignItem} pojo with single populated field {@link CampaignItem#url url}
+     * @param campaignItemOperation {@link CampaignItemOperation} with single populated field {@link CampaignItem#url url}
      * @return {@link CampaignItem} pojo with status {@link com.taboola.backstage.model.media.campaigns.items.ItemStatus#CRAWLING CRAWLING}
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    CampaignItem createItem(BackstageAuthentication auth, String accountId, String campaignId, CampaignItem item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignItem createItem(BackstageAuthentication auth, String accountId, String campaignId, CampaignItemOperation campaignItemOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Fetch all {@link CampaignItem}  associated with a specific {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
@@ -111,13 +112,13 @@ public interface CampaignItemsService {
      * @param campaignId {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} Id. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign#getId()} object
      * @param itemId RSS parent id. Taken from {@link CampaignItem#getId()} with a type of RSS
      * @param childId RSS child item id. Taken from {@link CampaignItem#getId()}
-     * @param campaignItem Full or partial {@link CampaignItem} pojo to update.
+     * @param campaignItemOperation Full or partial {@link CampaignItemOperation} defines campaign item configuration change
      * @return Fully populated {@link CampaignItem} pojo
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, String childId, CampaignItem campaignItem) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, String childId, CampaignItemOperation campaignItemOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Fetch a single {@link CampaignItem} associated with a certain {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
@@ -138,13 +139,13 @@ public interface CampaignItemsService {
      * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
      * @param campaignId {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} Id. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign#getId()} object
      * @param itemId {@link CampaignItem} Id. Taken from {@link CampaignItem#getId()} object
-     * @param item Full or partial {@link CampaignItem} pojo to update.
+     * @param campaignItemOperation Full or partial {@link CampaignItemOperation} defines campaign item configuration change
      * @return Fully populated {@link CampaignItem} pojo
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignItem item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignItemOperation campaignItemOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Move an existing {@link CampaignItem} to a 'STOPPED' status.

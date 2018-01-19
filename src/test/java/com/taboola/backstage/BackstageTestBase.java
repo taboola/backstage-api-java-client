@@ -9,6 +9,7 @@ import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
 import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -70,14 +71,14 @@ public abstract class BackstageTestBase {
         return campaign;
     }
 
-    protected CampaignItem generateDummyCamppaignItem() {
-        CampaignItem item = factory.manufacturePojo(CampaignItem.class);
-        item.setId(null);
-        item.setCampaignId(null);
-        item.setType(null);
-        item.setUrl(null);
-        item.setStatus(null);
-        return item;
+    protected CampaignItem generateDummyCampaignItem() {
+        return factory.manufacturePojo(CampaignItem.class);
+    }
+
+    protected CampaignItemOperation generateDummyCampaignItemOperation() {
+        CampaignItemOperation campaignItemOperation = factory.manufacturePojo(CampaignItemOperation.class);
+        campaignItemOperation.setUrl(null);
+        return campaignItemOperation;
     }
 
     protected Resource generateDummyResource() {

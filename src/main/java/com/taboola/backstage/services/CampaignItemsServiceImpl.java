@@ -8,6 +8,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.internal.BackstageCampaignItemsEndpoint;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 
 /**
  * Created by vladi
@@ -26,12 +27,12 @@ public class CampaignItemsServiceImpl implements CampaignItemsService {
     }
 
     @Override
-    public CampaignItem createItem(BackstageAuthentication auth, String accountId, String campaignId, CampaignItem item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignItem createItem(BackstageAuthentication auth, String accountId, String campaignId, CampaignItemOperation campaignItemOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         if(performValidations) {
-            FieldsValidator.validateCreateOperation(item);
+            FieldsValidator.validateCreateOperation(campaignItemOperation);
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return endpoint.createItem(accessToken, accountId, campaignId, item);
+        return endpoint.createItem(accessToken, accountId, campaignId, campaignItemOperation);
     }
 
     @Override
@@ -53,12 +54,12 @@ public class CampaignItemsServiceImpl implements CampaignItemsService {
     }
 
     @Override
-    public CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, String childId, CampaignItem campaignItem) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignItem updateSpecificRSSChildItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, String childId, CampaignItemOperation campaignItemOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         if(performValidations) {
-            FieldsValidator.validateUpdateOperation(campaignItem);
+            FieldsValidator.validateUpdateOperation(campaignItemOperation);
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return endpoint.updateSpecificRSSChildItem(accessToken, accountId, campaignId, itemId, childId, campaignItem);
+        return endpoint.updateSpecificRSSChildItem(accessToken, accountId, campaignId, itemId, childId, campaignItemOperation);
     }
 
     @Override
@@ -68,12 +69,12 @@ public class CampaignItemsServiceImpl implements CampaignItemsService {
     }
 
     @Override
-    public CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignItem item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignItem updateItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignItemOperation campaignItemOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         if(performValidations) {
-            FieldsValidator.validateUpdateOperation(item);
+            FieldsValidator.validateUpdateOperation(campaignItemOperation);
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return endpoint.updateItem(accessToken, accountId, campaignId, itemId, item);
+        return endpoint.updateItem(accessToken, accountId, campaignId, itemId, campaignItemOperation);
     }
 
     @Override
