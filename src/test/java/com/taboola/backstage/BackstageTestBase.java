@@ -7,6 +7,7 @@ import com.taboola.backstage.model.auth.PasswordAuthenticationDetails;
 import com.taboola.backstage.model.auth.Token;
 import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
 import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
@@ -54,19 +55,18 @@ public abstract class BackstageTestBase {
     }
 
     protected Campaign generateDummyCampaign() {
-        Campaign campaign = factory.manufacturePojo(Campaign.class);
-        campaign.setId(null);
-        campaign.setAdvertiserId(null);
+        return factory.manufacturePojo(Campaign.class);
+    }
+
+    protected CampaignOperation generateDummyCampaignOperation() {
+        CampaignOperation campaign = factory.manufacturePojo(CampaignOperation.class);
         campaign.setName(null);
         campaign.setBrandingText(null);
         campaign.setCpc(null);
         campaign.setSpendingLimit(null);
         campaign.setSpendingLimitModel(null);
-        campaign.setPostalCodeTargeting(null);
         campaign.setStartDate(null);
         campaign.setApprovalState(null);
-        campaign.setSpent(null);
-        campaign.setStatus(null);
         return campaign;
     }
 

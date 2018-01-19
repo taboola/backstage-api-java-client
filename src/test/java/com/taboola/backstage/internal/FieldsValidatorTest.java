@@ -19,23 +19,25 @@ import static org.junit.Assert.fail;
  */
 public class FieldsValidatorTest extends BackstageTestBase {
 
-    private DummyAnnotationTestClass dummyClass;
+    private ExtendedDummyAnnotationTestClass dummyClass;
 
     private static class DummyAnnotationTestClass {
 
         @ReadOnly
-        private String id;
+        protected String id;
 
         @Final
-        private String name;
+        protected String name;
 
         @Required
-        private String cpc;
+        protected String cpc;
     }
+
+    private static class ExtendedDummyAnnotationTestClass extends DummyAnnotationTestClass { }
 
     @Before
     public void beforeTest() {
-        dummyClass = new DummyAnnotationTestClass();
+        dummyClass = new ExtendedDummyAnnotationTestClass();
     }
 
     @Test

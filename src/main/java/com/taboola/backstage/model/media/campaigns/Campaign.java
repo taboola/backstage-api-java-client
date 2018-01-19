@@ -16,223 +16,131 @@ import java.util.Objects;
 public class Campaign {
 
     @ReadOnly
-    private String id;
+    protected String id;
     @ReadOnly
-    private String advertiserId;
+    protected String advertiserId;
     @Required
-    private String name;
+    protected String name;
     @Required
-    private String brandingText;
-    private String trackingCode;
+    protected String brandingText;
+    protected String trackingCode;
     @Required
-    private Double cpc;
-    private Double dailyCap;
-    private DailyAdDeliveryModel dailyAdDeliveryModel;
-    private PublisherBidModifier publisherBidModifier;
+    protected Double cpc;
+    protected Double dailyCap;
+    protected DailyAdDeliveryModel dailyAdDeliveryModel;
+    protected PublisherBidModifier publisherBidModifier;
     @Required
-    private Double spendingLimit;
+    protected Double spendingLimit;
     @Required
-    private SpendingLimitModel spendingLimitModel;
-    private CampaignTargeting countryTargeting;
-    private CampaignTargeting subCountryTargeting;
-    private CampaignTargeting platformTargeting;
-    private CampaignTargeting publisherTargeting;
+    protected SpendingLimitModel spendingLimitModel;
+    protected CampaignTargeting countryTargeting;
+    protected CampaignTargeting subCountryTargeting;
+    protected CampaignTargeting platformTargeting;
+    protected CampaignTargeting publisherTargeting;
     @ReadOnly
-    private CampaignTargeting postalCodeTargeting;
-    private String comments;
+    protected CampaignTargeting postalCodeTargeting;
+    protected String comments;
     @Final
-    private Date startDate;
-    private Date endDate;
+    protected Date startDate;
+    protected Date endDate;
     @ReadOnly
-    private CampaignApprovalState approvalState;
-    private Boolean isActive;
+    protected CampaignApprovalState approvalState;
+    protected Boolean isActive;
     @ReadOnly
-    private Double spent;
+    protected Double spent;
     @ReadOnly
-    private CampaignStatus status;
+    protected CampaignStatus status;
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getAdvertiserId() {
         return advertiserId;
     }
 
-    public void setAdvertiserId(String advertiserId) {
-        this.advertiserId = advertiserId;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getBrandingText() {
         return brandingText;
     }
 
-    public void setBrandingText(String brandingText) {
-        this.brandingText = brandingText;
-    }
-
     public String getTrackingCode() {
         return trackingCode;
-    }
-
-    public void setTrackingCode(String trackingCode) {
-        this.trackingCode = trackingCode;
     }
 
     public Double getCpc() {
         return cpc;
     }
 
-    public void setCpc(Double cpc) {
-        this.cpc = cpc;
-    }
-
     public Double getDailyCap() {
         return dailyCap;
-    }
-
-    public void setDailyCap(Double dailyCap) {
-        this.dailyCap = dailyCap;
     }
 
     public DailyAdDeliveryModel getDailyAdDeliveryModel() {
         return dailyAdDeliveryModel;
     }
 
-    public void setDailyAdDeliveryModel(DailyAdDeliveryModel dailyAdDeliveryModel) {
-        this.dailyAdDeliveryModel = dailyAdDeliveryModel;
-    }
-
     public PublisherBidModifier getPublisherBidModifier() {
         return publisherBidModifier;
-    }
-
-    public void setPublisherBidModifier(PublisherBidModifier publisherBidModifier) {
-        this.publisherBidModifier = publisherBidModifier;
     }
 
     public Double getSpendingLimit() {
         return spendingLimit;
     }
 
-    public void setSpendingLimit(Double spendingLimit) {
-        this.spendingLimit = spendingLimit;
-    }
-
     public SpendingLimitModel getSpendingLimitModel() {
         return spendingLimitModel;
-    }
-
-    public void setSpendingLimitModel(SpendingLimitModel spendingLimitModel) {
-        this.spendingLimitModel = spendingLimitModel;
     }
 
     public CampaignTargeting getCountryTargeting() {
         return countryTargeting;
     }
 
-    public void setCountryTargeting(CampaignTargeting countryTargeting) {
-        this.countryTargeting = countryTargeting;
-    }
-
     public CampaignTargeting getSubCountryTargeting() {
         return subCountryTargeting;
-    }
-
-    public void setSubCountryTargeting(CampaignTargeting subCountryTargeting) {
-        this.subCountryTargeting = subCountryTargeting;
     }
 
     public CampaignTargeting getPlatformTargeting() {
         return platformTargeting;
     }
 
-    public void setPlatformTargeting(CampaignTargeting platformTargeting) {
-        this.platformTargeting = platformTargeting;
-    }
-
     public CampaignTargeting getPublisherTargeting() {
         return publisherTargeting;
-    }
-
-    public void setPublisherTargeting(CampaignTargeting publisherTargeting) {
-        this.publisherTargeting = publisherTargeting;
     }
 
     public CampaignTargeting getPostalCodeTargeting() {
         return postalCodeTargeting;
     }
 
-    public void setPostalCodeTargeting(CampaignTargeting postalCodeTargeting) {
-        this.postalCodeTargeting = postalCodeTargeting;
-    }
-
     public String getComments() {
         return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
     }
 
     public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
     public Date getEndDate() {
         return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public CampaignApprovalState getApprovalState() {
         return approvalState;
     }
 
-    public void setApprovalState(CampaignApprovalState approvalState) {
-        this.approvalState = approvalState;
-    }
-
     public Boolean getIsActive() {
         return isActive;
-    }
-
-    public void setIsActive(Boolean active) {
-        isActive = active;
     }
 
     public Double getSpent() {
         return spent;
     }
 
-    public void setSpent(Double spent) {
-        this.spent = spent;
-    }
-
     public CampaignStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(CampaignStatus status) {
-        this.status = status;
     }
 
     @Override

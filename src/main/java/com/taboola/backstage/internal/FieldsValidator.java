@@ -10,8 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by vladi
@@ -48,7 +47,7 @@ public class FieldsValidator {
     }
 
     private static void validate(Object obj, Map<Class<?>, BiFunction<Object, Field, Boolean, IllegalAccessException>> failOn) {
-        Field[] declaredFields = obj.getClass().getDeclaredFields();
+        List<Field> declaredFields = getAllFields(obj.getClass());
         for(Field field : declaredFields) {
             for(Annotation fieldAnnotation : field.getDeclaredAnnotations()) {
                 Class<?> annotation = fieldAnnotation.annotationType();
@@ -66,5 +65,13 @@ public class FieldsValidator {
                 }
             }
         }
+    }
+
+    private static List<Field> getAllFields(Class<?> type) {
+        List<Field> fields = new LinkedList<>();
+        for (Class<?> c = type ; c != null ; c = c.getSuperclass()) {
+            fields.addAll(Arrays.asList(c.getDeclaredFields()));
+        }
+        return fields;
     }
 }

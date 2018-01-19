@@ -8,6 +8,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
+import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 
 /**
  * Created by vladi
@@ -26,12 +27,12 @@ public class CampaignsServiceImpl implements CampaignsService {
     }
 
     @Override
-    public Campaign create(BackstageAuthentication auth, String accountId, Campaign campaign) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public Campaign create(BackstageAuthentication auth, String accountId, CampaignOperation campaignOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         if(performValidations) {
-            FieldsValidator.validateCreateOperation(campaign);
+            FieldsValidator.validateCreateOperation(campaignOperation);
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return endpoint.createCampaign(accessToken, accountId, campaign);
+        return endpoint.createCampaign(accessToken, accountId, campaignOperation);
     }
 
     @Override
@@ -47,12 +48,12 @@ public class CampaignsServiceImpl implements CampaignsService {
     }
 
     @Override
-    public Campaign update(BackstageAuthentication auth, String accountId, String campaignId, Campaign campaign) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public Campaign update(BackstageAuthentication auth, String accountId, String campaignId, CampaignOperation campaignOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         if(performValidations) {
-            FieldsValidator.validateUpdateOperation(campaign);
+            FieldsValidator.validateUpdateOperation(campaignOperation);
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
-        return endpoint.updateCampaign(accessToken, accountId, campaignId,  campaign);
+        return endpoint.updateCampaign(accessToken, accountId, campaignId,  campaignOperation);
     }
 
 }

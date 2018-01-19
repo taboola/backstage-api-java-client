@@ -6,6 +6,7 @@ import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 
 /**
  * {@link Campaign} entity CRUD operations
@@ -28,13 +29,13 @@ public interface CampaignsService {
      *
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId Under which {@link com.taboola.backstage.model.Account Account} the campaign is going to be created. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
-     * @param campaign {@link Campaign} pojo to be created
+     * @param campaignOperation {@link CampaignOperation} defines campaign configuration at time of creation
      * @return Fully populated {@link Campaign} pojo
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    Campaign create(BackstageAuthentication auth, String accountId, Campaign campaign) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    Campaign create(BackstageAuthentication auth, String accountId, CampaignOperation campaignOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Read campaign entity
@@ -67,12 +68,12 @@ public interface CampaignsService {
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
      * @param campaignId {@link Campaign} that is going to be updated. Taken from {@link Campaign#getId()} object
-     * @param campaign Full or partial {@link Campaign} pojo to update.
+     * @param campaignOperation Full or partial {@link CampaignOperation} defines campaign configuration change
      * @return Fully populated {@link Campaign} pojo
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    Campaign update(BackstageAuthentication auth, String accountId, String campaignId, Campaign campaign) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    Campaign update(BackstageAuthentication auth, String accountId, String campaignId, CampaignOperation campaignOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
 }
