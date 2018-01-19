@@ -67,7 +67,6 @@ public abstract class BackstageTestBase {
         campaign.setSpendingLimit(null);
         campaign.setSpendingLimitModel(null);
         campaign.setStartDate(null);
-        campaign.setApprovalState(null);
         return campaign;
     }
 

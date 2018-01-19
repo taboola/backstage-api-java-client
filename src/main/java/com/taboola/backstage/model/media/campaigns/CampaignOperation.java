@@ -96,11 +96,6 @@ public class CampaignOperation extends Campaign {
         return this;
     }
 
-    public CampaignOperation setApprovalState(CampaignApprovalState approvalState) {
-        this.approvalState = approvalState;
-        return this;
-    }
-
     public CampaignOperation setActive(Boolean active) {
         isActive = active;
         return this;
