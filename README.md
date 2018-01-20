@@ -4,7 +4,7 @@
 1. [Getting Started](#1-getting-started)
 2. [Full Example - Create first campaign and item ](#2-full-example---create-first-campaign-and-item)
 3. [Authentication](#3-authentication)
-4. [Exceptions](#4.-exceptions)
+4. [Exceptions](#4-exceptions)
 
 ### Intro
 The Taboola Backstage API allow you to manage your campaign, items and view reports.
