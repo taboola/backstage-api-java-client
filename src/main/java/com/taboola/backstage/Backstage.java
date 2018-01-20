@@ -120,6 +120,7 @@ public class Backstage {
         private Long connectionTimeoutMillis;
         private Long readTimeoutMillis;
         private Boolean performClientValidations;
+        private Boolean debug;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
@@ -151,9 +152,14 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setDebug(Boolean debug) {
+            this.debug = debug;
+            return this;
+        }
+
         public Backstage build() {
             organizeState();
-            CommunicationConfig config = new CommunicationConfig(baseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent);
+            CommunicationConfig config = new CommunicationConfig(baseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
             return new Backstage(
                 new CampaignsServiceImpl(performClientValidations, communicator.getCampaignsService()),
@@ -190,6 +196,10 @@ public class Backstage {
 
             if(performClientValidations == null) {
                 performClientValidations = true;
+            }
+
+            if(debug == null) {
+                debug = false;
             }
         }
 

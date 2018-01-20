@@ -18,7 +18,7 @@ public class CommunicationFactoryTest extends BackstageTestBase {
 
     @Before
     public void beforeTest() {
-        CommunicationConfig config = new CommunicationConfig("http://localhost", 1L, 1L, 1L, "Dummy-Agent");
+        CommunicationConfig config = new CommunicationConfig("http://localhost", 1L, 1L, 1L, "Dummy-Agent", true);
         testInstance = new CommunicationFactory(config);
     }
 

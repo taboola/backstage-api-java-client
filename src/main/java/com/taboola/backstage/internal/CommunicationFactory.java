@@ -58,7 +58,11 @@ public final class CommunicationFactory {
 
     private Retrofit createRetrofit(CommunicationConfig config) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(logger::info);
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        if(config.isDebug()) {
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        } else {
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        }
 
         //TODO add ability to start retrofit2 in mock mode {option retrofit-mock}
 
