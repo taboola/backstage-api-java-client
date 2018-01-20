@@ -3,6 +3,8 @@
 ### Table of Contents
 1. [Getting Started](#1-getting-started)
 2. [Full Example - Create first campaign and item ](#2-full-example---create-first-campaign-and-item)
+3. [Authentication](#3-authentication)
+4. [Exceptions](#4.-exceptions)
 
 ### Intro
 The Taboola Backstage API allow you to manage your campaign, items and view reports.
@@ -81,3 +83,34 @@ try {
     logger.warn("Connectivity issues", e);
 }
 ```
+
+### 3. Authentication
+
+Supports:
+1. CLIENT_CREDENTIALS
+2. PASSWORD_AUTHENTICATION
+
+Authentication service can be found under Backstage instance, see below:
+```
+Backstage backstage = Backstage.builder().build();
+AuthenticationService authService = backstage.authenticationService();
+```
+
+BackstageAuthentication instance is valid 12 hours after its creation. 
+In order to re-authenticate the same BackstageAuthentication instance the following can be done:
+
+```
+//Assuming you have previously created BackstageAuthentication under the name 'auth'
+BackstageAuthentication auth = backstage.authenticationService().reAuthenticate(auth);
+``` 
+
+### 4. Exceptions
+
+1. **BackstageAPIUnauthorizedException** - Token is expired or bad credentials were supplied (HTTP status 401)
+   1. Can be resolved by re-authentication or making sure that supplied credentials are correct
+2. **BackstageAPIRequestException** - Bad request (HTTP status 4xx)
+   2. Can be resolved by fixing the request to a valid one
+3. **BackstageAPIConnectivityException** - Connectivity issues (HTTP status 5xx)
+   3. Can be resolved by retrying or fixing networking issues
+
+
