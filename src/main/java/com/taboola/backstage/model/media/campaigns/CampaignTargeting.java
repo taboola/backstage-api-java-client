@@ -4,7 +4,7 @@ import com.taboola.backstage.annotations.ReadOnly;
 import com.taboola.backstage.annotations.Required;
 import com.taboola.backstage.model.media.campaigns.targeting.Type;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * <p>
@@ -36,7 +36,7 @@ public class CampaignTargeting {
     @Required
     private Type type;
     @Required
-    private List<String> value;
+    private Collection<String> value;
     @ReadOnly
     private String href;
 
@@ -48,11 +48,11 @@ public class CampaignTargeting {
         this.type = type;
     }
 
-    public List<String> getValue() {
+    public Collection<String> getValue() {
         return value;
     }
 
-    public void setValue(List<String> value) {
+    public void setValue(Collection<String> value) {
         this.value = value;
     }
 
