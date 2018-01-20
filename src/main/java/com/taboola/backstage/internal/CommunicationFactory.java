@@ -67,6 +67,7 @@ public final class CommunicationFactory {
         //TODO add ability to start retrofit2 in mock mode {option retrofit-mock}
 
         OkHttpClient client = new OkHttpClient.Builder()
+                                    //TODO use global connection pool to prevent OkHttpClient default behaviour from creating too many file descriptors when performing async calls
                                     .addInterceptor(loggingInterceptor)
                                     .addInterceptor(new UserAgentInterceptor(config.getUserAgent()))
                                     .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
