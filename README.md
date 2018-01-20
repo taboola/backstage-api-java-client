@@ -106,11 +106,11 @@ BackstageAuthentication auth = backstage.authenticationService().reAuthenticate(
 
 ### 4. Exceptions
 
-1. **BackstageAPIUnauthorizedException** - Token is expired or bad credentials were supplied (HTTP status 401)
-   1. Can be resolved by re-authentication or making sure that supplied credentials are correct
-2. **BackstageAPIRequestException** - Bad request (HTTP status 4xx)
-   2. Can be resolved by fixing the request to a valid one
-3. **BackstageAPIConnectivityException** - Connectivity issues (HTTP status 5xx)
-   3. Can be resolved by retrying or fixing networking issues
+- **BackstageAPIUnauthorizedException** - Token is expired or bad credentials were supplied (HTTP status 401)
+  - Can be resolved by re-authentication or making sure that supplied credentials are correct
+- **BackstageAPIRequestException** - Bad request (HTTP status 4xx)
+  - Can be resolved by fixing the request to a valid one
+- **BackstageAPIConnectivityException** - Connectivity issues (HTTP status 5xx)
+  - Can be resolved by retrying or fixing networking issues
 
 
