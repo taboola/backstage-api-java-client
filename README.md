@@ -1,5 +1,7 @@
 ## Backstage API Java Client
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.taboola/backstage-api-java-client/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.taboola/backstage-api-java-client)
+
 ### Table of Contents
 1. [Getting Started](#1-getting-started)
 2. [Full Example - Create first campaign and item ](#2-full-example---create-first-campaign-and-item)
