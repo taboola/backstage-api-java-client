@@ -1,12 +1,14 @@
 ## Backstage API Java Client
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.taboola/backstage-api-java-client/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.taboola/backstage-api-java-client)
+[![Build Status](https://travis-ci.org/taboola/backstage-api-java-client.svg?branch=master)](https://travis-ci.org/taboola/backstage-api-java-client)
 
 ### Table of Contents
 1. [Getting Started](#1-getting-started)
 2. [Full Example - Create first campaign and item ](#2-full-example---create-first-campaign-and-item)
 3. [Authentication](#3-authentication)
 4. [Exceptions](#4-exceptions)
+5. [Usage](#5-usage)
 
 ### Intro
 The Taboola Backstage API allow you to manage your campaign, items and view reports.
@@ -115,4 +117,23 @@ BackstageAuthentication auth = backstage.authenticationService().reAuthenticate(
 - **BackstageAPIConnectivityException** - Connectivity issues (HTTP status 5xx)
   - Can be resolved by retrying or fixing networking issues
 
+### 5. Usage
 
+If your project is built with Maven add following to your pom file:
+
+```
+<dependency>
+    <groupId>com.taboola</groupId>
+    <artifactId>backstage-api-java-client</artifactId>
+    <version>x.y.z</version>
+</dependency>
+```
+
+If your project is built with Gradle add following to your gradle setting file:
+
+```
+// https://mvnrepository.com/artifact/com.taboola/backstage-api-java-client
+compile group: 'com.taboola', name: 'backstage-api-java-client', version: 'x.y.z'
+```
+
+Replace 'x.y.z' with the latest available version from [Maven Central](https://mvnrepository.com/artifact/com.taboola/backstage-api-java-client)
