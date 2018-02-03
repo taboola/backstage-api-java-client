@@ -1,4 +1,4 @@
-package com.taboola.backstage.model.media.reports;
+package com.taboola.backstage.model;
 
 /**
  * Created by vladi

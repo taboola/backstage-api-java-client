@@ -33,6 +33,7 @@ public final class CommunicationFactory {
     private final BackstageCampaignItemsEndpoint campaignItemService;
     private final BackstageDictionaryEndpoint dictionaryService;
     private final BackstageMediaReportsEndpoint mediaReportsService;
+    private final BackstagePublisherReportsEndpoint publisherReportsService;
     private final BackstagePostalTargetingEndpoint campaignPostalCodeTargeting;
 
     public CommunicationFactory(CommunicationConfig config) {
@@ -45,6 +46,7 @@ public final class CommunicationFactory {
         this.campaignItemService = retrofit.create(BackstageCampaignItemsEndpoint.class);
         this.dictionaryService = retrofit.create(BackstageDictionaryEndpoint.class);
         this.mediaReportsService = retrofit.create(BackstageMediaReportsEndpoint.class);
+        this.publisherReportsService = retrofit.create(BackstagePublisherReportsEndpoint.class);
         this.campaignPostalCodeTargeting = retrofit.create(BackstagePostalTargetingEndpoint.class);
     }
 
@@ -110,5 +112,9 @@ public final class CommunicationFactory {
 
     public BackstagePostalTargetingEndpoint getCampaignPostalCodeTargeting() {
         return campaignPostalCodeTargeting;
+    }
+
+    public BackstagePublisherReportsEndpoint getPublisherReportsService() {
+        return publisherReportsService;
     }
 }

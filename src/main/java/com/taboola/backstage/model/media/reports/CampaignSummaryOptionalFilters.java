@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.reports;
 
+import com.taboola.backstage.model.ReportFilter;
+
 /**
  * Created by vladi
  * Date: 12/7/2017
