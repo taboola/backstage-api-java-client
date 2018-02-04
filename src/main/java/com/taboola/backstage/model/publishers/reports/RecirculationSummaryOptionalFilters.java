@@ -8,12 +8,21 @@ import com.taboola.backstage.model.ReportFilter;
  * Time: 10:51 PM
  * By Taboola
  */
-public class RecirculationSummaryOptionalFilters implements ReportFilter {
+public enum RecirculationSummaryOptionalFilters implements ReportFilter {
 
-    //TODO impl
+    PAGE_TYPE("page_type"),
+    PACEMENT("placement"),
+    COUNTRY("country"),
+    PLATFORM("platform");
+
+    private final String name;
+
+    RecirculationSummaryOptionalFilters(String name) {
+        this.name = name;
+    }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 }
