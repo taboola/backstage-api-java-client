@@ -8,14 +8,21 @@ import com.taboola.backstage.model.ReportFilter;
  * Time: 10:40 PM
  * By Taboola
  */
-public class RevenueSummaryOptionalFilters implements ReportFilter {
+public enum RevenueSummaryOptionalFilters implements ReportFilter {
 
+    PAGE_TYPE("page_type"),
+    PACEMENT("placement"),
+    COUNTRY("country"),
+    PLATFORM("platform");
 
-    //TODO impl
+    private final String name;
 
+    RevenueSummaryOptionalFilters(String name) {
+        this.name = name;
+    }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 }
