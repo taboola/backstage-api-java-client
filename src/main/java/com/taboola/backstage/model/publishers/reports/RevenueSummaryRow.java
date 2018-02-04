@@ -37,171 +37,152 @@ public class RevenueSummaryRow {
         return pageViews;
     }
 
-    public RevenueSummaryRow setPageViews(Integer pageViews) {
+    public void setPageViews(Integer pageViews) {
         this.pageViews = pageViews;
-        return this;
     }
 
     public Double getPageViewsWithAdsPct() {
         return pageViewsWithAdsPct;
     }
 
-    public RevenueSummaryRow setPageViewsWithAdsPct(Double pageViewsWithAdsPct) {
+    public void setPageViewsWithAdsPct(Double pageViewsWithAdsPct) {
         this.pageViewsWithAdsPct = pageViewsWithAdsPct;
-        return this;
     }
 
     public Integer getPageViewsWithAds() {
         return pageViewsWithAds;
     }
 
-    public RevenueSummaryRow setPageViewsWithAds(Integer pageViewsWithAds) {
+    public void setPageViewsWithAds(Integer pageViewsWithAds) {
         this.pageViewsWithAds = pageViewsWithAds;
-        return this;
     }
 
     public Double getCtr() {
         return ctr;
     }
 
-    public RevenueSummaryRow setCtr(Double ctr) {
+    public void setCtr(Double ctr) {
         this.ctr = ctr;
-        return this;
     }
 
     public Integer getClicks() {
         return clicks;
     }
 
-    public RevenueSummaryRow setClicks(Integer clicks) {
+    public void setClicks(Integer clicks) {
         this.clicks = clicks;
-        return this;
     }
 
     public Double getAdCpc() {
         return adCpc;
     }
 
-    public RevenueSummaryRow setAdCpc(Double adCpc) {
+    public void setAdCpc(Double adCpc) {
         this.adCpc = adCpc;
-        return this;
     }
 
     public Double getAdRpm() {
         return adRpm;
     }
 
-    public RevenueSummaryRow setAdRpm(Double adRpm) {
+    public void setAdRpm(Double adRpm) {
         this.adRpm = adRpm;
-        return this;
     }
 
     public Double getAdRevenue() {
         return adRevenue;
     }
 
-    public RevenueSummaryRow setAdRevenue(Double adRevenue) {
+    public void setAdRevenue(Double adRevenue) {
         this.adRevenue = adRevenue;
-        return this;
     }
 
     public String getCurrency() {
         return currency;
     }
 
-    public RevenueSummaryRow setCurrency(String currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
-        return this;
     }
 
     public String getDate() {
         return date;
     }
 
-    public RevenueSummaryRow setDate(String date) {
+    public void setDate(String date) {
         this.date = date;
-        return this;
     }
 
     public String getDateEndPeriod() {
         return dateEndPeriod;
     }
 
-    public RevenueSummaryRow setDateEndPeriod(String dateEndPeriod) {
+    public void setDateEndPeriod(String dateEndPeriod) {
         this.dateEndPeriod = dateEndPeriod;
-        return this;
     }
 
     public String getPateType() {
         return pateType;
     }
 
-    public RevenueSummaryRow setPateType(String pateType) {
+    public void setPateType(String pateType) {
         this.pateType = pateType;
-        return this;
     }
 
     public String getPlacement() {
         return placement;
     }
 
-    public RevenueSummaryRow setPlacement(String placement) {
+    public void setPlacement(String placement) {
         this.placement = placement;
-        return this;
     }
 
     public String getPublisher() {
         return publisher;
     }
 
-    public RevenueSummaryRow setPublisher(String publisher) {
+    public void setPublisher(String publisher) {
         this.publisher = publisher;
-        return this;
     }
 
     public String getPublisherName() {
         return publisherName;
     }
 
-    public RevenueSummaryRow setPublisherName(String publisherName) {
+    public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
-        return this;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public RevenueSummaryRow setCountry(String country) {
+    public void setCountry(String country) {
         this.country = country;
-        return this;
     }
 
     public String getCountryName() {
         return countryName;
     }
 
-    public RevenueSummaryRow setCountryName(String countryName) {
+    public void setCountryName(String countryName) {
         this.countryName = countryName;
-        return this;
     }
 
     public String getPlatform() {
         return platform;
     }
 
-    public RevenueSummaryRow setPlatform(String platform) {
+    public void setPlatform(String platform) {
         this.platform = platform;
-        return this;
     }
 
     public String getPlatformName() {
         return platformName;
     }
 
-    public RevenueSummaryRow setPlatformName(String platformName) {
+    public void setPlatformName(String platformName) {
         this.platformName = platformName;
-        return this;
     }
 
     @Override
