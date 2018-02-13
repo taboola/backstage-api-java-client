@@ -100,6 +100,14 @@ public class Backstage {
         return reportsService;
     }
 
+    public AdvertiserReportsService advertiserReportsService() {
+        return reportsService;
+    }
+
+    public PublisherReportsService publisherReportsService() {
+        return reportsService;
+    }
+
     public AccountsService accountsService() {
         return accountsService;
     }
