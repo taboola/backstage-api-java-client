@@ -213,7 +213,6 @@ public class RevenueSummaryRow {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(pageViews, pageViewsWithAdsPct, pageViewsWithAds, ctr, clicks, adCpc, adRpm, adRevenue, currency, date, dateEndPeriod, pateType, placement, publisher, publisherName, country, countryName, platform, platformName);
     }
 

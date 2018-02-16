@@ -252,7 +252,6 @@ public class VisitValueRow {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(visits, bounceRate, viewsVisit, pageViews, pageViewsWithAdsPct, adRpm, adVisitRpm, adRevenue, currency, date, dateEndPeriod, referralDomain, landingPage, landingPageTitle, landingPageUrl, landingPageThumb, pageType, country, platform, trackingCodeSourceMedium, trackingCodeCampaign, trackingCodeCustom, referralTrackingCodes);
     }
 

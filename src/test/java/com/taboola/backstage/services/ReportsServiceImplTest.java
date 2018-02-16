@@ -50,7 +50,7 @@ public class ReportsServiceImplTest extends BackstageTestBase {
         when(advertiserReportMock.getCampaignSummary(auth.getToken().getAccessTokenForHeader(), "accountId",
                             CampaignSummaryDimensions.DAY.getName(), dateStr, dateStr, Collections.emptyMap())).thenReturn(expected);
 
-        CampaignSummaryReport actual = testInstance.getCampaignSummeryReport(auth, "accountId", date, date, CampaignSummaryDimensions.DAY);
+        CampaignSummaryReport actual = testInstance.getCampaignSummaryReport(auth, "accountId", date, date, CampaignSummaryDimensions.DAY);
         assertNotNull("Missing report", actual);
         assertEquals("Invalid timezone", expected.getTimezone(), actual.getTimezone());
         assertEquals("Invalid last used rawdata update time", expected.getLastUsedRawdataUpdateTime(), actual.getLastUsedRawdataUpdateTime());

@@ -162,7 +162,6 @@ public class RecirculationSummaryRow {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(pageViews, ctr, clicks, averageViewsAfterClick, date, dateEndPeriod, pateType, placement, publisher, publisherName, country, countryName, platform, platformName);
     }
 

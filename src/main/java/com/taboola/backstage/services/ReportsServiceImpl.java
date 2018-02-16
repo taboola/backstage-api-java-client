@@ -50,12 +50,12 @@ public class ReportsServiceImpl implements ReportsService {
     }
 
     @Override
-    public CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate, CampaignSummaryDimensions dimension) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
-        return getCampaignSummeryReport(auth, accountId, startDate, endDate, dimension, Collections.emptyMap());
+    public CampaignSummaryReport getCampaignSummaryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate, CampaignSummaryDimensions dimension) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return getCampaignSummaryReport(auth, accountId, startDate, endDate, dimension, Collections.emptyMap());
     }
 
     @Override
-    public CampaignSummaryReport getCampaignSummeryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
+    public CampaignSummaryReport getCampaignSummaryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
                                                           CampaignSummaryDimensions dimension, Map<CampaignSummaryOptionalFilters, String> filters) {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         //TODO verify correct use of filters based on spec and save HTTP call
