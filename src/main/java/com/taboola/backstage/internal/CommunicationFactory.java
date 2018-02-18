@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.taboola.backstage.internal.config.CommunicationConfig;
+import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -23,8 +24,6 @@ import java.util.concurrent.TimeUnit;
  */
 public final class CommunicationFactory {
 
-    private static final Logger logger = LogManager.getLogger(CommunicationFactory.class);
-
     private final ObjectMapper objectMapper;
 
     private final BackstageAuthenticationEndpoint authService;
@@ -39,8 +38,12 @@ public final class CommunicationFactory {
     public CommunicationFactory(CommunicationConfig config) {
         this.objectMapper = createObjectMapper();
 
-        Retrofit retrofit = createRetrofit(config);
-        this.authService = retrofit.create(BackstageAuthenticationEndpoint.class);
+        Retrofit.Builder retrofitBuilder = createRetrofitBuilder(config);
+
+        Retrofit authRetrofit = retrofitBuilder.baseUrl(config.getAuthenticationBaseUrl()).build();
+        this.authService = authRetrofit.create(BackstageAuthenticationEndpoint.class);
+
+        Retrofit retrofit = retrofitBuilder.baseUrl(config.getBackstageBaseUrl()).build();
         this.campaignsService = retrofit.create(BackstageCampaignsEndpoint.class);
         this.accountService = retrofit.create(BackstageAccountEndpoint.class);
         this.campaignItemService = retrofit.create(BackstageCampaignItemsEndpoint.class);
@@ -58,31 +61,34 @@ public final class CommunicationFactory {
         return objectMapper;
     }
 
-    private Retrofit createRetrofit(CommunicationConfig config) {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(logger::info);
+    private HttpLoggingInterceptor createLoggingInterceptor(CommunicationConfig config) {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new CommunicationInterceptor());
         if(config.isDebug()) {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         } else {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         }
 
-        //TODO add ability to start retrofit2 in mock mode {option retrofit-mock}
+        return loggingInterceptor;
+    }
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                                    //TODO use global connection pool to prevent OkHttpClient default behaviour from creating too many file descriptors when performing async calls
-                                    .addInterceptor(loggingInterceptor)
-                                    .addInterceptor(new UserAgentInterceptor(config.getUserAgent()))
-                                    .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
-                                    .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
-                                    .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
-                                    .build();
-
+    private Retrofit.Builder createRetrofitBuilder(CommunicationConfig config) {
         return new Retrofit.Builder()
-                            .baseUrl(config.getBackstageBaseUrl())
+                            //TODO add ability to start retrofit2 in mock mode {option retrofit-mock}
                             .addConverterFactory(StringConverterFactory.create())
                             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                             .addCallAdapterFactory(SynchronousCallAdapterFactory.create(objectMapper))
-                            .client(client)
+                            .client(createOkHttpClient(config));
+    }
+
+    private OkHttpClient createOkHttpClient(CommunicationConfig config) {
+        return new OkHttpClient.Builder()
+                            //TODO use global connection pool to prevent OkHttpClient default behaviour from creating too many file descriptors when performing async calls
+                            .addInterceptor(createLoggingInterceptor(config))
+                            .addInterceptor(new UserAgentInterceptor(config.getUserAgent()))
+                            .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
+                            .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
+                            .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
                             .build();
     }
 

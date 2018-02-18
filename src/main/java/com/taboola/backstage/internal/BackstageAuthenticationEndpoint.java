@@ -13,13 +13,13 @@ import retrofit2.http.*;
  */
 public interface BackstageAuthenticationEndpoint {
 
-    @POST("/backstage/oauth/token")
+    @POST("oauth/token")
     @FormUrlEncoded
     Token getAuthToken(@Field("client_id") String clientId,
                              @Field("client_secret") String clientSecret,
                              @Field("grant_type") String grantType) throws BackstageAPIException;
 
-    @POST("/backstage/oauth/token")
+    @POST("oauth/token")
     @FormUrlEncoded
     Token getAuthToken(@Field("client_id") String clientId,
                              @Field("client_secret") String clientSecret,

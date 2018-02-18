@@ -8,16 +8,18 @@ package com.taboola.backstage.internal.config;
  */
 public class CommunicationConfig {
 
-    private String backstageBaseUrl;
-    private long connectionTimeoutMillis;
-    private long readTimeoutMillis;
-    private long writeTimeoutMillis;
-    private String userAgent;
-    private boolean debug;
+    private final String backstageBaseUrl;
+    private final String authenticationBaseUrl;
+    private final long connectionTimeoutMillis;
+    private final long readTimeoutMillis;
+    private final long writeTimeoutMillis;
+    private final String userAgent;
+    private final boolean debug;
 
-    public CommunicationConfig(String backstageBaseUrl, Long connectionTimeoutMillis, Long readTimeoutMillis,
+    public CommunicationConfig(String backstageBaseUrl, String authenticationBaseUrl, Long connectionTimeoutMillis, Long readTimeoutMillis,
                                Long writeTimeoutMillis, String userAgent, boolean debug) {
         this.backstageBaseUrl = backstageBaseUrl;
+        this.authenticationBaseUrl = authenticationBaseUrl;
         this.connectionTimeoutMillis = connectionTimeoutMillis;
         this.readTimeoutMillis = readTimeoutMillis;
         this.writeTimeoutMillis = writeTimeoutMillis;
@@ -49,10 +51,15 @@ public class CommunicationConfig {
         return debug;
     }
 
+    public String getAuthenticationBaseUrl() {
+        return authenticationBaseUrl;
+    }
+
     @Override
     public String toString() {
         return "CommunicationConfig{" +
         "backstageBaseUrl='" + backstageBaseUrl + '\'' +
+        ", authenticationBaseUrl='" + authenticationBaseUrl + '\'' +
         ", connectionTimeoutMillis=" + connectionTimeoutMillis +
         ", readTimeoutMillis=" + readTimeoutMillis +
         ", writeTimeoutMillis=" + writeTimeoutMillis +
