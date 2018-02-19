@@ -31,6 +31,7 @@ public class CommunicationFactoryTest extends BackstageTestBase {
         Assert.assertNotNull("Missing service instance", testInstance.getCampaignsService());
         Assert.assertNotNull("Missing service instance", testInstance.getDictionaryService());
         Assert.assertNotNull("Missing service instance", testInstance.getMediaReportsService());
+        Assert.assertNotNull("Missing service instance", testInstance.getPublisherReportsService());
     }
 
 

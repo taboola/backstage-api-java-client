@@ -9,8 +9,7 @@ import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
