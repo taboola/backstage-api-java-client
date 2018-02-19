@@ -1,6 +1,7 @@
 package com.taboola.backstage;
 
 import com.taboola.backstage.model.Account;
+import com.taboola.backstage.model.Report;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.ClientCredentialAuthenticationDetails;
 import com.taboola.backstage.model.auth.PasswordAuthenticationDetails;
@@ -11,9 +12,12 @@ import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
-import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
 
 /**
  * Created by vladi
@@ -84,8 +88,18 @@ public abstract class BackstageTestBase {
         return factory.manufacturePojo(Resource.class);
     }
 
-    protected TopCampaignContentReport generateDummyTopCampaignContentReport() {
-        return factory.manufacturePojo(TopCampaignContentReport.class);
+    protected <REPORT extends Report<ROW>, ROW> REPORT generateDummyReport(Class<REPORT> reportClass, Class<ROW> rowClass, int numOfRandomRows) throws IllegalAccessException, InstantiationException {
+        REPORT report = reportClass.newInstance();
+
+        Collection<ROW> rows = new LinkedList<>();
+        for(int i = 0 ; i < numOfRandomRows ; i++) {
+            rows.add(factory.manufacturePojo(rowClass));
+        }
+
+        report.setResults(rows);
+        report.setLastUsedRawdataUpdateTime(new Date().toString());
+        report.setTimezone("EST");
+        return report;
     }
 
     protected PostalTargeting generateDummyPostalCodeTargeting() {

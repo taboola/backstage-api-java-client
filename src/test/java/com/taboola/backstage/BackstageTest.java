@@ -21,5 +21,8 @@ public class BackstageTest extends BackstageTestBase {
         Assert.assertNotNull("Missing service instance", testInstance.campaignsService());
         Assert.assertNotNull("Missing service instance", testInstance.dictionaryService());
         Assert.assertNotNull("Missing service instance", testInstance.reportsService());
+        Assert.assertNotNull("Missing service instance", testInstance.advertiserReportsService());
+        Assert.assertNotNull("Missing service instance", testInstance.publisherReportsService());
+        Assert.assertNotNull("Missing service instance", testInstance.userService());
     }
 }

@@ -100,6 +100,14 @@ public class Backstage {
         return reportsService;
     }
 
+    public AdvertiserReportsService advertiserReportsService() {
+        return reportsService;
+    }
+
+    public PublisherReportsService publisherReportsService() {
+        return reportsService;
+    }
+
     public AccountsService accountsService() {
         return accountsService;
     }
@@ -167,7 +175,7 @@ public class Backstage {
                 new UserServiceImpl(communicator.getAccountService()),
                 new CampaignItemsServiceImpl(performClientValidations, communicator.getCampaignItemService()),
                 new DictionaryServiceImpl(communicator.getDictionaryService()),
-                new ReportsServiceImpl(communicator.getMediaReportsService()),
+                new ReportsServiceImpl(communicator.getMediaReportsService(), communicator.getPublisherReportsService()),
                 new AccountsServiceImpl(communicator.getAccountService()),
                 new CampaignPostalTargetingServiceImpl(performClientValidations, communicator.getCampaignPostalCodeTargeting())
             );
