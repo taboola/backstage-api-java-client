@@ -8,6 +8,6 @@ package com.taboola.backstage.internal;
  */
 class BackstagePaths {
 
-    static final String BACKSTAGE_API_PATH_PREFIX = "/backstage/api/1.0";
+    static final String BACKSTAGE_API_PATH_PREFIX = "api/1.0";
 
 }

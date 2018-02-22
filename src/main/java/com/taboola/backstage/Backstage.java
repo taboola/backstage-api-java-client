@@ -119,10 +119,12 @@ public class Backstage {
     //TODO support async services
 
     public static class BackstageBuilder {
-        private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com";
+        private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
+        private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
 
         private String baseUrl;
+        private String authBaseUrl;
         private String userAgent;
         private Long writeTimeoutMillis;
         private Long connectionTimeoutMillis;
@@ -132,6 +134,11 @@ public class Backstage {
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
+            return this;
+        }
+
+        public BackstageBuilder setAuthBaseUrl(String authBaseUrl) {
+            this.authBaseUrl = authBaseUrl;
             return this;
         }
 
@@ -167,7 +174,7 @@ public class Backstage {
 
         public Backstage build() {
             organizeState();
-            CommunicationConfig config = new CommunicationConfig(baseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent, debug);
+            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
             return new Backstage(
                 new CampaignsServiceImpl(performClientValidations, communicator.getCampaignsService()),
@@ -184,6 +191,10 @@ public class Backstage {
         private void organizeState() {
             if(baseUrl == null) {
                 baseUrl = DEFAULT_BACKSTAGE_HOST;
+            }
+
+            if(authBaseUrl == null) {
+                authBaseUrl = DEFAULT_AUTH_BACKSTAGE_HOST;
             }
 
             if(connectionTimeoutMillis == null) {

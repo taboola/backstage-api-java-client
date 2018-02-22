@@ -18,7 +18,7 @@ public class CommunicationFactoryTest extends BackstageTestBase {
 
     @Before
     public void beforeTest() {
-        CommunicationConfig config = new CommunicationConfig("http://localhost", 1L, 1L, 1L, "Dummy-Agent", true);
+        CommunicationConfig config = new CommunicationConfig("http://localhost", "http://localhost", 1L, 1L, 1L, "Dummy-Agent", true);
         testInstance = new CommunicationFactory(config);
     }
 
@@ -31,6 +31,7 @@ public class CommunicationFactoryTest extends BackstageTestBase {
         Assert.assertNotNull("Missing service instance", testInstance.getCampaignsService());
         Assert.assertNotNull("Missing service instance", testInstance.getDictionaryService());
         Assert.assertNotNull("Missing service instance", testInstance.getMediaReportsService());
+        Assert.assertNotNull("Missing service instance", testInstance.getPublisherReportsService());
     }
 
 
