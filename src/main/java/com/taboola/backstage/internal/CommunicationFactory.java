@@ -34,15 +34,18 @@ public final class CommunicationFactory {
     private final BackstagePublisherReportsEndpoint publisherReportsService;
     private final BackstagePostalTargetingEndpoint campaignPostalCodeTargeting;
 
+    private final Retrofit retrofit;
+    private final Retrofit authRetrofit;
+
     public CommunicationFactory(CommunicationConfig config) {
         this.objectMapper = createObjectMapper();
 
         Retrofit.Builder retrofitBuilder = createRetrofitBuilder(config);
 
-        Retrofit authRetrofit = retrofitBuilder.baseUrl(config.getAuthenticationBaseUrl()).build();
+        this.authRetrofit = retrofitBuilder.baseUrl(config.getAuthenticationBaseUrl()).build();
         this.authService = authRetrofit.create(BackstageAuthenticationEndpoint.class);
 
-        Retrofit retrofit = retrofitBuilder.baseUrl(config.getBackstageBaseUrl()).build();
+        this.retrofit = retrofitBuilder.baseUrl(config.getBackstageBaseUrl()).build();
         this.campaignsService = retrofit.create(BackstageCampaignsEndpoint.class);
         this.accountService = retrofit.create(BackstageAccountEndpoint.class);
         this.campaignItemService = retrofit.create(BackstageCampaignItemsEndpoint.class);
@@ -89,6 +92,14 @@ public final class CommunicationFactory {
                             .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
                             .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
                             .build();
+    }
+
+    public <E> E createAuthEndpoint(Class<E> clazz) {
+        return authRetrofit.create(clazz);
+    }
+
+    public <E> E createEndpoint(Class<E> clazz) {
+        return retrofit.create(clazz);
     }
 
     public BackstageAuthenticationEndpoint getAuthService() {

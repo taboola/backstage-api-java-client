@@ -2,6 +2,8 @@ package com.taboola.backstage;
 
 import com.taboola.backstage.internal.CommunicationFactory;
 import com.taboola.backstage.internal.config.CommunicationConfig;
+import com.taboola.backstage.plugin.BackstagePluginFactory;
+import com.taboola.backstage.plugin.BackstagePluginFactoryImpl;
 import com.taboola.backstage.services.*;
 
 /**
@@ -55,13 +57,15 @@ public class Backstage {
     private final ReportsService reportsService;
     private final AccountsService accountsService;
     private final CampaignPostalTargetingService campaignPostalCodeTargetingService;
+    private final BackstagePluginFactory pluginFactory;
 
-    private Backstage(CampaignsService campaignsService,
+    private Backstage(BackstagePluginFactory pluginFactory, CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
                       CampaignItemsService campaignItemsService, DictionaryService dictionaryService,
                       ReportsService reportsService, AccountsService accountsService,
                       CampaignPostalTargetingService campaignPostalCodeTargetingService) {
 
+        this.pluginFactory = pluginFactory;
         this.campaignsService = campaignsService;
         this.authenticationService = authenticationService;
         this.userService = userService;
@@ -114,6 +118,10 @@ public class Backstage {
 
     public CampaignPostalTargetingService campaignPostalCodeTargetingService() {
         return campaignPostalCodeTargetingService;
+    }
+
+    public BackstagePluginFactory pluginFactory() {
+        return pluginFactory;
     }
 
     //TODO support async services
@@ -177,6 +185,7 @@ public class Backstage {
             CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
             return new Backstage(
+                new BackstagePluginFactoryImpl(communicator),
                 new CampaignsServiceImpl(performClientValidations, communicator.getCampaignsService()),
                 new AuthenticationServiceImpl(communicator.getAuthService()),
                 new UserServiceImpl(communicator.getAccountService()),
