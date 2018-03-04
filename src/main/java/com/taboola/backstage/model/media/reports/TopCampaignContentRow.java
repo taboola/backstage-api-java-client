@@ -221,9 +221,9 @@ public class TopCampaignContentRow {
         ", cpm=" + cpm +
         ", spent=" + spent +
         ", currency='" + currency + '\'' +
-        ", cvr='" + cvr +
-        ", cpa='" + cpa +
-        ", actions='" + actions +
+        ", cvr=" + cvr +
+        ", cpa=" + cpa +
+        ", actions=" + actions +
         '}';
     }
 }
