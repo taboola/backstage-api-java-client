@@ -1,4 +1,4 @@
-package com.taboola.backstage.plugin;
+package com.taboola.backstage.internal.extensions;
 
 import com.taboola.backstage.internal.CommunicationFactory;
 
@@ -8,11 +8,11 @@ import com.taboola.backstage.internal.CommunicationFactory;
  * Time: 11:00 PM
  * By Taboola
  */
-public class BackstagePluginFactoryImpl implements BackstagePluginFactory {
+public class BackstageEndpointsFactoryImpl implements BackstageEndpointsFactory {
 
     private final CommunicationFactory communicationFactory;
 
-    public BackstagePluginFactoryImpl(CommunicationFactory communicationFactory) {
+    public BackstageEndpointsFactoryImpl(CommunicationFactory communicationFactory) {
         this.communicationFactory = communicationFactory;
     }
 

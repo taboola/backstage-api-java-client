@@ -1,12 +1,13 @@
-package com.taboola.backstage.plugin;
+package com.taboola.backstage.internal.extensions;
 
 /**
- * Created by vladi
- * Date: 2/25/2018
- * Time: 10:22 PM
- * By Taboola
+ * <p>
+ *   Backstage endpoints factory, creates interface implementations
+ * </p>
+ * @author vladi
+ * @version 1.0
  */
-public interface BackstagePluginFactory {
+public interface BackstageEndpointsFactory {
 
     /**
      * Creates backstage authentication endpoint

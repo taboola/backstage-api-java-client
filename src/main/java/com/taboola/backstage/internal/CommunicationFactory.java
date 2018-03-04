@@ -24,16 +24,6 @@ import java.util.concurrent.TimeUnit;
 public final class CommunicationFactory {
 
     private final ObjectMapper objectMapper;
-
-    private final BackstageAuthenticationEndpoint authService;
-    private final BackstageCampaignsEndpoint campaignsService;
-    private final BackstageAccountEndpoint accountService;
-    private final BackstageCampaignItemsEndpoint campaignItemService;
-    private final BackstageDictionaryEndpoint dictionaryService;
-    private final BackstageMediaReportsEndpoint mediaReportsService;
-    private final BackstagePublisherReportsEndpoint publisherReportsService;
-    private final BackstagePostalTargetingEndpoint campaignPostalCodeTargeting;
-
     private final Retrofit retrofit;
     private final Retrofit authRetrofit;
 
@@ -43,16 +33,7 @@ public final class CommunicationFactory {
         Retrofit.Builder retrofitBuilder = createRetrofitBuilder(config);
 
         this.authRetrofit = retrofitBuilder.baseUrl(config.getAuthenticationBaseUrl()).build();
-        this.authService = authRetrofit.create(BackstageAuthenticationEndpoint.class);
-
         this.retrofit = retrofitBuilder.baseUrl(config.getBackstageBaseUrl()).build();
-        this.campaignsService = retrofit.create(BackstageCampaignsEndpoint.class);
-        this.accountService = retrofit.create(BackstageAccountEndpoint.class);
-        this.campaignItemService = retrofit.create(BackstageCampaignItemsEndpoint.class);
-        this.dictionaryService = retrofit.create(BackstageDictionaryEndpoint.class);
-        this.mediaReportsService = retrofit.create(BackstageMediaReportsEndpoint.class);
-        this.publisherReportsService = retrofit.create(BackstagePublisherReportsEndpoint.class);
-        this.campaignPostalCodeTargeting = retrofit.create(BackstagePostalTargetingEndpoint.class);
     }
 
     private ObjectMapper createObjectMapper() {
@@ -100,37 +81,5 @@ public final class CommunicationFactory {
 
     public <E> E createEndpoint(Class<E> clazz) {
         return retrofit.create(clazz);
-    }
-
-    public BackstageAuthenticationEndpoint getAuthService() {
-        return authService;
-    }
-
-    public BackstageCampaignsEndpoint getCampaignsService() {
-        return campaignsService;
-    }
-
-    public BackstageAccountEndpoint getAccountService() {
-        return accountService;
-    }
-
-    public BackstageCampaignItemsEndpoint getCampaignItemService() {
-        return campaignItemService;
-    }
-
-    public BackstageDictionaryEndpoint getDictionaryService() {
-        return dictionaryService;
-    }
-
-    public BackstageMediaReportsEndpoint getMediaReportsService() {
-        return mediaReportsService;
-    }
-
-    public BackstagePostalTargetingEndpoint getCampaignPostalCodeTargeting() {
-        return campaignPostalCodeTargeting;
-    }
-
-    public BackstagePublisherReportsEndpoint getPublisherReportsService() {
-        return publisherReportsService;
     }
 }

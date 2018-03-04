@@ -1,9 +1,11 @@
 package com.taboola.backstage;
 
-import com.taboola.backstage.internal.CommunicationFactory;
+import com.taboola.backstage.internal.*;
 import com.taboola.backstage.internal.config.CommunicationConfig;
-import com.taboola.backstage.plugin.BackstagePluginFactory;
-import com.taboola.backstage.plugin.BackstagePluginFactoryImpl;
+import com.taboola.backstage.internal.extensions.BackstageEndpointsFactory;
+import com.taboola.backstage.internal.extensions.BackstageEndpointsFactoryImpl;
+import com.taboola.backstage.internal.extensions.BackstageExtensionUtils;
+import com.taboola.backstage.internal.extensions.BackstageExtensionUtilsImpl;
 import com.taboola.backstage.services.*;
 
 /**
@@ -57,15 +59,15 @@ public class Backstage {
     private final ReportsService reportsService;
     private final AccountsService accountsService;
     private final CampaignPostalTargetingService campaignPostalCodeTargetingService;
-    private final BackstagePluginFactory pluginFactory;
+    private final BackstageExtensionUtils extensionUtils;
 
-    private Backstage(BackstagePluginFactory pluginFactory, CampaignsService campaignsService,
+    private Backstage(BackstageExtensionUtils extensionUtils, CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
                       CampaignItemsService campaignItemsService, DictionaryService dictionaryService,
                       ReportsService reportsService, AccountsService accountsService,
                       CampaignPostalTargetingService campaignPostalCodeTargetingService) {
 
-        this.pluginFactory = pluginFactory;
+        this.extensionUtils = extensionUtils;
         this.campaignsService = campaignsService;
         this.authenticationService = authenticationService;
         this.userService = userService;
@@ -120,8 +122,8 @@ public class Backstage {
         return campaignPostalCodeTargetingService;
     }
 
-    public BackstagePluginFactory pluginFactory() {
-        return pluginFactory;
+    public BackstageExtensionUtils extensionUtils() {
+        return extensionUtils;
     }
 
     //TODO support async services
@@ -184,16 +186,17 @@ public class Backstage {
             organizeState();
             CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
+            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsFactoryImpl(communicator);
             return new Backstage(
-                new BackstagePluginFactoryImpl(communicator),
-                new CampaignsServiceImpl(performClientValidations, communicator.getCampaignsService()),
-                new AuthenticationServiceImpl(communicator.getAuthService()),
-                new UserServiceImpl(communicator.getAccountService()),
-                new CampaignItemsServiceImpl(performClientValidations, communicator.getCampaignItemService()),
-                new DictionaryServiceImpl(communicator.getDictionaryService()),
-                new ReportsServiceImpl(communicator.getMediaReportsService(), communicator.getPublisherReportsService()),
-                new AccountsServiceImpl(communicator.getAccountService()),
-                new CampaignPostalTargetingServiceImpl(performClientValidations, communicator.getCampaignPostalCodeTargeting())
+                new BackstageExtensionUtilsImpl(endpointsFactory),
+                new CampaignsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignsEndpoint.class)),
+                new AuthenticationServiceImpl(endpointsFactory.createAuthEndpoint(BackstageAuthenticationEndpoint.class)),
+                new UserServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
+                new CampaignItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignItemsEndpoint.class)),
+                new DictionaryServiceImpl(endpointsFactory.createEndpoint(BackstageDictionaryEndpoint.class)),
+                new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class)),
+                new AccountsServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
+                new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class))
             );
         }
 
