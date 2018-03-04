@@ -29,6 +29,7 @@ public class Campaign {
     protected Double dailyCap;
     protected DailyAdDeliveryModel dailyAdDeliveryModel;
     protected PublisherBidModifier publisherBidModifier;
+    protected TrafficAllocationMode trafficAllocationMode;
     @Required
     protected Double spendingLimit;
     @Required
@@ -143,6 +144,10 @@ public class Campaign {
         return status;
     }
 
+    public TrafficAllocationMode getTrafficAllocationMode() {
+        return trafficAllocationMode;
+    }
+
     @Override
     public String toString() {
         return "Campaign{" +
@@ -169,6 +174,7 @@ public class Campaign {
         ", isActive=" + isActive +
         ", spent=" + spent +
         ", status='" + status + '\'' +
+        ", trafficAllocationMode='" + trafficAllocationMode + '\'' +
         '}';
     }
 
@@ -199,11 +205,12 @@ public class Campaign {
         Objects.equals(approvalState, campaign.approvalState) &&
         Objects.equals(isActive, campaign.isActive) &&
         Objects.equals(spent, campaign.spent) &&
+        Objects.equals(trafficAllocationMode, campaign.trafficAllocationMode) &&
         Objects.equals(status, campaign.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, postalCodeTargeting, comments, startDate, endDate, approvalState, isActive, spent, status);
+        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, postalCodeTargeting, comments, startDate, endDate, approvalState, isActive, spent, status, trafficAllocationMode);
     }
 }

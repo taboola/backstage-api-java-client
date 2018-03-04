@@ -100,4 +100,9 @@ public class CampaignOperation extends Campaign {
         isActive = active;
         return this;
     }
+
+    public CampaignOperation setTrafficAllocationMode(TrafficAllocationMode trafficAllocationMode) {
+        this.trafficAllocationMode = trafficAllocationMode;
+        return this;
+    }
 }
