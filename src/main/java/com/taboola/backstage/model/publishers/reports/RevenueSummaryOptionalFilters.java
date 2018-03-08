@@ -11,7 +11,7 @@ import com.taboola.backstage.model.ReportFilter;
 public enum RevenueSummaryOptionalFilters implements ReportFilter {
 
     PAGE_TYPE("page_type"),
-    PACEMENT("placement"),
+    PLACEMENT("placement"),
     COUNTRY("country"),
     PLATFORM("platform");
 
