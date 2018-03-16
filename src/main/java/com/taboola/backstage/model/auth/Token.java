@@ -10,6 +10,8 @@ import java.util.Objects;
  */
 public class Token {
 
+    private static final int MILLISECONDS_IN_SINGLE_SECOND = 1000;
+    
     private String accessToken;
     private String refreshToken;
     private String tokenType;
@@ -57,7 +59,8 @@ public class Token {
     }
 
     public boolean isExpired() {
-        return System.currentTimeMillis() >= (creationTimestamp + (expiresIn * 1000));
+        Objects.requireNonNull(expiresIn, "Expires in is null");
+        return System.currentTimeMillis() >= (creationTimestamp + (expiresIn * MILLISECONDS_IN_SINGLE_SECOND));
     }
 
     @Override
