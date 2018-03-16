@@ -24,8 +24,8 @@ public class CommunicationFactoryTest extends BackstageTestBase {
 
     @Test
     public void testHappyFlowServices() {
-        Assert.assertNotNull("Missing service instance", testInstance.createEndpoint(BackstageAccountEndpoint.class));
-        Assert.assertNotNull("Missing service instance", testInstance.createAuthEndpoint(BackstageAuthenticationEndpoint.class));
+        Assert.assertNotNull("Missing service instance", testInstance.createRetrofitEndpoint(BackstageAccountEndpoint.class));
+        Assert.assertNotNull("Missing service instance", testInstance.createRetrofitAuthEndpoint(BackstageAuthenticationEndpoint.class));
     }
 
 

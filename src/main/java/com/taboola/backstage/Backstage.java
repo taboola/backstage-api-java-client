@@ -2,10 +2,10 @@ package com.taboola.backstage;
 
 import com.taboola.backstage.internal.*;
 import com.taboola.backstage.internal.config.CommunicationConfig;
-import com.taboola.backstage.internal.extensions.BackstageEndpointsFactory;
-import com.taboola.backstage.internal.extensions.BackstageEndpointsFactoryImpl;
-import com.taboola.backstage.internal.extensions.BackstageExtensionUtils;
-import com.taboola.backstage.internal.extensions.BackstageExtensionUtilsImpl;
+import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
+import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
+import com.taboola.backstage.internal.BackstageInternalTools;
+import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.services.*;
 
 /**
@@ -59,15 +59,15 @@ public class Backstage {
     private final ReportsService reportsService;
     private final AccountsService accountsService;
     private final CampaignPostalTargetingService campaignPostalCodeTargetingService;
-    private final BackstageExtensionUtils extensionUtils;
+    private final BackstageInternalTools internalTools;
 
-    private Backstage(BackstageExtensionUtils extensionUtils, CampaignsService campaignsService,
+    private Backstage(BackstageInternalTools internalTools, CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
                       CampaignItemsService campaignItemsService, DictionaryService dictionaryService,
                       ReportsService reportsService, AccountsService accountsService,
                       CampaignPostalTargetingService campaignPostalCodeTargetingService) {
 
-        this.extensionUtils = extensionUtils;
+        this.internalTools = internalTools;
         this.campaignsService = campaignsService;
         this.authenticationService = authenticationService;
         this.userService = userService;
@@ -122,8 +122,8 @@ public class Backstage {
         return campaignPostalCodeTargetingService;
     }
 
-    public BackstageExtensionUtils extensionUtils() {
-        return extensionUtils;
+    public BackstageInternalTools internalTools() {
+        return internalTools;
     }
 
     //TODO support async services
@@ -186,9 +186,9 @@ public class Backstage {
             organizeState();
             CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
-            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsFactoryImpl(communicator);
+            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
             return new Backstage(
-                new BackstageExtensionUtilsImpl(endpointsFactory),
+                new BackstageInternalToolsImpl(endpointsFactory),
                 new CampaignsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignsEndpoint.class)),
                 new AuthenticationServiceImpl(endpointsFactory.createAuthEndpoint(BackstageAuthenticationEndpoint.class)),
                 new UserServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),

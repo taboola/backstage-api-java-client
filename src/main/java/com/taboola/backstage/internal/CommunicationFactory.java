@@ -75,11 +75,11 @@ public final class CommunicationFactory {
                             .build();
     }
 
-    public <E> E createAuthEndpoint(Class<E> clazz) {
+    public <E> E createRetrofitAuthEndpoint(Class<E> clazz) {
         return authRetrofit.create(clazz);
     }
 
-    public <E> E createEndpoint(Class<E> clazz) {
+    public <E> E createRetrofitEndpoint(Class<E> clazz) {
         return retrofit.create(clazz);
     }
 }

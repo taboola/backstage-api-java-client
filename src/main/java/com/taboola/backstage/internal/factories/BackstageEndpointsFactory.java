@@ -1,11 +1,11 @@
-package com.taboola.backstage.internal.extensions;
+package com.taboola.backstage.internal.factories;
 
 /**
  * <p>
  *   Backstage endpoints factory, creates interface implementations
  * </p>
  * @author vladi
- * @version 1.0
+ * @since 1.0.2
  */
 public interface BackstageEndpointsFactory {
 
