@@ -24,32 +24,16 @@ import java.util.concurrent.TimeUnit;
 public final class CommunicationFactory {
 
     private final ObjectMapper objectMapper;
-
-    private final BackstageAuthenticationEndpoint authService;
-    private final BackstageCampaignsEndpoint campaignsService;
-    private final BackstageAccountEndpoint accountService;
-    private final BackstageCampaignItemsEndpoint campaignItemService;
-    private final BackstageDictionaryEndpoint dictionaryService;
-    private final BackstageMediaReportsEndpoint mediaReportsService;
-    private final BackstagePublisherReportsEndpoint publisherReportsService;
-    private final BackstagePostalTargetingEndpoint campaignPostalCodeTargeting;
+    private final Retrofit retrofit;
+    private final Retrofit authRetrofit;
 
     public CommunicationFactory(CommunicationConfig config) {
         this.objectMapper = createObjectMapper();
 
         Retrofit.Builder retrofitBuilder = createRetrofitBuilder(config);
 
-        Retrofit authRetrofit = retrofitBuilder.baseUrl(config.getAuthenticationBaseUrl()).build();
-        this.authService = authRetrofit.create(BackstageAuthenticationEndpoint.class);
-
-        Retrofit retrofit = retrofitBuilder.baseUrl(config.getBackstageBaseUrl()).build();
-        this.campaignsService = retrofit.create(BackstageCampaignsEndpoint.class);
-        this.accountService = retrofit.create(BackstageAccountEndpoint.class);
-        this.campaignItemService = retrofit.create(BackstageCampaignItemsEndpoint.class);
-        this.dictionaryService = retrofit.create(BackstageDictionaryEndpoint.class);
-        this.mediaReportsService = retrofit.create(BackstageMediaReportsEndpoint.class);
-        this.publisherReportsService = retrofit.create(BackstagePublisherReportsEndpoint.class);
-        this.campaignPostalCodeTargeting = retrofit.create(BackstagePostalTargetingEndpoint.class);
+        this.authRetrofit = retrofitBuilder.baseUrl(config.getAuthenticationBaseUrl()).build();
+        this.retrofit = retrofitBuilder.baseUrl(config.getBackstageBaseUrl()).build();
     }
 
     private ObjectMapper createObjectMapper() {
@@ -91,35 +75,11 @@ public final class CommunicationFactory {
                             .build();
     }
 
-    public BackstageAuthenticationEndpoint getAuthService() {
-        return authService;
+    public <E> E createRetrofitAuthEndpoint(Class<E> clazz) {
+        return authRetrofit.create(clazz);
     }
 
-    public BackstageCampaignsEndpoint getCampaignsService() {
-        return campaignsService;
-    }
-
-    public BackstageAccountEndpoint getAccountService() {
-        return accountService;
-    }
-
-    public BackstageCampaignItemsEndpoint getCampaignItemService() {
-        return campaignItemService;
-    }
-
-    public BackstageDictionaryEndpoint getDictionaryService() {
-        return dictionaryService;
-    }
-
-    public BackstageMediaReportsEndpoint getMediaReportsService() {
-        return mediaReportsService;
-    }
-
-    public BackstagePostalTargetingEndpoint getCampaignPostalCodeTargeting() {
-        return campaignPostalCodeTargeting;
-    }
-
-    public BackstagePublisherReportsEndpoint getPublisherReportsService() {
-        return publisherReportsService;
+    public <E> E createRetrofitEndpoint(Class<E> clazz) {
+        return retrofit.create(clazz);
     }
 }

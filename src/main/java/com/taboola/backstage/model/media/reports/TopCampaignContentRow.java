@@ -25,6 +25,9 @@ public class TopCampaignContentRow {
     private Double cpm;
     private Double spent;
     private String currency;
+    private Long actions;
+    private Double cpa;
+    private Double cvr;
 
     public String getItem() {
         return item;
@@ -146,6 +149,30 @@ public class TopCampaignContentRow {
         this.currency = currency;
     }
 
+    public Long getActions() {
+        return actions;
+    }
+
+    public void setActions(Long actions) {
+        this.actions = actions;
+    }
+
+    public Double getCpa() {
+        return cpa;
+    }
+
+    public void setCpa(Double cpa) {
+        this.cpa = cpa;
+    }
+
+    public Double getCvr() {
+        return cvr;
+    }
+
+    public void setCvr(Double cvr) {
+        this.cvr = cvr;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -165,12 +192,15 @@ public class TopCampaignContentRow {
         Objects.equals(cpc, that.cpc) &&
         Objects.equals(cpm, that.cpm) &&
         Objects.equals(spent, that.spent) &&
+        Objects.equals(cvr, that.cvr) &&
+        Objects.equals(cpa, that.cpa) &&
+        Objects.equals(actions, that.actions) &&
         Objects.equals(currency, that.currency);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider, contentProviderName, impressions, ctr, clicks, cpc, cpm, spent, currency);
+        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider, contentProviderName, impressions, ctr, clicks, cpc, cpm, spent, currency, cvr, cpa, actions);
     }
 
     @Override
@@ -191,6 +221,9 @@ public class TopCampaignContentRow {
         ", cpm=" + cpm +
         ", spent=" + spent +
         ", currency='" + currency + '\'' +
+        ", cvr=" + cvr +
+        ", cpa=" + cpa +
+        ", actions=" + actions +
         '}';
     }
 }
