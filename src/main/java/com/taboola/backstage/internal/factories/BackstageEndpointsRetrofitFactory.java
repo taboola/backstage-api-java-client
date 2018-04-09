@@ -25,14 +25,14 @@ public class BackstageEndpointsRetrofitFactory implements BackstageEndpointsFact
     @Override
     public <A> A createAuthEndpoint(Class<A> clazz) {
         Objects.requireNonNull(clazz, "clazz");
-        logger.debug("creating authentication endpoint using retrofit for class [{}]", clazz);
+        logger.debug("creating authentication endpoint using retrofit for class [{}]", clazz::toString);
         return communicationFactory.createRetrofitAuthEndpoint(clazz);
     }
 
     @Override
     public <E> E createEndpoint(Class<E> clazz) {
         Objects.requireNonNull(clazz, "clazz");
-        logger.debug("creating endpoint using retrofit for class [{}]", clazz);
+        logger.debug("creating endpoint using retrofit for class [{}]", clazz::toString);
         return communicationFactory.createRetrofitEndpoint(clazz);
     }
 }
