@@ -6,6 +6,8 @@ import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.auth.*;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
 
+import java.util.Objects;
+
 /**
  * Created by vladi
  * Date: 10/14/2017
@@ -35,8 +37,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public BackstageAuthentication reAuthenticate(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         AuthenticationDetails details = auth.getDetails();
+        if(details == null) {
+            throw new IllegalStateException("Can't reAuthenticate without authentication details");
+        }
+
+        GrantType grantType = details.getGrantType();
+        if(grantType == null) {
+            throw new IllegalStateException("Unknown grant type");
+        }
+
         //In order to save some usability pain paying here with down cast...
-        switch (details.getGrantType()) {
+        switch (grantType) {
             case CLIENT_CREDENTIALS:
                 if(details instanceof ClientCredentialAuthenticationDetails) {
                     ClientCredentialAuthenticationDetails clientCredentialDetails = (ClientCredentialAuthenticationDetails) details;
@@ -56,6 +67,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             default:
                 throw new IllegalStateException("Unknown grant type");
         }
+    }
+
+    @Override
+    public BackstageAuthentication authenticate(String accessToken) {
+        Objects.requireNonNull(accessToken, "accessToken");
+        Token token = new Token();
+        token.setAccessToken(accessToken);
+        return new BackstageAuthentication(null, token);
     }
 
     @Override

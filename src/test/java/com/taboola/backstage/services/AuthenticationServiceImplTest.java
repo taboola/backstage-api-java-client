@@ -148,4 +148,22 @@ public class AuthenticationServiceImplTest extends BackstageTestBase {
 
         testInstance.reAuthenticate(invalidInstance);
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void testInvalidGrantType_expectingException() {
+        BackstageAuthentication invalidInstance = new BackstageAuthentication(null, new Token());
+        testInstance.reAuthenticate(invalidInstance);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testNullAuthenticationDetails_expectingException() {
+        BackstageAuthentication invalidInstance = new BackstageAuthentication(new AuthenticationDetails(GrantType.CLIENT_CREDENTIALS) {
+            @Override
+            public GrantType getGrantType() {
+               return null;
+            }
+        }, new Token());
+
+        testInstance.reAuthenticate(invalidInstance);
+    }
 }
