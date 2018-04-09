@@ -62,7 +62,7 @@ public interface AuthenticationService {
 
     /**
      * Creates {@link BackstageAuthentication} based on received access token string.
-     * <p>Keep in mind after such authentication it is NOT possible to use {@link #reAuthenticate(BackstageAuthentication) reAuthenticate} method.</
+     * <p>Keep in mind after such authentication it is NOT possible to use {@link #reAuthenticate(BackstageAuthentication) reAuthenticate} method.</p>
      *
      * @param accessToken supplied by authentication {@link com.taboola.backstage.model.auth.Token Token}
      * @return {@link BackstageAuthentication} object which is being required by all services
