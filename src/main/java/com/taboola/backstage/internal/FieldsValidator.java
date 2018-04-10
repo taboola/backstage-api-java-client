@@ -60,7 +60,7 @@ public class FieldsValidator {
                         }
 
                     } catch (IllegalAccessException e) {
-                        logger.error("Failed to pull field data from field [{}] for annotation [{}]", field.getName(), annotation);
+                        logger.error("Failed to pull field data from field [{}] for annotation [{}]", field.getName(), annotation.toString());
                     }
                 }
             }
