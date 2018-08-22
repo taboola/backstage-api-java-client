@@ -184,7 +184,8 @@ public class Backstage {
 
         public Backstage build() {
             organizeState();
-            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, userAgent, debug);
+            String finalUserAgent = String.format("Backstage/%s (%s)", "1.0.2", userAgent);
+            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, finalUserAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
             BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
             return new Backstage(
