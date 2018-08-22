@@ -132,6 +132,7 @@ public class Backstage {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
+        private static final String VERSION = "1.0.2";
 
         private String baseUrl;
         private String authBaseUrl;
@@ -184,7 +185,7 @@ public class Backstage {
 
         public Backstage build() {
             organizeState();
-            String finalUserAgent = String.format("Backstage/%s (%s)", "1.0.2", userAgent);
+            String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
             CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, finalUserAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
             BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
