@@ -42,6 +42,8 @@ public class Campaign {
     @ReadOnly
     protected CampaignTargeting<String> postalCodeTargeting;
     protected String comments;
+    protected BidType bidType;
+    protected MarketingObjective marketingObjective;
     @Final
     protected Date startDate;
     protected Date endDate;
@@ -153,6 +155,14 @@ public class Campaign {
         return trafficAllocationMode;
     }
 
+    public BidType getBidType() {
+        return bidType;
+    }
+
+    public MarketingObjective getMarketingObjective() {
+        return marketingObjective;
+    }
+
     @Override
     public String toString() {
         return "Campaign{" +
@@ -175,6 +185,8 @@ public class Campaign {
                 ", osTargeting=" + osTargeting +
                 ", postalCodeTargeting=" + postalCodeTargeting +
                 ", comments='" + comments + '\'' +
+                ", bidType=" + bidType +
+                ", marketingObjective=" + marketingObjective +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", approvalState=" + approvalState +
@@ -208,6 +220,8 @@ public class Campaign {
                 Objects.equals(osTargeting, campaign.osTargeting) &&
                 Objects.equals(postalCodeTargeting, campaign.postalCodeTargeting) &&
                 Objects.equals(comments, campaign.comments) &&
+                bidType == campaign.bidType &&
+                marketingObjective == campaign.marketingObjective &&
                 Objects.equals(startDate, campaign.startDate) &&
                 Objects.equals(endDate, campaign.endDate) &&
                 approvalState == campaign.approvalState &&
@@ -218,8 +232,6 @@ public class Campaign {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier,
-                trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting,
-                publisherTargeting, osTargeting, postalCodeTargeting, comments, startDate, endDate, approvalState, isActive, spent, status);
+        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier, trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, osTargeting, postalCodeTargeting, comments, bidType, marketingObjective, startDate, endDate, approvalState, isActive, spent, status);
     }
 }

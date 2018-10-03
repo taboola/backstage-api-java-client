@@ -110,4 +110,14 @@ public class CampaignOperation extends Campaign {
         this.trafficAllocationMode = trafficAllocationMode;
         return this;
     }
+
+    public CampaignOperation setBidType(BidType bidType) {
+        this.bidType = bidType;
+        return this;
+    }
+
+    public CampaignOperation setBidType(MarketingObjective marketingObjective) {
+        this.marketingObjective = marketingObjective;
+        return this;
+    }
 }
