@@ -120,4 +120,28 @@ public class DictionaryServiceImplTest extends BackstageTestBase {
         assertEquals("Invalid platforms resource", results, actual);
         verify(endpointMock, times(1)).getPlatforms(any());
     }
+
+    @Test
+    public void testOperationSystem() {
+        Resource resource = generateDummyResource();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<Resource> results = new Results<>(Collections.singleton(resource));
+        when(endpointMock.getOperationSystem(auth.getToken().getAccessTokenForHeader())).thenReturn(results);
+
+        Results<Resource> actual = testInstance.getOperationSystem(auth);
+        assertEquals("Invalid operation system resource", results, actual);
+        verify(endpointMock, times(1)).getOperationSystem(any());
+    }
+
+    @Test
+    public void testOperationSystemSubCategories() {
+        Resource resource = generateDummyResource();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<Resource> results = new Results<>(Collections.singleton(resource));
+        when(endpointMock.getOperationSystemSubCategories(auth.getToken().getAccessTokenForHeader(), resource.getName())).thenReturn(results);
+
+        Results<Resource> actual = testInstance.getOperationSystemSubCategories(auth, resource.getName());
+        assertEquals("Invalid operation system sub categories resource", results, actual);
+        verify(endpointMock, times(1)).getOperationSystemSubCategories(any(), any());
+    }
 }

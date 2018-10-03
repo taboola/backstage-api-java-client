@@ -24,6 +24,7 @@ import java.util.Collection;
  *    devices only.
  *    <br> 3. Publisher Targeting (exclude only) - You can block specific publishers from
  *    serving your campaign.
+ *    <br> 4. OS Targeting - The campaign can be targeted for specific operation system
  * </p>
  *
  * Created by vladi
@@ -31,12 +32,12 @@ import java.util.Collection;
  * Time: 10:34 PM
  * By Taboola
  */
-public class CampaignTargeting {
+public class CampaignTargeting<T> {
 
     @Required
     private Type type;
     @Required
-    private Collection<String> value;
+    private Collection<T> value;
     @ReadOnly
     private String href;
 
@@ -48,11 +49,11 @@ public class CampaignTargeting {
         this.type = type;
     }
 
-    public Collection<String> getValue() {
+    public Collection<T> getValue() {
         return value;
     }
 
-    public void setValue(Collection<String> value) {
+    public void setValue(Collection<T> value) {
         this.value = value;
     }
 

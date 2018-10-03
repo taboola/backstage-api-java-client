@@ -61,23 +61,28 @@ public class CampaignOperation extends Campaign {
         return this;
     }
 
-    public CampaignOperation setCountryTargeting(CampaignTargeting countryTargeting) {
+    public CampaignOperation setCountryTargeting(CampaignTargeting<String> countryTargeting) {
         this.countryTargeting = countryTargeting;
         return this;
     }
 
-    public CampaignOperation setSubCountryTargeting(CampaignTargeting subCountryTargeting) {
+    public CampaignOperation setSubCountryTargeting(CampaignTargeting<String> subCountryTargeting) {
         this.subCountryTargeting = subCountryTargeting;
         return this;
     }
 
-    public CampaignOperation setPlatformTargeting(CampaignTargeting platformTargeting) {
+    public CampaignOperation setPlatformTargeting(CampaignTargeting<String> platformTargeting) {
         this.platformTargeting = platformTargeting;
         return this;
     }
 
-    public CampaignOperation setPublisherTargeting(CampaignTargeting publisherTargeting) {
+    public CampaignOperation setPublisherTargeting(CampaignTargeting<String> publisherTargeting) {
         this.publisherTargeting = publisherTargeting;
+        return this;
+    }
+
+    public CampaignOperation setOsTargeting(CampaignTargeting<OperationSystem> osTargeting) {
+        this.osTargeting = osTargeting;
         return this;
     }
 
