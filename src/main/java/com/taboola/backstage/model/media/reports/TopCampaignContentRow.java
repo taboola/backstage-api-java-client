@@ -28,6 +28,7 @@ public class TopCampaignContentRow {
     private Long actions;
     private Double cpa;
     private Double cvr;
+    private Double roas;
 
     public String getItem() {
         return item;
@@ -173,57 +174,68 @@ public class TopCampaignContentRow {
         this.cvr = cvr;
     }
 
+    public Double getRoas() {
+        return roas;
+    }
+
+    public TopCampaignContentRow setRoas(Double roas) {
+        this.roas = roas;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TopCampaignContentRow that = (TopCampaignContentRow) o;
         return Objects.equals(item, that.item) &&
-        Objects.equals(itemName, that.itemName) &&
-        Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
-        Objects.equals(url, that.url) &&
-        Objects.equals(campaigns, that.campaigns) &&
-        Objects.equals(campaignName, that.campaignName) &&
-        Objects.equals(contentProvider, that.contentProvider) &&
-        Objects.equals(contentProviderName, that.contentProviderName) &&
-        Objects.equals(impressions, that.impressions) &&
-        Objects.equals(ctr, that.ctr) &&
-        Objects.equals(clicks, that.clicks) &&
-        Objects.equals(cpc, that.cpc) &&
-        Objects.equals(cpm, that.cpm) &&
-        Objects.equals(spent, that.spent) &&
-        Objects.equals(cvr, that.cvr) &&
-        Objects.equals(cpa, that.cpa) &&
-        Objects.equals(actions, that.actions) &&
-        Objects.equals(currency, that.currency);
+                Objects.equals(itemName, that.itemName) &&
+                Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(campaigns, that.campaigns) &&
+                Objects.equals(campaignName, that.campaignName) &&
+                Objects.equals(contentProvider, that.contentProvider) &&
+                Objects.equals(contentProviderName, that.contentProviderName) &&
+                Objects.equals(impressions, that.impressions) &&
+                Objects.equals(ctr, that.ctr) &&
+                Objects.equals(clicks, that.clicks) &&
+                Objects.equals(cpc, that.cpc) &&
+                Objects.equals(cpm, that.cpm) &&
+                Objects.equals(spent, that.spent) &&
+                Objects.equals(currency, that.currency) &&
+                Objects.equals(actions, that.actions) &&
+                Objects.equals(cpa, that.cpa) &&
+                Objects.equals(cvr, that.cvr) &&
+                Objects.equals(roas, that.roas);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider, contentProviderName, impressions, ctr, clicks, cpc, cpm, spent, currency, cvr, cpa, actions);
+        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider, contentProviderName, impressions, ctr, clicks, cpc, cpm, spent, currency, actions, cpa, cvr, roas);
     }
 
     @Override
     public String toString() {
         return "TopCampaignContentRow{" +
-        "item='" + item + '\'' +
-        ", itemName='" + itemName + '\'' +
-        ", thumbnailUrl='" + thumbnailUrl + '\'' +
-        ", url='" + url + '\'' +
-        ", campaigns='" + campaigns + '\'' +
-        ", campaignName='" + campaignName + '\'' +
-        ", contentProvider='" + contentProvider + '\'' +
-        ", contentProviderName='" + contentProviderName + '\'' +
-        ", impressions=" + impressions +
-        ", ctr=" + ctr +
-        ", clicks=" + clicks +
-        ", cpc=" + cpc +
-        ", cpm=" + cpm +
-        ", spent=" + spent +
-        ", currency='" + currency + '\'' +
-        ", cvr=" + cvr +
-        ", cpa=" + cpa +
-        ", actions=" + actions +
-        '}';
+                "item='" + item + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", thumbnailUrl='" + thumbnailUrl + '\'' +
+                ", url='" + url + '\'' +
+                ", campaigns='" + campaigns + '\'' +
+                ", campaignName='" + campaignName + '\'' +
+                ", contentProvider='" + contentProvider + '\'' +
+                ", contentProviderName='" + contentProviderName + '\'' +
+                ", impressions=" + impressions +
+                ", ctr=" + ctr +
+                ", clicks=" + clicks +
+                ", cpc=" + cpc +
+                ", cpm=" + cpm +
+                ", spent=" + spent +
+                ", currency='" + currency + '\'' +
+                ", actions=" + actions +
+                ", cpa=" + cpa +
+                ", cvr=" + cvr +
+                ", roas=" + roas +
+                '}';
     }
 }

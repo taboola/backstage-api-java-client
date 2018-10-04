@@ -30,11 +30,13 @@ public class CampaignSummaryRow {
     private String campaignName;
     private String site;
     private String siteName;
+    private Integer siteId;
     private String country;
     private String countryName;
     private String platform;
     private String platformName;
     private BlockingLevelType blockLevel;
+    private Double roas;
 
     public Integer getImpressions() {
         return impressions;
@@ -243,67 +245,89 @@ public class CampaignSummaryRow {
         return this;
     }
 
+    public Integer getSiteId() {
+        return siteId;
+    }
+
+    public CampaignSummaryRow setSiteId(Integer siteId) {
+        this.siteId = siteId;
+        return this;
+    }
+
+    public Double getRoas() {
+        return roas;
+    }
+
+    public CampaignSummaryRow setRoas(Double roas) {
+        this.roas = roas;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CampaignSummaryRow that = (CampaignSummaryRow) o;
         return Objects.equals(impressions, that.impressions) &&
-        Objects.equals(ctr, that.ctr) &&
-        Objects.equals(clicks, that.clicks) &&
-        Objects.equals(cpc, that.cpc) &&
-        Objects.equals(cpm, that.cpm) &&
-        Objects.equals(cpaConversionRate, that.cpaConversionRate) &&
-        Objects.equals(cpaActionsNum, that.cpaActionsNum) &&
-        Objects.equals(spent, that.spent) &&
-        Objects.equals(currency, that.currency) &&
-        Objects.equals(date, that.date) &&
-        Objects.equals(dateEndPeriod, that.dateEndPeriod) &&
-        Objects.equals(contentProvider, that.contentProvider) &&
-        Objects.equals(contentProviderName, that.contentProviderName) &&
-        Objects.equals(campaignsNum, that.campaignsNum) &&
-        Objects.equals(campaign, that.campaign) &&
-        Objects.equals(campaignName, that.campaignName) &&
-        Objects.equals(site, that.site) &&
-        Objects.equals(siteName, that.siteName) &&
-        Objects.equals(country, that.country) &&
-        Objects.equals(countryName, that.countryName) &&
-        Objects.equals(platform, that.platform) &&
-        Objects.equals(platformName, that.platformName) &&
-        blockLevel == that.blockLevel;
+                Objects.equals(ctr, that.ctr) &&
+                Objects.equals(clicks, that.clicks) &&
+                Objects.equals(cpc, that.cpc) &&
+                Objects.equals(cpm, that.cpm) &&
+                Objects.equals(cpaConversionRate, that.cpaConversionRate) &&
+                Objects.equals(cpaActionsNum, that.cpaActionsNum) &&
+                Objects.equals(spent, that.spent) &&
+                Objects.equals(currency, that.currency) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(dateEndPeriod, that.dateEndPeriod) &&
+                Objects.equals(contentProvider, that.contentProvider) &&
+                Objects.equals(contentProviderName, that.contentProviderName) &&
+                Objects.equals(campaignsNum, that.campaignsNum) &&
+                Objects.equals(campaign, that.campaign) &&
+                Objects.equals(campaignName, that.campaignName) &&
+                Objects.equals(site, that.site) &&
+                Objects.equals(siteName, that.siteName) &&
+                Objects.equals(siteId, that.siteId) &&
+                Objects.equals(country, that.country) &&
+                Objects.equals(countryName, that.countryName) &&
+                Objects.equals(platform, that.platform) &&
+                Objects.equals(platformName, that.platformName) &&
+                blockLevel == that.blockLevel &&
+                Objects.equals(roas, that.roas);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(impressions, ctr, clicks, cpc, cpm, cpaConversionRate, cpaActionsNum, spent, currency, date, dateEndPeriod, contentProvider, contentProviderName, campaignsNum, campaign, campaignName, site, siteName, country, countryName, platform, platformName, blockLevel);
+        return Objects.hash(impressions, ctr, clicks, cpc, cpm, cpaConversionRate, cpaActionsNum, spent, currency, date, dateEndPeriod, contentProvider, contentProviderName, campaignsNum, campaign, campaignName, site, siteName, siteId, country, countryName, platform, platformName, blockLevel, roas);
     }
 
     @Override
     public String toString() {
         return "CampaignSummaryRow{" +
-        "impressions=" + impressions +
-        ", ctr=" + ctr +
-        ", clicks=" + clicks +
-        ", cpc=" + cpc +
-        ", cpm=" + cpm +
-        ", cpaConversionRate=" + cpaConversionRate +
-        ", cpaActionsNum=" + cpaActionsNum +
-        ", spent=" + spent +
-        ", currency='" + currency + '\'' +
-        ", date='" + date + '\'' +
-        ", dateEndPeriod='" + dateEndPeriod + '\'' +
-        ", contentProvider='" + contentProvider + '\'' +
-        ", contentProviderName='" + contentProviderName + '\'' +
-        ", campaignsNum=" + campaignsNum +
-        ", campaign=" + campaign +
-        ", campaignName='" + campaignName + '\'' +
-        ", site='" + site + '\'' +
-        ", siteName='" + siteName + '\'' +
-        ", country='" + country + '\'' +
-        ", countryName='" + countryName + '\'' +
-        ", platform='" + platform + '\'' +
-        ", platformName='" + platformName + '\'' +
-        ", blockLevel=" + blockLevel +
-        '}';
+                "impressions=" + impressions +
+                ", ctr=" + ctr +
+                ", clicks=" + clicks +
+                ", cpc=" + cpc +
+                ", cpm=" + cpm +
+                ", cpaConversionRate=" + cpaConversionRate +
+                ", cpaActionsNum=" + cpaActionsNum +
+                ", spent=" + spent +
+                ", currency='" + currency + '\'' +
+                ", date='" + date + '\'' +
+                ", dateEndPeriod='" + dateEndPeriod + '\'' +
+                ", contentProvider='" + contentProvider + '\'' +
+                ", contentProviderName='" + contentProviderName + '\'' +
+                ", campaignsNum=" + campaignsNum +
+                ", campaign=" + campaign +
+                ", campaignName='" + campaignName + '\'' +
+                ", site='" + site + '\'' +
+                ", siteName='" + siteName + '\'' +
+                ", siteId=" + siteId +
+                ", country='" + country + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", platform='" + platform + '\'' +
+                ", platformName='" + platformName + '\'' +
+                ", blockLevel=" + blockLevel +
+                ", roas=" + roas +
+                '}';
     }
 }
