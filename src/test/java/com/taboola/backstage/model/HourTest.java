@@ -34,4 +34,12 @@ public class HourTest {
         Assert.assertEquals("Invalid enum", Hour.FIFTEEN, objectMapper.readValue("15", Hour.class));
         Assert.assertEquals("Invalid enum", Hour.TWENTY_FOUR, objectMapper.readValue("24", Hour.class));
     }
+
+    @Test
+    public void testFromJsonToEnum_whenGivenNonNumberStrNumber_expectingNull() throws IOException {
+        Assert.assertNull("Invalid enum", objectMapper.readValue("null", Hour.class));
+        Assert.assertNull("Invalid enum", objectMapper.readValue("true", Hour.class));
+        Assert.assertNull("Invalid enum", objectMapper.readValue("false", Hour.class));
+        Assert.assertNull("Invalid enum", objectMapper.readValue("\"abc\"", Hour.class));
+    }
 }

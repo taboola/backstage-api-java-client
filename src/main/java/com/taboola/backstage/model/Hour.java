@@ -43,22 +43,20 @@ public enum Hour {
     }
 
     @JsonCreator
-    public static Hour fromString(String strHour) {
-        if(strHour == null) {
-            return null;
-        }
-
-        int i = Integer.parseInt(strHour);
-        for(Hour type : Hour.values()) {
-            if(type.num == i) {
-                return type;
+    public static Hour toEnum(String strHour) {
+        try {
+            int parsedNum = Integer.parseInt(strHour);
+            for (Hour type : Hour.values()) {
+                if (type.num == parsedNum) {
+                    return type;
+                }
             }
-        }
+        } catch(Throwable ignored) {}
         return null;
     }
 
     @JsonValue
-    private Integer getNumber() {
+    private Integer toInteger() {
         return num;
     }
 }
