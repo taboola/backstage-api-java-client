@@ -3,6 +3,7 @@ package com.taboola.backstage.model.media.campaigns;
 import com.taboola.backstage.annotations.Final;
 import com.taboola.backstage.annotations.ReadOnly;
 import com.taboola.backstage.annotations.Required;
+import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
 
 import java.util.Date;
 import java.util.Objects;
@@ -44,6 +45,7 @@ public class Campaign {
     protected String comments;
     protected BidType bidType;
     protected MarketingObjective marketingObjective;
+    protected ActivitySchedule activitySchedule;
     @Final
     protected Date startDate;
     protected Date endDate;
@@ -163,6 +165,10 @@ public class Campaign {
         return marketingObjective;
     }
 
+    public ActivitySchedule getActivitySchedule() {
+        return activitySchedule;
+    }
+
     @Override
     public String toString() {
         return "Campaign{" +
@@ -187,6 +193,7 @@ public class Campaign {
                 ", comments='" + comments + '\'' +
                 ", bidType=" + bidType +
                 ", marketingObjective=" + marketingObjective +
+                ", activitySchedule=" + activitySchedule +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", approvalState=" + approvalState +
@@ -222,6 +229,7 @@ public class Campaign {
                 Objects.equals(comments, campaign.comments) &&
                 bidType == campaign.bidType &&
                 marketingObjective == campaign.marketingObjective &&
+                Objects.equals(activitySchedule, campaign.activitySchedule) &&
                 Objects.equals(startDate, campaign.startDate) &&
                 Objects.equals(endDate, campaign.endDate) &&
                 approvalState == campaign.approvalState &&
@@ -232,6 +240,9 @@ public class Campaign {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier, trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting, osTargeting, postalCodeTargeting, comments, bidType, marketingObjective, startDate, endDate, approvalState, isActive, spent, status);
+        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier,
+                trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting,
+                publisherTargeting, osTargeting, postalCodeTargeting, comments, bidType, marketingObjective, activitySchedule,
+                startDate, endDate, approvalState, isActive, spent, status);
     }
 }

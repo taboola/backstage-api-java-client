@@ -2,6 +2,8 @@ package com.taboola.backstage.model.media.campaigns;
 
 import java.util.Date;
 
+import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
+
 /**
  * Created by vladi
  * Date: 1/19/2018
@@ -118,6 +120,11 @@ public class CampaignOperation extends Campaign {
 
     public CampaignOperation setBidType(MarketingObjective marketingObjective) {
         this.marketingObjective = marketingObjective;
+        return this;
+    }
+
+    public CampaignOperation setActivitySchedule(ActivitySchedule activitySchedule) {
+        this.activitySchedule = activitySchedule;
         return this;
     }
 }
