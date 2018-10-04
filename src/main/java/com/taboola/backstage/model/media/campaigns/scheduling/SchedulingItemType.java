@@ -4,7 +4,6 @@ package com.taboola.backstage.model.media.campaigns.scheduling;
  * <p>
  *    <br>⚫ INCLUDE - Only supplied values will activate campaign
  *    <br>⚫ EXCLUDE - All values should activate campaign other than the supplied values.
- *    <br>⚫ ALL - No restrictions - all options.
  * </p>
  *
  * Created by vladi.m
@@ -12,7 +11,7 @@ package com.taboola.backstage.model.media.campaigns.scheduling;
  * Time 16:15
  * Copyright Taboola
  */
-public enum Type {
+public enum SchedulingItemType {
     INCLUDE,
     EXCLUDE
 }

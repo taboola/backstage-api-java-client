@@ -15,7 +15,7 @@ import com.taboola.backstage.model.Hour;
 public class ActivityScheduleItem {
 
     @Required
-    private Type type;
+    private SchedulingItemType type;
     @Required
     private DayOfWeek day;
     @Required
@@ -23,11 +23,11 @@ public class ActivityScheduleItem {
     @Required
     private Hour untilHour;
 
-    public Type getType() {
+    public SchedulingItemType getType() {
         return type;
     }
 
-    public ActivityScheduleItem setType(Type type) {
+    public ActivityScheduleItem setType(SchedulingItemType type) {
         this.type = type;
         return this;
     }

@@ -21,16 +21,18 @@ public class OperationSystem {
         return osFamily;
     }
 
-    public void setOsFamily(String osFamily) {
+    public OperationSystem setOsFamily(String osFamily) {
         this.osFamily = osFamily;
+        return this;
     }
 
     public Collection<String> getSubCategories() {
         return subCategories;
     }
 
-    public void setSubCategories(Collection<String> subCategories) {
+    public OperationSystem setSubCategories(Collection<String> subCategories) {
         this.subCategories = subCategories;
+        return this;
     }
 
     @Override
