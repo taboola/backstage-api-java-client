@@ -26,4 +26,12 @@ public class TargetedBidModifier {
     public void setCpcModification(Double cpcModification) {
         this.cpcModification = cpcModification;
     }
+
+    @Override
+    public String toString() {
+        return "TargetedBidModifier{" +
+                "target='" + target + '\'' +
+                ", cpcModification=" + cpcModification +
+                '}';
+    }
 }

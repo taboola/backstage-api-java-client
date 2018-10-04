@@ -19,4 +19,11 @@ public class PublisherBidModifier {
     public void setValues(List<TargetedBidModifier> values) {
         this.values = values;
     }
+
+    @Override
+    public String toString() {
+        return "PublisherBidModifier{" +
+                "values=" + values +
+                '}';
+    }
 }
