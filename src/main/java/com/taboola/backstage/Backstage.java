@@ -142,6 +142,7 @@ public class Backstage {
         private Long readTimeoutMillis;
         private Boolean performClientValidations;
         private Boolean debug;
+        private Boolean organizeDynamicColumns;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
@@ -183,6 +184,11 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setOrganizeDynamicColumns(Boolean organizeDynamicColumns) {
+            this.organizeDynamicColumns = organizeDynamicColumns;
+            return this;
+        }
+
         public Backstage build() {
             organizeState();
             String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
@@ -196,7 +202,7 @@ public class Backstage {
                 new UserServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                 new CampaignItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignItemsEndpoint.class)),
                 new DictionaryServiceImpl(endpointsFactory.createEndpoint(BackstageDictionaryEndpoint.class)),
-                new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class)),
+                new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), organizeDynamicColumns),
                 new AccountsServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                 new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class))
             );
@@ -233,6 +239,10 @@ public class Backstage {
 
             if(debug == null) {
                 debug = false;
+            }
+
+            if(organizeDynamicColumns == null) {
+                organizeDynamicColumns = true;
             }
         }
 

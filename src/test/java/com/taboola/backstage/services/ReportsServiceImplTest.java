@@ -36,7 +36,7 @@ public class ReportsServiceImplTest extends BackstageTestBase {
         pubReportMock = mock(BackstagePublisherReportsEndpoint.class);
         advertiserReportMock = mock(BackstageMediaReportsEndpoint.class);
 
-        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock);
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, true);
         reset(pubReportMock);
         reset(advertiserReportMock);
     }
@@ -149,4 +149,6 @@ public class ReportsServiceImplTest extends BackstageTestBase {
         verify(pubReportMock, times(1)).getRecirculationSummary(auth.getToken().getAccessTokenForHeader(), "accountId",
                          RecirculationSummaryDimensions.DAY.getName(), dateStr, dateStr, Collections.emptyMap());
     }
+
+    //TODO write test for organize dynamic columns
 }

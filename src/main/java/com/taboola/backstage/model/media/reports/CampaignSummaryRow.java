@@ -2,13 +2,16 @@ package com.taboola.backstage.model.media.reports;
 
 import java.util.Objects;
 
+import com.taboola.backstage.model.dynamic.DynamicFields;
+import com.taboola.backstage.model.dynamic.DynamicRow;
+
 /**
  * Created by vladi
  * Date: 12/7/2017
  * Time: 10:10 PM
  * By Taboola
  */
-public class CampaignSummaryRow {
+public class CampaignSummaryRow implements DynamicRow {
 
     private Integer impressions;
     private Double ctr;
@@ -37,6 +40,9 @@ public class CampaignSummaryRow {
     private String platformName;
     private BlockingLevelType blockLevel;
     private Double roas;
+
+    // dynamic
+    private DynamicFields dynamicFields;
 
     public Integer getImpressions() {
         return impressions;
@@ -263,6 +269,15 @@ public class CampaignSummaryRow {
         return this;
     }
 
+    public DynamicFields getDynamicFields() {
+        return dynamicFields;
+    }
+
+    public CampaignSummaryRow setDynamicFields(DynamicFields dynamicFields) {
+        this.dynamicFields = dynamicFields;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -292,12 +307,16 @@ public class CampaignSummaryRow {
                 Objects.equals(platform, that.platform) &&
                 Objects.equals(platformName, that.platformName) &&
                 blockLevel == that.blockLevel &&
-                Objects.equals(roas, that.roas);
+                Objects.equals(roas, that.roas) &&
+                Objects.equals(dynamicFields, that.dynamicFields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(impressions, ctr, clicks, cpc, cpm, cpaConversionRate, cpaActionsNum, spent, currency, date, dateEndPeriod, contentProvider, contentProviderName, campaignsNum, campaign, campaignName, site, siteName, siteId, country, countryName, platform, platformName, blockLevel, roas);
+        return Objects.hash(impressions, ctr, clicks, cpc, cpm, cpaConversionRate, cpaActionsNum, spent,
+                currency, date, dateEndPeriod, contentProvider, contentProviderName,
+                campaignsNum, campaign, campaignName, site, siteName, siteId, country,
+                countryName, platform, platformName, blockLevel, roas, dynamicFields);
     }
 
     @Override
@@ -328,6 +347,7 @@ public class CampaignSummaryRow {
                 ", platformName='" + platformName + '\'' +
                 ", blockLevel=" + blockLevel +
                 ", roas=" + roas +
+                ", dynamicFields=" + dynamicFields +
                 '}';
     }
 }

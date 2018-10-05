@@ -2,13 +2,16 @@ package com.taboola.backstage.model.media.reports;
 
 import java.util.Objects;
 
+import com.taboola.backstage.model.dynamic.DynamicFields;
+import com.taboola.backstage.model.dynamic.DynamicRow;
+
 /**
  * Created by vladi
  * Date: 10/27/2017
  * Time: 10:09 PM
  * By Taboola
  */
-public class TopCampaignContentRow {
+public class TopCampaignContentRow implements DynamicRow {
 
     private String item;
     private String itemName;
@@ -29,6 +32,9 @@ public class TopCampaignContentRow {
     private Double cpa;
     private Double cvr;
     private Double roas;
+
+    // dynamic
+    private DynamicFields dynamicFields;
 
     public String getItem() {
         return item;
@@ -183,6 +189,15 @@ public class TopCampaignContentRow {
         return this;
     }
 
+    public DynamicFields getDynamicFields() {
+        return dynamicFields;
+    }
+
+    public TopCampaignContentRow setDynamicFields(DynamicFields dynamicFields) {
+        this.dynamicFields = dynamicFields;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -206,12 +221,14 @@ public class TopCampaignContentRow {
                 Objects.equals(actions, that.actions) &&
                 Objects.equals(cpa, that.cpa) &&
                 Objects.equals(cvr, that.cvr) &&
-                Objects.equals(roas, that.roas);
+                Objects.equals(roas, that.roas) &&
+                Objects.equals(dynamicFields, that.dynamicFields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider, contentProviderName, impressions, ctr, clicks, cpc, cpm, spent, currency, actions, cpa, cvr, roas);
+        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider, contentProviderName,
+                            impressions, ctr, clicks, cpc, cpm, spent, currency, actions, cpa, cvr, roas, dynamicFields);
     }
 
     @Override
@@ -236,6 +253,7 @@ public class TopCampaignContentRow {
                 ", cpa=" + cpa +
                 ", cvr=" + cvr +
                 ", roas=" + roas +
+                ", dynamicFields=" + dynamicFields +
                 '}';
     }
 }
