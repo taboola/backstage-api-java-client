@@ -4,9 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
-import java.lang.reflect.Type;
 
-import com.sun.deploy.util.ReflectionUtil;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.ColumnsMetadata;
 import com.taboola.backstage.model.Report;
@@ -25,7 +23,6 @@ import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
-import com.taboola.backstage.model.media.reports.BlockingLevelType;
 
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
