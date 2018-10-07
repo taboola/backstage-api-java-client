@@ -33,7 +33,6 @@ import static org.mockito.Mockito.*;
 public class ReportsServiceImplTest extends BackstageTestBase {
 
     private ReportsServiceImpl testInstance;
-
     private BackstagePublisherReportsEndpoint pubReportMock;
     private BackstageMediaReportsEndpoint advertiserReportMock;
 
