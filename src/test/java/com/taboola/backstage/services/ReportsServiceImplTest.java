@@ -4,6 +4,9 @@ import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
+import com.taboola.backstage.model.dynamic.DynamicField;
+import com.taboola.backstage.model.dynamic.DynamicFields;
+import com.taboola.backstage.model.dynamic.DynamicFieldsMetadata;
 import com.taboola.backstage.model.media.reports.*;
 import com.taboola.backstage.model.publishers.reports.*;
 import org.junit.Before;
@@ -14,8 +17,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
@@ -150,5 +156,34 @@ public class ReportsServiceImplTest extends BackstageTestBase {
                          RecirculationSummaryDimensions.DAY.getName(), dateStr, dateStr, Collections.emptyMap());
     }
 
-    //TODO write test for organize dynamic columns
+    @Test
+    public void testTryOrganizingDynamicColumns_whenFlagDisabled_expectingNullMetadataOnField() throws InstantiationException, IllegalAccessException {
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, false);
+        CampaignSummaryReport report = generateDummyReport(CampaignSummaryReport.class, CampaignSummaryRow.class, 1, 1);
+
+        testInstance.tryOrganizingDynamicColumns(report);
+
+        assertNotNull("Expecting metadata object", report.getMetadata());
+        DynamicField actualDynamicField = report.getResults().iterator().next().getDynamicFields().get(0);
+        assertNotNull("Expecting dynamic field", actualDynamicField);
+        assertNull("Expecting no metadata on dynamic fields", actualDynamicField.getDynamicFieldMetadata());
+    }
+
+    @Test
+    public void testTryOrganizingDynamicColumns_whenFlagEnabled_expectingMetadataOnField() throws InstantiationException, IllegalAccessException {
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, true);
+        CampaignSummaryReport report = generateDummyReport(CampaignSummaryReport.class, CampaignSummaryRow.class, 1, 1);
+
+        testInstance.tryOrganizingDynamicColumns(report);
+
+        assertNotNull("Expecting metadata object", report.getMetadata());
+        DynamicFields dynamicFields = report.getResults().iterator().next().getDynamicFields();
+        assertNotNull("Expecting dynamic fields", dynamicFields);
+
+        DynamicFieldsMetadata dynamicFieldsMetadata = report.getMetadata().getDynamicFields();
+        for(DynamicField field : dynamicFields) {
+            assertEquals("Miss match between dynamic field and its metadata", field.getId(), field.getDynamicFieldMetadata().getId());
+            assertThat("Metadata does not exists", dynamicFieldsMetadata, hasItem(field.getDynamicFieldMetadata()));
+        }
+    }
 }
