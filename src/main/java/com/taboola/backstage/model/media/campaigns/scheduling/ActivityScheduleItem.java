@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import com.taboola.backstage.annotations.Required;
 import com.taboola.backstage.model.DayOfWeek;
-import com.taboola.backstage.model.Hour;
 
 /**
  * Created by vladi.m
@@ -19,9 +18,9 @@ public class ActivityScheduleItem {
     @Required
     private DayOfWeek day;
     @Required
-    private Hour fromHour;
+    private Integer fromHour;
     @Required
-    private Hour untilHour;
+    private Integer untilHour;
 
     public SchedulingItemType getType() {
         return type;
@@ -41,20 +40,20 @@ public class ActivityScheduleItem {
         return this;
     }
 
-    public Hour getFromHour() {
+    public Integer getFromHour() {
         return fromHour;
     }
 
-    public ActivityScheduleItem setFromHour(Hour fromHour) {
+    public ActivityScheduleItem setFromHour(Integer fromHour) {
         this.fromHour = fromHour;
         return this;
     }
 
-    public Hour getUntilHour() {
+    public Integer getUntilHour() {
         return untilHour;
     }
 
-    public ActivityScheduleItem setUntilHour(Hour untilHour) {
+    public ActivityScheduleItem setUntilHour(Integer untilHour) {
         this.untilHour = untilHour;
         return this;
     }
