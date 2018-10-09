@@ -1,23 +1,31 @@
 package com.taboola.backstage;
 
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
 import com.taboola.backstage.model.Account;
+import com.taboola.backstage.model.ColumnsMetadata;
 import com.taboola.backstage.model.Report;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.ClientCredentialAuthenticationDetails;
 import com.taboola.backstage.model.auth.PasswordAuthenticationDetails;
 import com.taboola.backstage.model.auth.Token;
 import com.taboola.backstage.model.dictionary.Resource;
+import com.taboola.backstage.model.dynamic.DynamicField;
+import com.taboola.backstage.model.dynamic.DynamicFieldMetadata;
+import com.taboola.backstage.model.dynamic.DynamicFields;
+import com.taboola.backstage.model.dynamic.DynamicFieldsMetadata;
+import com.taboola.backstage.model.dynamic.DynamicRow;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
+
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
 
 /**
  * Created by vladi
@@ -102,7 +110,80 @@ public abstract class BackstageTestBase {
         return report;
     }
 
+    protected <REPORT extends Report<ROW>, ROW extends DynamicRow> REPORT generateDummyReport(Class<REPORT> reportClass, Class<ROW> rowClass, int numOfRandomRows, int numOfRandomDynamicFields) throws IllegalAccessException, InstantiationException {
+        REPORT report = reportClass.newInstance();
+
+        Collection<ROW> rows = new LinkedList<>();
+        DynamicFields dynamicFields = generateDummyDynamicFields(numOfRandomDynamicFields);
+        for(int i = 0 ; i < numOfRandomRows ; i++) {
+            ROW row = factory.manufacturePojo(rowClass);
+
+            DynamicFields generatedDynamicFields = row.getDynamicFields();
+            row.getDynamicFields().clear();
+            if(dynamicFields != null) {
+                generatedDynamicFields.addAll(generateDynamicFieldsDataWithSameIds(dynamicFields));
+            }
+            rows.add(row);
+        }
+
+        report.setMetadata(generateDummyColumnsMetadata(dynamicFields));
+        report.setResults(rows);
+        report.setLastUsedRawdataUpdateTime(new Date().toString());
+        report.setTimezone("EST");
+        return report;
+    }
+
+    private DynamicFields generateDynamicFieldsDataWithSameIds(DynamicFields dynamicFields) {
+        if(dynamicFields == null) {
+            return null;
+        }
+
+        DynamicFields res = new DynamicFields();
+        res.addAll(dynamicFields.stream().map(curr -> {
+            DynamicField field = factory.manufacturePojo(DynamicField.class);
+            // populated by the client logic not the API response
+            field.setDynamicFieldMetadata(null);
+            return field.setId(curr.getId());
+        }).collect(Collectors.toList()));
+        return res;
+
+    }
+
     protected PostalTargeting generateDummyPostalCodeTargeting() {
         return factory.manufacturePojo(PostalTargeting.class);
+    }
+
+    protected DynamicFields generateDummyDynamicFields(int numOfFields) {
+        if(numOfFields == 0) {
+            return null;
+        }
+
+        DynamicFields dynamicFields = new DynamicFields();
+
+        for(int i = 0 ; i < numOfFields ; i++) {
+            DynamicField dynamicField = factory.manufacturePojo(DynamicField.class);
+            dynamicField.setDynamicFieldMetadata(null);
+            dynamicFields.add(dynamicField);
+        }
+
+        return dynamicFields;
+    }
+
+    protected ColumnsMetadata generateDummyColumnsMetadata(DynamicFields dynamicFields) {
+        if(dynamicFields == null) {
+            return null;
+        }
+
+        ColumnsMetadata reportMetadata = new ColumnsMetadata();
+
+        DynamicFieldsMetadata dynamicFieldMetadata = new DynamicFieldsMetadata();
+        for (DynamicField field : dynamicFields) {
+            DynamicFieldMetadata metadata = factory.manufacturePojo(DynamicFieldMetadata.class);
+            metadata.setId(field.getId());
+            dynamicFieldMetadata.add(metadata);
+        }
+
+        reportMetadata.setDynamicFields(dynamicFieldMetadata);
+        return reportMetadata;
     }
 }

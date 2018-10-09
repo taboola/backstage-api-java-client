@@ -2,6 +2,8 @@ package com.taboola.backstage.model.media.campaigns;
 
 import java.util.Date;
 
+import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
+
 /**
  * Created by vladi
  * Date: 1/19/2018
@@ -61,23 +63,28 @@ public class CampaignOperation extends Campaign {
         return this;
     }
 
-    public CampaignOperation setCountryTargeting(CampaignTargeting countryTargeting) {
+    public CampaignOperation setCountryTargeting(CampaignTargeting<String> countryTargeting) {
         this.countryTargeting = countryTargeting;
         return this;
     }
 
-    public CampaignOperation setSubCountryTargeting(CampaignTargeting subCountryTargeting) {
+    public CampaignOperation setSubCountryTargeting(CampaignTargeting<String> subCountryTargeting) {
         this.subCountryTargeting = subCountryTargeting;
         return this;
     }
 
-    public CampaignOperation setPlatformTargeting(CampaignTargeting platformTargeting) {
+    public CampaignOperation setPlatformTargeting(CampaignTargeting<String> platformTargeting) {
         this.platformTargeting = platformTargeting;
         return this;
     }
 
-    public CampaignOperation setPublisherTargeting(CampaignTargeting publisherTargeting) {
+    public CampaignOperation setPublisherTargeting(CampaignTargeting<String> publisherTargeting) {
         this.publisherTargeting = publisherTargeting;
+        return this;
+    }
+
+    public CampaignOperation setOsTargeting(CampaignTargeting<OperationSystem> osTargeting) {
+        this.osTargeting = osTargeting;
         return this;
     }
 
@@ -103,6 +110,21 @@ public class CampaignOperation extends Campaign {
 
     public CampaignOperation setTrafficAllocationMode(TrafficAllocationMode trafficAllocationMode) {
         this.trafficAllocationMode = trafficAllocationMode;
+        return this;
+    }
+
+    public CampaignOperation setBidType(BidType bidType) {
+        this.bidType = bidType;
+        return this;
+    }
+
+    public CampaignOperation setMarketingObjective(MarketingObjective marketingObjective) {
+        this.marketingObjective = marketingObjective;
+        return this;
+    }
+
+    public CampaignOperation setActivitySchedule(ActivitySchedule activitySchedule) {
+        this.activitySchedule = activitySchedule;
         return this;
     }
 }

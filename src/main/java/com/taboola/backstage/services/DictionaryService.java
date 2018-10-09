@@ -92,4 +92,26 @@ public interface DictionaryService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Results<Resource> getPlatforms(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Dictionary list of operation system display names and codes
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @return Collection of {@link Resource}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<Resource> getOperationSystem(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+
+    /**
+     * Dictionary list of operation system sub categories display names and codes
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param operationSystem operation system code (supplied by {@link com.taboola.backstage.services.DictionaryService#getOperationSystem DictionaryService.getOperationSystem()})
+     * @return Collection of {@link Resource}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<Resource> getOperationSystemSubCategories(BackstageAuthentication auth, String operationSystem) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }

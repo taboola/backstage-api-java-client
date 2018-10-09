@@ -10,7 +10,8 @@ import com.taboola.backstage.model.ReportFilter;
  */
 public enum TopCampaignContentOptionalFilters implements ReportFilter {
 
-    CAMPAIGN_ID("campaign");
+    CAMPAIGN_ID("campaign"),
+    INCLUDE_MULTI_CONVERSIONS("include_multi_conversions");
 
     private final String name;
 

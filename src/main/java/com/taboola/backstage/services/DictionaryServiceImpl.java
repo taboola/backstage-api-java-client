@@ -63,4 +63,16 @@ public class DictionaryServiceImpl implements DictionaryService {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getPlatforms(accessToken);
     }
+
+    @Override
+    public Results<Resource> getOperationSystem(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getOperationSystem(accessToken);
+    }
+
+    @Override
+    public Results<Resource> getOperationSystemSubCategories(BackstageAuthentication auth, String operationSystem) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getOperationSystemSubCategories(accessToken, operationSystem);
+    }
 }

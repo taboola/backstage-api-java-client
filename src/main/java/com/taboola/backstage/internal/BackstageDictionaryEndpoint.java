@@ -40,4 +40,13 @@ public interface BackstageDictionaryEndpoint {
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/platforms")
     @Headers("Content-Type: application/json")
     Results<Resource> getPlatforms(@Header("Authorization") String authToken) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/campaigns_properties/operating_systems")
+    @Headers("Content-Type: application/json")
+    Results<Resource> getOperationSystem(@Header("Authorization") String authToken) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/campaigns_properties/operating_systems/{operation_system}")
+    @Headers("Content-Type: application/json")
+    Results<Resource> getOperationSystemSubCategories(@Header("Authorization") String authToken, @Path("operation_system") String operationSystem) throws BackstageAPIException;
+
 }

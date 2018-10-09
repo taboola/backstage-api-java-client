@@ -13,6 +13,7 @@ public class Report<T> {
     private String lastUsedRawdataUpdateTime;
     private String timezone;
     private Collection<T> results;
+    private ColumnsMetadata metadata;
 
     public String getLastUsedRawdataUpdateTime() {
         return lastUsedRawdataUpdateTime;
@@ -38,12 +39,21 @@ public class Report<T> {
         this.results = results;
     }
 
+    public ColumnsMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(ColumnsMetadata metadata) {
+        this.metadata = metadata;
+    }
+
     @Override
     public String toString() {
         return "Report{" +
-        "lastUsedRawdataUpdateTime='" + lastUsedRawdataUpdateTime + '\'' +
-        ", timezone='" + timezone + '\'' +
-        ", results=" + results +
-        '}';
+                "lastUsedRawdataUpdateTime='" + lastUsedRawdataUpdateTime + '\'' +
+                ", timezone='" + timezone + '\'' +
+                ", results=" + results +
+                ", metadata=" + metadata +
+                '}';
     }
 }
