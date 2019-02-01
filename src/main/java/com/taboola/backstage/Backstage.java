@@ -133,6 +133,8 @@ public class Backstage {
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
         private static final String VERSION = "1.0.4";
+        private static final Integer DEFAULT_MAX_IDLE_CONNECTIONS = 5;
+        private static final Long DEFAULT_KEEP_ALIVE_DURATION_SEC = 300L;
 
         private String baseUrl;
         private String authBaseUrl;
@@ -140,6 +142,8 @@ public class Backstage {
         private Long writeTimeoutMillis;
         private Long connectionTimeoutMillis;
         private Long readTimeoutMillis;
+        private Integer maxIdleConnections;
+        private Long keepAliveDurationSec;
         private Boolean performClientValidations;
         private Boolean debug;
         private Boolean organizeDynamicColumns;
@@ -174,6 +178,16 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setWriteTimeoutMillis(Integer maxIdleConnections) {
+            this.maxIdleConnections = maxIdleConnections;
+            return this;
+        }
+
+        public BackstageBuilder setKeepAliveDurationSec(Long keepAliveDurationSec) {
+            this.keepAliveDurationSec = keepAliveDurationSec;
+            return this;
+        }
+
         public BackstageBuilder setPerformClientValidations(Boolean performClientValidations) {
             this.performClientValidations = performClientValidations;
             return this;
@@ -192,7 +206,7 @@ public class Backstage {
         public Backstage build() {
             organizeState();
             String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
-            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, finalUserAgent, debug);
+            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, maxIdleConnections, keepAliveDurationSec, finalUserAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
             BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
             return new Backstage(
@@ -229,6 +243,14 @@ public class Backstage {
                 writeTimeoutMillis = 0L;
             }
 
+            if(maxIdleConnections == null) {
+                maxIdleConnections = DEFAULT_MAX_IDLE_CONNECTIONS;
+            }
+
+            if(keepAliveDurationSec == null) {
+                keepAliveDurationSec = DEFAULT_KEEP_ALIVE_DURATION_SEC;
+            }
+
             if(userAgent == null) {
                 userAgent = DEFAULT_USER_AGENT;
             }
@@ -245,6 +267,5 @@ public class Backstage {
                 organizeDynamicColumns = true;
             }
         }
-
     }
 }
