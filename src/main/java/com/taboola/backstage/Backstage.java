@@ -178,7 +178,7 @@ public class Backstage {
             return this;
         }
 
-        public BackstageBuilder setWriteTimeoutMillis(Integer maxIdleConnections) {
+        public BackstageBuilder setMaxIdleConnections(Integer maxIdleConnections) {
             this.maxIdleConnections = maxIdleConnections;
             return this;
         }
