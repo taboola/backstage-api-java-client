@@ -14,19 +14,19 @@ public class CommunicationConfig {
     private final long readTimeoutMillis;
     private final long writeTimeoutMillis;
     private final int maxIdleConnections;
-    private final long keepAliveDurationSec;
+    private final long keepAliveDurationMillis;
     private final String userAgent;
     private final boolean debug;
 
     public CommunicationConfig(String backstageBaseUrl, String authenticationBaseUrl, Long connectionTimeoutMillis, Long readTimeoutMillis,
-                               Long writeTimeoutMillis, Integer maxIdleConnections, Long keepAliveDurationSec, String userAgent, boolean debug) {
+                               Long writeTimeoutMillis, Integer maxIdleConnections, Long keepAliveDurationMillis, String userAgent, boolean debug) {
         this.backstageBaseUrl = backstageBaseUrl;
         this.authenticationBaseUrl = authenticationBaseUrl;
         this.connectionTimeoutMillis = connectionTimeoutMillis;
         this.readTimeoutMillis = readTimeoutMillis;
         this.writeTimeoutMillis = writeTimeoutMillis;
         this.maxIdleConnections = maxIdleConnections;
-        this.keepAliveDurationSec = keepAliveDurationSec;
+        this.keepAliveDurationMillis = keepAliveDurationMillis;
         this.userAgent = userAgent;
         this.debug = debug;
     }
@@ -55,8 +55,8 @@ public class CommunicationConfig {
         return maxIdleConnections;
     }
 
-    public long getKeepAliveDurationSec() {
-        return keepAliveDurationSec;
+    public long getKeepAliveDurationMillis() {
+        return keepAliveDurationMillis;
     }
 
     public String getUserAgent() {
@@ -76,7 +76,7 @@ public class CommunicationConfig {
         ", readTimeoutMillis=" + readTimeoutMillis +
         ", writeTimeoutMillis=" + writeTimeoutMillis +
         ", maxIdleConnections=" + maxIdleConnections +
-        ", keepAliveDurationSec=" + keepAliveDurationSec +
+        ", keepAliveDurationMillis=" + keepAliveDurationMillis +
         ", userAgent='" + userAgent + '\'' +
         ", debug=" + debug +
         '}';

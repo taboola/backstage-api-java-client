@@ -73,7 +73,8 @@ public final class CommunicationFactory {
                             .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
                             .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
                             .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
-                            .connectionPool(new ConnectionPool(config.getMaxIdleConnections(), config.getKeepAliveDurationSec(), TimeUnit.SECONDS))
+                            .connectionPool(new ConnectionPool(config.getMaxIdleConnections(),
+                                    config.getKeepAliveDurationMillis(), TimeUnit.MILLISECONDS))
                             .build();
     }
 

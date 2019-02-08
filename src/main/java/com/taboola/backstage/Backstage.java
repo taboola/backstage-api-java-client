@@ -134,7 +134,7 @@ public class Backstage {
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
         private static final String VERSION = "1.0.4";
         private static final Integer DEFAULT_MAX_IDLE_CONNECTIONS = 5;
-        private static final Long DEFAULT_KEEP_ALIVE_DURATION_SEC = 300L;
+        private static final Long DEFAULT_KEEP_ALIVE_DURATION_MILLIS = 300_000L;
 
         private String baseUrl;
         private String authBaseUrl;
@@ -143,7 +143,7 @@ public class Backstage {
         private Long connectionTimeoutMillis;
         private Long readTimeoutMillis;
         private Integer maxIdleConnections;
-        private Long keepAliveDurationSec;
+        private Long keepAliveDurationMillis;
         private Boolean performClientValidations;
         private Boolean debug;
         private Boolean organizeDynamicColumns;
@@ -178,13 +178,13 @@ public class Backstage {
             return this;
         }
 
-        public BackstageBuilder setWriteTimeoutMillis(Integer maxIdleConnections) {
+        public BackstageBuilder setMaxIdleConnections(Integer maxIdleConnections) {
             this.maxIdleConnections = maxIdleConnections;
             return this;
         }
 
-        public BackstageBuilder setKeepAliveDurationSec(Long keepAliveDurationSec) {
-            this.keepAliveDurationSec = keepAliveDurationSec;
+        public BackstageBuilder setKeepAliveDurationMillis(Long keepAliveDurationMillis) {
+            this.keepAliveDurationMillis = keepAliveDurationMillis;
             return this;
         }
 
@@ -206,7 +206,8 @@ public class Backstage {
         public Backstage build() {
             organizeState();
             String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
-            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, maxIdleConnections, keepAliveDurationSec, finalUserAgent, debug);
+            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, maxIdleConnections,
+                    keepAliveDurationMillis, finalUserAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config);
             BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
             return new Backstage(
@@ -247,8 +248,8 @@ public class Backstage {
                 maxIdleConnections = DEFAULT_MAX_IDLE_CONNECTIONS;
             }
 
-            if(keepAliveDurationSec == null) {
-                keepAliveDurationSec = DEFAULT_KEEP_ALIVE_DURATION_SEC;
+            if(keepAliveDurationMillis == null) {
+                keepAliveDurationMillis = DEFAULT_KEEP_ALIVE_DURATION_MILLIS;
             }
 
             if(userAgent == null) {
