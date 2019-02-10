@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
+import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -72,6 +73,8 @@ public final class CommunicationFactory {
                             .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
                             .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
                             .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
+                            .connectionPool(new ConnectionPool(config.getMaxIdleConnections(),
+                                    config.getKeepAliveDurationMillis(), TimeUnit.MILLISECONDS))
                             .build();
     }
 
