@@ -54,7 +54,7 @@
         <log4j.core.version>2.6.1</log4j.core.version>
         <retrofit.version>2.5.0</retrofit.version>
         <converter.jackson.version>2.3.0</converter.jackson.version>
-        <logging.interceptor.version>3.9.0</logging.interceptor.version>
+        <logging.interceptor.version>3.12.1</logging.interceptor.version>
         <jackson.databind.version>2.9.8</jackson.databind.version>
         <junit.version>4.12</junit.version>
         <mockito.all.version>1.10.19</mockito.all.version>
