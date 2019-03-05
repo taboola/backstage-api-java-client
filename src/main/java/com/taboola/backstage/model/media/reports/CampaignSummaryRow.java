@@ -38,7 +38,7 @@ public class CampaignSummaryRow implements DynamicRow {
     private String countryName;
     private String platform;
     private String platformName;
-    private BlockingLevelType blockLevel;
+    private BlockingLevelType blockingLevel;
     private Double roas;
 
     // dynamic
@@ -242,13 +242,12 @@ public class CampaignSummaryRow implements DynamicRow {
         return this;
     }
 
-    public BlockingLevelType getBlockLevel() {
-        return blockLevel;
+    public BlockingLevelType getBlockingLevel() {
+        return blockingLevel;
     }
 
-    public CampaignSummaryRow setBlockLevel(BlockingLevelType blockLevel) {
-        this.blockLevel = blockLevel;
-        return this;
+    public void setBlockingLevel(BlockingLevelType blockingLevel) {
+        this.blockingLevel = blockingLevel;
     }
 
     public Integer getSiteId() {
@@ -306,7 +305,7 @@ public class CampaignSummaryRow implements DynamicRow {
                 Objects.equals(countryName, that.countryName) &&
                 Objects.equals(platform, that.platform) &&
                 Objects.equals(platformName, that.platformName) &&
-                blockLevel == that.blockLevel &&
+                Objects.equals(blockingLevel, that.blockingLevel) &&
                 Objects.equals(roas, that.roas) &&
                 Objects.equals(dynamicFields, that.dynamicFields);
     }
@@ -316,7 +315,7 @@ public class CampaignSummaryRow implements DynamicRow {
         return Objects.hash(impressions, ctr, clicks, cpc, cpm, cpaConversionRate, cpaActionsNum, spent,
                 currency, date, dateEndPeriod, contentProvider, contentProviderName,
                 campaignsNum, campaign, campaignName, site, siteName, siteId, country,
-                countryName, platform, platformName, blockLevel, roas, dynamicFields);
+                countryName, platform, platformName, blockingLevel, roas, dynamicFields);
     }
 
     @Override
@@ -345,7 +344,7 @@ public class CampaignSummaryRow implements DynamicRow {
                 ", countryName='" + countryName + '\'' +
                 ", platform='" + platform + '\'' +
                 ", platformName='" + platformName + '\'' +
-                ", blockLevel=" + blockLevel +
+                ", blockingLevel=" + blockingLevel +
                 ", roas=" + roas +
                 ", dynamicFields=" + dynamicFields +
                 '}';
