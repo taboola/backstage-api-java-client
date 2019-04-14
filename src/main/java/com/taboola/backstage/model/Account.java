@@ -13,6 +13,7 @@ public class Account {
     private Long id;
     private String name;
     private String accountId;
+    private AccountType type;
 
     public Long getId() {
         return id;
@@ -38,13 +39,18 @@ public class Account {
         this.accountId = accountId;
     }
 
+    public AccountType getType() { return type; }
+
+    public void setType(AccountType type) { this.type = type; }
+
     @Override
     public String toString() {
         return "Account{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", accountId='" + accountId + '\'' +
-        '}';
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", accountId='" + accountId + '\'' +
+            ", type=" + type +
+            '}';
     }
 
     @Override
@@ -54,11 +60,12 @@ public class Account {
         Account account = (Account) o;
         return Objects.equals(id, account.id) &&
         Objects.equals(name, account.name) &&
-        Objects.equals(accountId, account.accountId);
+        Objects.equals(accountId, account.accountId) &&
+        type == account.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, accountId);
+        return Objects.hash(id, name, accountId, type);
     }
 }
