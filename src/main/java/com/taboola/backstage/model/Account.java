@@ -1,5 +1,6 @@
 package com.taboola.backstage.model;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,6 +15,8 @@ public class Account {
     private String name;
     private String accountId;
     private AccountType type;
+    private List<PartnerType> partnerTypes;
+    private List<CampaignType> campaignTypes;
 
     public Long getId() {
         return id;
@@ -43,14 +46,32 @@ public class Account {
 
     public void setType(AccountType type) { this.type = type; }
 
+    public List<PartnerType> getPartnerTypes() {
+        return partnerTypes;
+    }
+
+    public void setPartnerTypes(List<PartnerType> partnerTypes) {
+        this.partnerTypes = partnerTypes;
+    }
+
+    public List<CampaignType> getCampaignTypes() {
+        return campaignTypes;
+    }
+
+    public void setCampaignTypes(List<CampaignType> campaignTypes) {
+        this.campaignTypes = campaignTypes;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", accountId='" + accountId + '\'' +
-            ", type=" + type +
-            '}';
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", accountId='" + accountId + '\'' +
+                ", type=" + type +
+                ", partnerTypes=" + partnerTypes +
+                ", campaignTypes=" + campaignTypes +
+                '}';
     }
 
     @Override
@@ -59,13 +80,15 @@ public class Account {
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
         return Objects.equals(id, account.id) &&
-        Objects.equals(name, account.name) &&
-        Objects.equals(accountId, account.accountId) &&
-        type == account.type;
+                Objects.equals(name, account.name) &&
+                Objects.equals(accountId, account.accountId) &&
+                type == account.type &&
+                Objects.equals(partnerTypes, account.partnerTypes) &&
+                Objects.equals(campaignTypes, account.campaignTypes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, accountId, type);
+        return Objects.hash(id, name, accountId, type, partnerTypes, campaignTypes);
     }
 }

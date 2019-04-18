@@ -27,4 +27,10 @@ public class UserServiceImpl implements UserService {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return accountEndpoint.getUserAllowedAccounts(accessToken);
     }
+
+    @Override
+    public Account readAccount(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return accountEndpoint.getUserAccount(accessToken);
+    }
 }
