@@ -25,4 +25,15 @@ public interface UserService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Results<Account> readAllowedAccounts(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Read user's account details {@link Account}
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @return {@link Account}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Account readAccount(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }

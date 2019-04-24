@@ -23,5 +23,5 @@ public enum MarketingObjective {
     DRIVE_WEBSITE_TRAFFIC,
     MOBILE_APP_INSTALL,
     OTHER,
-    NONE
+    @Deprecated NONE
 }

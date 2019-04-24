@@ -43,4 +43,14 @@ public class UserServiceImplTest extends BackstageTestBase {
         Results<Account> actual = testInstance.readAllowedAccounts(auth);
         assertEquals("Invalid accounts", expected, actual);
     }
+
+    @Test
+    public void testReadUsersAccount(){
+        Account expected = generateDummyAccount();
+        when(accountsEndpointMock.getUserAccount(any())).thenReturn(expected);
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Account actual = testInstance.readAccount(auth);
+        assertEquals("Invalid accounts", expected, actual);
+    }
 }

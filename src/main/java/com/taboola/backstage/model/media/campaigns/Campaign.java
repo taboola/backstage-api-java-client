@@ -44,6 +44,7 @@ public class Campaign {
     protected CampaignTargeting<String> postalCodeTargeting;
     protected String comments;
     protected BidType bidType;
+    @Required
     protected MarketingObjective marketingObjective;
     protected ActivitySchedule activitySchedule;
     @Final
