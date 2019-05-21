@@ -5,12 +5,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.taboola.backstage.internal.config.CommunicationConfig;
+import com.taboola.backstage.internal.config.SerializationConfig;
+import com.taboola.backstage.internal.interceptors.IgnoreAnySetterSerializationInterceptor;
 import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -28,20 +29,26 @@ public final class CommunicationFactory {
     private final Retrofit retrofit;
     private final Retrofit authRetrofit;
 
-    public CommunicationFactory(CommunicationConfig config) {
-        this.objectMapper = createObjectMapper();
+    public CommunicationFactory(CommunicationConfig communicationConfig, SerializationConfig serializationConfig) {
+        this.objectMapper = createObjectMapper(serializationConfig);
 
-        Retrofit.Builder retrofitBuilder = createRetrofitBuilder(config);
+        Retrofit.Builder retrofitBuilder = createRetrofitBuilder(communicationConfig);
 
-        this.authRetrofit = retrofitBuilder.baseUrl(config.getAuthenticationBaseUrl()).build();
-        this.retrofit = retrofitBuilder.baseUrl(config.getBackstageBaseUrl()).build();
+        this.authRetrofit = retrofitBuilder.baseUrl(communicationConfig.getAuthenticationBaseUrl()).build();
+        this.retrofit = retrofitBuilder.baseUrl(communicationConfig.getBackstageBaseUrl()).build();
     }
 
-    private ObjectMapper createObjectMapper() {
+    private ObjectMapper createObjectMapper(SerializationConfig serializationConfig) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        serializationConfig.getMixins().forEach(objectMapper::addMixIn);
+
+        if (serializationConfig.isAnySetterAnnotationIgnored()) {
+            objectMapper.setAnnotationIntrospector(new IgnoreAnySetterSerializationInterceptor());
+        }
+
         return objectMapper;
     }
 

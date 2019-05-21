@@ -2,6 +2,7 @@ package com.taboola.backstage;
 
 import com.taboola.backstage.internal.*;
 import com.taboola.backstage.internal.config.CommunicationConfig;
+import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
 import com.taboola.backstage.internal.BackstageInternalTools;
@@ -16,8 +17,8 @@ import com.taboola.backstage.services.*;
  * {@code
  * Backstage backstage = Backstage.builder().build();
  * }
- *</pre>
- *
+ * </pre>
+ * <p>
  * Example : getting all {@link com.taboola.backstage.model.media.campaigns.Campaign Campaigns} that belong to my account id
  * <pre>
  * {@code
@@ -147,6 +148,7 @@ public class Backstage {
         private Boolean performClientValidations;
         private Boolean debug;
         private Boolean organizeDynamicColumns;
+        private SerializationConfig serializationConfig;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
@@ -203,69 +205,78 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setSerializationConfig(SerializationConfig serializationConfig) {
+            this.serializationConfig = serializationConfig;
+            return this;
+        }
+
         public Backstage build() {
             organizeState();
             String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
             CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, maxIdleConnections,
                     keepAliveDurationMillis, finalUserAgent, debug);
-            CommunicationFactory communicator = new CommunicationFactory(config);
+            CommunicationFactory communicator = new CommunicationFactory(config, serializationConfig);
             BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
             return new Backstage(
-                new BackstageInternalToolsImpl(endpointsFactory),
-                new CampaignsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignsEndpoint.class)),
-                new AuthenticationServiceImpl(endpointsFactory.createAuthEndpoint(BackstageAuthenticationEndpoint.class)),
-                new UserServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
-                new CampaignItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignItemsEndpoint.class)),
-                new DictionaryServiceImpl(endpointsFactory.createEndpoint(BackstageDictionaryEndpoint.class)),
-                new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), organizeDynamicColumns),
-                new AccountsServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
-                new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class))
+                    new BackstageInternalToolsImpl(endpointsFactory),
+                    new CampaignsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignsEndpoint.class)),
+                    new AuthenticationServiceImpl(endpointsFactory.createAuthEndpoint(BackstageAuthenticationEndpoint.class)),
+                    new UserServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
+                    new CampaignItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignItemsEndpoint.class)),
+                    new DictionaryServiceImpl(endpointsFactory.createEndpoint(BackstageDictionaryEndpoint.class)),
+                    new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), organizeDynamicColumns),
+                    new AccountsServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
+                    new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class))
             );
         }
 
         private void organizeState() {
-            if(baseUrl == null) {
+            if (baseUrl == null) {
                 baseUrl = DEFAULT_BACKSTAGE_HOST;
             }
 
-            if(authBaseUrl == null) {
+            if (authBaseUrl == null) {
                 authBaseUrl = DEFAULT_AUTH_BACKSTAGE_HOST;
             }
 
-            if(connectionTimeoutMillis == null) {
+            if (connectionTimeoutMillis == null) {
                 connectionTimeoutMillis = 0L;
             }
 
-            if(readTimeoutMillis == null) {
+            if (readTimeoutMillis == null) {
                 readTimeoutMillis = 0L;
             }
 
-            if(writeTimeoutMillis == null) {
+            if (writeTimeoutMillis == null) {
                 writeTimeoutMillis = 0L;
             }
 
-            if(maxIdleConnections == null) {
+            if (maxIdleConnections == null) {
                 maxIdleConnections = DEFAULT_MAX_IDLE_CONNECTIONS;
             }
 
-            if(keepAliveDurationMillis == null) {
+            if (keepAliveDurationMillis == null) {
                 keepAliveDurationMillis = DEFAULT_KEEP_ALIVE_DURATION_MILLIS;
             }
 
-            if(userAgent == null) {
+            if (userAgent == null) {
                 userAgent = DEFAULT_USER_AGENT;
             }
 
-            if(performClientValidations == null) {
+            if (performClientValidations == null) {
                 performClientValidations = true;
             }
 
-            if(debug == null) {
+            if (debug == null) {
                 debug = false;
             }
 
-            if(organizeDynamicColumns == null) {
+            if (organizeDynamicColumns == null) {
                 organizeDynamicColumns = true;
+            }
+
+            if (serializationConfig == null) {
+                serializationConfig = SerializationConfig.builder().build();
             }
         }
     }
