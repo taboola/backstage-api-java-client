@@ -1,4 +1,4 @@
-package com.taboola.backstage.internal.interceptors;
+package com.taboola.backstage.internal.serialization;
 
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;

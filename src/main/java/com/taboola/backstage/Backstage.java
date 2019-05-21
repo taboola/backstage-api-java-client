@@ -136,6 +136,7 @@ public class Backstage {
         private static final String VERSION = "1.0.9";
         private static final Integer DEFAULT_MAX_IDLE_CONNECTIONS = 5;
         private static final Long DEFAULT_KEEP_ALIVE_DURATION_MILLIS = 300_000L;
+        private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
 
         private String baseUrl;
         private String authBaseUrl;
@@ -276,7 +277,7 @@ public class Backstage {
             }
 
             if (serializationConfig == null) {
-                serializationConfig = new SerializationConfig();
+                serializationConfig = DEFAULT_SERIALIZATION_CONFIG;
             }
         }
     }

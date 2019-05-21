@@ -5,6 +5,8 @@ import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
+import com.taboola.backstage.internal.serialization.ObjectMapperFactory;
+
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -26,7 +28,7 @@ public final class CommunicationFactory {
     private final Retrofit authRetrofit;
 
     public CommunicationFactory(CommunicationConfig communicationConfig, SerializationConfig serializationConfig) {
-        this.objectMapper = new ObjectMapperFactory().createObjectMapper(serializationConfig);
+        this.objectMapper = ObjectMapperFactory.create().createObjectMapper(serializationConfig);
 
         Retrofit.Builder retrofitBuilder = createRetrofitBuilder(communicationConfig);
 
