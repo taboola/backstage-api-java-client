@@ -276,7 +276,7 @@ public class Backstage {
             }
 
             if (serializationConfig == null) {
-                serializationConfig = SerializationConfig.builder().build();
+                serializationConfig = new SerializationConfig();
             }
         }
     }

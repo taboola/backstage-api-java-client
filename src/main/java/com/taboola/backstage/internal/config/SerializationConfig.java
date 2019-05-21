@@ -4,12 +4,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SerializationConfig {
-    private final Map<Class<?>, Class<?>> mixins;
-    private final boolean shouldIgnoreAnySetterAnnotation;
+    private Map<Class<?>, Class<?>> mixins;
+    private boolean shouldIgnoreAnySetterAnnotation;
 
-    private SerializationConfig(Map<Class<?>, Class<?>> mixins, boolean shouldIgnoreAnySetterAnnotation) {
+    public SerializationConfig() {
+        mixins = new HashMap<>();
+        shouldIgnoreAnySetterAnnotation = false;
+    }
+
+    public SerializationConfig setMixins(Map<Class<?>, Class<?>> mixins) {
         this.mixins = mixins;
+        return this;
+    }
+
+    public SerializationConfig setShouldIgnoreAnySetterAnnotation(boolean shouldIgnoreAnySetterAnnotation) {
         this.shouldIgnoreAnySetterAnnotation = shouldIgnoreAnySetterAnnotation;
+        return this;
     }
 
     public Map<Class<?>, Class<?>> getMixins() {
@@ -26,39 +36,5 @@ public class SerializationConfig {
                 "mixins=" + mixins +
                 ", shouldIgnoreAnySetterAnnotation=" + shouldIgnoreAnySetterAnnotation +
                 '}';
-    }
-
-    public static SerializationConfigBuilder builder() {
-        return new SerializationConfigBuilder();
-    }
-
-    public static class SerializationConfigBuilder {
-        private Map<Class<?>, Class<?>> mixins;
-        private Boolean shouldIgnoreAnySetterAnnotation;
-
-        public SerializationConfigBuilder setMixins(Map<Class<?>, Class<?>> mixins) {
-            this.mixins = mixins;
-            return this;
-        }
-
-        public SerializationConfigBuilder setShouldIgnoreAnySetterAnnotation(Boolean shouldIgnoreAnySetterAnnotation) {
-            this.shouldIgnoreAnySetterAnnotation = shouldIgnoreAnySetterAnnotation;
-            return this;
-        }
-
-        public SerializationConfig build() {
-            organizeState();
-            return new SerializationConfig(mixins, shouldIgnoreAnySetterAnnotation);
-        }
-
-        private void organizeState() {
-            if (mixins == null) {
-                mixins = new HashMap<>();
-            }
-
-            if (this.shouldIgnoreAnySetterAnnotation == null) {
-                shouldIgnoreAnySetterAnnotation = false;
-            }
-        }
     }
 }

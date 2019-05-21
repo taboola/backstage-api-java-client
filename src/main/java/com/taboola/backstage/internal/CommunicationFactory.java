@@ -26,7 +26,7 @@ public final class CommunicationFactory {
     private final Retrofit authRetrofit;
 
     public CommunicationFactory(CommunicationConfig communicationConfig, SerializationConfig serializationConfig) {
-        this.objectMapper = SerializationFactory.create().applySerializationConfig(serializationConfig, new ObjectMapper());
+        this.objectMapper = new ObjectMapperFactory().createObjectMapper(serializationConfig);
 
         Retrofit.Builder retrofitBuilder = createRetrofitBuilder(communicationConfig);
 

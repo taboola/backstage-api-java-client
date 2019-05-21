@@ -20,7 +20,7 @@ public class CommunicationFactoryTest extends BackstageTestBase {
     @Before
     public void beforeTest() {
         CommunicationConfig communicationConfig = new CommunicationConfig("http://localhost", "http://localhost", 1L, 1L, 1L, 1, 60L, "Dummy-Agent", true);
-        SerializationConfig serializationConfig = SerializationConfig.builder().build();
+        SerializationConfig serializationConfig = new SerializationConfig();
         testInstance = new CommunicationFactory(communicationConfig, serializationConfig);
     }
 
