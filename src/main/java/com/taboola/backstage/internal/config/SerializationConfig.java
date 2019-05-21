@@ -5,26 +5,26 @@ import java.util.Map;
 
 public class SerializationConfig {
     private final Map<Class<?>, Class<?>> mixins;
-    private final boolean isAnySetterAnnotationIgnored;
+    private final boolean shouldIgnoreAnySetterAnnotation;
 
-    private SerializationConfig(Map<Class<?>, Class<?>> mixins, boolean isAnySetterAnnotationIgnored) {
+    private SerializationConfig(Map<Class<?>, Class<?>> mixins, boolean shouldIgnoreAnySetterAnnotation) {
         this.mixins = mixins;
-        this.isAnySetterAnnotationIgnored = isAnySetterAnnotationIgnored;
+        this.shouldIgnoreAnySetterAnnotation = shouldIgnoreAnySetterAnnotation;
     }
 
     public Map<Class<?>, Class<?>> getMixins() {
         return mixins;
     }
 
-    public boolean isAnySetterAnnotationIgnored() {
-        return isAnySetterAnnotationIgnored;
+    public boolean shouldIgnoreAnySetterAnnotation() {
+        return shouldIgnoreAnySetterAnnotation;
     }
 
     @Override
     public String toString() {
         return "SerializationConfig{" +
                 "mixins=" + mixins +
-                ", isAnySetterAnnotationIgnored=" + isAnySetterAnnotationIgnored +
+                ", shouldIgnoreAnySetterAnnotation=" + shouldIgnoreAnySetterAnnotation +
                 '}';
     }
 
@@ -34,21 +34,21 @@ public class SerializationConfig {
 
     public static class SerializationConfigBuilder {
         private Map<Class<?>, Class<?>> mixins;
-        private Boolean isAnySetterAnnotationIgnored;
+        private Boolean shouldIgnoreAnySetterAnnotation;
 
         public SerializationConfigBuilder setMixins(Map<Class<?>, Class<?>> mixins) {
             this.mixins = mixins;
             return this;
         }
 
-        public SerializationConfigBuilder setIsAnySetterAnnotationIgnored(Boolean isAnySetterAnnotationIgnored) {
-            this.isAnySetterAnnotationIgnored = isAnySetterAnnotationIgnored;
+        public SerializationConfigBuilder setShouldIgnoreAnySetterAnnotation(Boolean shouldIgnoreAnySetterAnnotation) {
+            this.shouldIgnoreAnySetterAnnotation = shouldIgnoreAnySetterAnnotation;
             return this;
         }
 
         public SerializationConfig build() {
             organizeState();
-            return new SerializationConfig(mixins, isAnySetterAnnotationIgnored);
+            return new SerializationConfig(mixins, shouldIgnoreAnySetterAnnotation);
         }
 
         private void organizeState() {
@@ -56,8 +56,8 @@ public class SerializationConfig {
                 mixins = new HashMap<>();
             }
 
-            if (this.isAnySetterAnnotationIgnored == null) {
-                isAnySetterAnnotationIgnored = false;
+            if (this.shouldIgnoreAnySetterAnnotation == null) {
+                shouldIgnoreAnySetterAnnotation = false;
             }
         }
     }

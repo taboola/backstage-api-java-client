@@ -1,12 +1,8 @@
 package com.taboola.backstage.internal;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.config.SerializationConfig;
-import com.taboola.backstage.internal.interceptors.IgnoreAnySetterSerializationInterceptor;
 import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
 import okhttp3.ConnectionPool;
@@ -30,26 +26,12 @@ public final class CommunicationFactory {
     private final Retrofit authRetrofit;
 
     public CommunicationFactory(CommunicationConfig communicationConfig, SerializationConfig serializationConfig) {
-        this.objectMapper = createObjectMapper(serializationConfig);
+        this.objectMapper = SerializationFactory.create().applySerializationConfig(serializationConfig, new ObjectMapper());
 
         Retrofit.Builder retrofitBuilder = createRetrofitBuilder(communicationConfig);
 
         this.authRetrofit = retrofitBuilder.baseUrl(communicationConfig.getAuthenticationBaseUrl()).build();
         this.retrofit = retrofitBuilder.baseUrl(communicationConfig.getBackstageBaseUrl()).build();
-    }
-
-    private ObjectMapper createObjectMapper(SerializationConfig serializationConfig) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        serializationConfig.getMixins().forEach(objectMapper::addMixIn);
-
-        if (serializationConfig.isAnySetterAnnotationIgnored()) {
-            objectMapper.setAnnotationIntrospector(new IgnoreAnySetterSerializationInterceptor());
-        }
-
-        return objectMapper;
     }
 
     private HttpLoggingInterceptor createLoggingInterceptor(CommunicationConfig config) {
