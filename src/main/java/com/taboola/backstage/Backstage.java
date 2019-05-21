@@ -18,7 +18,7 @@ import com.taboola.backstage.services.*;
  * Backstage backstage = Backstage.builder().build();
  * }
  * </pre>
- * <p>
+ *
  * Example : getting all {@link com.taboola.backstage.model.media.campaigns.Campaign Campaigns} that belong to my account id
  * <pre>
  * {@code
