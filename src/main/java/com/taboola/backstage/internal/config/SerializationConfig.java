@@ -17,8 +17,8 @@ public class SerializationConfig {
         return this;
     }
 
-    public SerializationConfig setShouldIgnoreAnySetterAnnotation(boolean shouldIgnoreAnySetterAnnotation) {
-        this.shouldIgnoreAnySetterAnnotation = shouldIgnoreAnySetterAnnotation;
+    public SerializationConfig setShouldIgnoreAnySetterAnnotation() {
+        this.shouldIgnoreAnySetterAnnotation = true;
         return this;
     }
 
