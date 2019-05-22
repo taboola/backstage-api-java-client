@@ -1,16 +1,15 @@
 package com.taboola.backstage.internal;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.taboola.backstage.internal.config.CommunicationConfig;
+import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
 import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
+import com.taboola.backstage.internal.serialization.SerializationMapperCreator;
+
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -28,21 +27,12 @@ public final class CommunicationFactory {
     private final Retrofit retrofit;
     private final Retrofit authRetrofit;
 
-    public CommunicationFactory(CommunicationConfig config) {
-        this.objectMapper = createObjectMapper();
+    public CommunicationFactory(CommunicationConfig communicationConfig, SerializationConfig serializationConfig) {
+        this.objectMapper = SerializationMapperCreator.createObjectMapper(serializationConfig);
+        Retrofit.Builder retrofitBuilder = createRetrofitBuilder(communicationConfig);
 
-        Retrofit.Builder retrofitBuilder = createRetrofitBuilder(config);
-
-        this.authRetrofit = retrofitBuilder.baseUrl(config.getAuthenticationBaseUrl()).build();
-        this.retrofit = retrofitBuilder.baseUrl(config.getBackstageBaseUrl()).build();
-    }
-
-    private ObjectMapper createObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return objectMapper;
+        this.authRetrofit = retrofitBuilder.baseUrl(communicationConfig.getAuthenticationBaseUrl()).build();
+        this.retrofit = retrofitBuilder.baseUrl(communicationConfig.getBackstageBaseUrl()).build();
     }
 
     private HttpLoggingInterceptor createLoggingInterceptor(CommunicationConfig config) {
