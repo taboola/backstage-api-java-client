@@ -1,4 +1,4 @@
-package com.taboola.backstage.internal;
+package com.taboola.backstage.internal.serialization;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
