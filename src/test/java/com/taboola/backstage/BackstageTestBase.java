@@ -20,6 +20,7 @@ import com.taboola.backstage.model.dynamic.DynamicFieldsMetadata;
 import com.taboola.backstage.model.dynamic.DynamicRow;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
+import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
@@ -185,5 +186,9 @@ public abstract class BackstageTestBase {
 
         reportMetadata.setDynamicFields(dynamicFieldMetadata);
         return reportMetadata;
+    }
+
+    protected CampaignPatch generateDummyCampaignPatch() {
+        return factory.manufacturePojo(CampaignPatch.class);
     }
 }

@@ -2,6 +2,8 @@ package com.taboola.backstage.model.media.campaigns;
 
 import java.util.List;
 
+import com.taboola.backstage.annotations.Required;
+
 /**
  * Created by vladi
  * Date: 9/29/2017
@@ -10,6 +12,7 @@ import java.util.List;
  */
 public class PublisherBidModifier {
 
+    @Required
     private List<TargetedBidModifier> values;
 
     public List<TargetedBidModifier> getValues() {
