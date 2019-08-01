@@ -19,6 +19,7 @@ import com.taboola.backstage.model.media.campaigns.CampaignPatch;
  *    <br> {@link CampaignsService#create} 3. Create a Campaign - Create a new Campaign under a specific partner account.
  *    <br> {@link CampaignsService#update} 4. Update a Campaign - Update an existing Campaign of a specific partner account.
  *    <br> {@link CampaignsService#patch} 5. Patch Campaign - Update an existing Campaign of a specific partner account.
+ *    <br> {@link CampaignsService#delete} 6. Delete Campaign - Delete an existing Campaign of a specific partner account.
  * </p>
  *
  * @author vladi
@@ -92,4 +93,17 @@ public interface CampaignsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     CampaignPatch patch(BackstageAuthentication auth, String accountId, String campaignId, CampaignPatch campaignPatch) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Delete campaign entity - NOT REVERSIBLE - PERMANENT DELETE
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId {@link Campaign} that is going to be updated. Taken from {@link Campaign#getId()} object
+     * @return Fully populated {@link Campaign} pojo
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Campaign delete(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }

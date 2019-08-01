@@ -45,4 +45,10 @@ public interface BackstageCampaignsEndpoint {
                                 @Path("account_id") String accountId,
                                 @Path("campaign_id") String campaignId,
                                 @Body CampaignPatch campaignPatch) throws BackstageAPIException;
+
+    @DELETE(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}")
+    @Headers("Content-Type: application/json")
+    Campaign deleteCampaign(@Header("Authorization") String accessToken,
+                            @Path("account_id") String accountId,
+                            @Path("campaign_id") String campaignId);
 }

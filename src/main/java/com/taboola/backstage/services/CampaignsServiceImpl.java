@@ -65,4 +65,10 @@ public class CampaignsServiceImpl implements CampaignsService {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.patchCampaign(accessToken, accountId, campaignId, campaignPatch);
     }
+
+    @Override
+    public Campaign delete(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.deleteCampaign(accessToken, accountId, campaignId);
+    }
 }

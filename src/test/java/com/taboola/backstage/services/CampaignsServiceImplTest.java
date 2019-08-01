@@ -141,4 +141,16 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
         assertEquals("Invalid campaignPatch", campaignPatch, actual);
         verify(endpointMock, times(1)).patchCampaign(any(), any(), any(), any());
     }
+
+    @Test
+    public void testDelete() {
+        Campaign campaign = generateDummyCampaign();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.deleteCampaign(auth.getToken().getAccessTokenForHeader(),"accountId", campaign.getId())).thenReturn(campaign);
+
+        Campaign actual = testInstance.delete(auth, "accountId", campaign.getId());
+        assertEquals("Invalid campaign", campaign, actual);
+        verify(endpointMock, times(1)).deleteCampaign(any(), any(), any());
+    }
+
 }
