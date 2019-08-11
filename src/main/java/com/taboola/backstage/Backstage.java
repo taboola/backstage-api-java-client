@@ -218,14 +218,15 @@ public class Backstage {
                     keepAliveDurationMillis, finalUserAgent, debug);
             CommunicationFactory communicator = new CommunicationFactory(config, serializationConfig);
             BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
+            BackstageInternalToolsImpl internalTools = new BackstageInternalToolsImpl(endpointsFactory);
             return new Backstage(
-                    new BackstageInternalToolsImpl(endpointsFactory),
+                    internalTools,
                     new CampaignsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignsEndpoint.class)),
                     new AuthenticationServiceImpl(endpointsFactory.createAuthEndpoint(BackstageAuthenticationEndpoint.class)),
                     new UserServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignItemsEndpoint.class)),
                     new DictionaryServiceImpl(endpointsFactory.createEndpoint(BackstageDictionaryEndpoint.class)),
-                    new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), organizeDynamicColumns),
+                    new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), internalTools, organizeDynamicColumns),
                     new AccountsServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class))
             );

@@ -1,8 +1,10 @@
 package com.taboola.backstage.services;
 
 import com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
+import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dynamic.DynamicField;
 import com.taboola.backstage.model.dynamic.DynamicFields;
@@ -35,13 +37,15 @@ public class ReportsServiceImplTest extends BackstageTestBase {
     private ReportsServiceImpl testInstance;
     private BackstagePublisherReportsEndpoint pubReportMock;
     private BackstageMediaReportsEndpoint advertiserReportMock;
+    private BackstageInternalToolsImpl backstageInternalTools;
 
     @Before
     public void beforeTest() {
         pubReportMock = mock(BackstagePublisherReportsEndpoint.class);
         advertiserReportMock = mock(BackstageMediaReportsEndpoint.class);
+        backstageInternalTools = new BackstageInternalToolsImpl(mock(BackstageEndpointsFactory.class));
 
-        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, true);
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, backstageInternalTools,true);
         reset(pubReportMock);
         reset(advertiserReportMock);
     }
@@ -156,33 +160,65 @@ public class ReportsServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testTryOrganizingDynamicColumns_whenFlagDisabled_expectingNullMetadataOnField() throws InstantiationException, IllegalAccessException {
-        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, false);
-        CampaignSummaryReport report = generateDummyReport(CampaignSummaryReport.class, CampaignSummaryRow.class, 1, 1);
+    public void campaignSummary_whenAttachDynamicMetadataFlagDisabled_expectingNullMetadataOnField() throws InstantiationException, IllegalAccessException {
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, backstageInternalTools, false);
 
-        testInstance.tryOrganizingDynamicColumns(report);
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        LocalDate date = LocalDate.of(2018, 1, 2);
+        String dateStr = DateTimeFormatter.ISO_LOCAL_DATE.format(date);
+        CampaignSummaryReport expected = generateDummyReport(CampaignSummaryReport.class, CampaignSummaryRow.class, 1,1);
+        when(advertiserReportMock.getCampaignSummary(auth.getToken().getAccessTokenForHeader(), "accountId",
+                CampaignSummaryDimensions.DAY.getName(), dateStr, dateStr, Collections.emptyMap())).thenReturn(expected);
 
-        assertNotNull("Expecting metadata object", report.getMetadata());
-        DynamicField actualDynamicField = report.getResults().iterator().next().getDynamicFields().get(0);
+        CampaignSummaryReport actual = testInstance.getCampaignSummaryReport(auth, "accountId", date, date, CampaignSummaryDimensions.DAY);
+        assertNotNull("Missing report", actual);
+        assertEquals("Invalid timezone", expected.getTimezone(), actual.getTimezone());
+        assertEquals("Invalid last used rawdata update time", expected.getLastUsedRawdataUpdateTime(), actual.getLastUsedRawdataUpdateTime());
+        Collection<CampaignSummaryRow> actualResults = actual.getResults();
+        assertNotNull("Missing report results", actualResults);
+        assertEquals("Invalid number of rows", 1, actualResults.size());
+        assertEquals("Invalid rows", expected.getResults(), actualResults);
+
+        assertNotNull("Expecting metadata object", actual.getMetadata());
+        DynamicField actualDynamicField = actual.getResults().iterator().next().getDynamicFields().get(0);
         assertNotNull("Expecting dynamic field", actualDynamicField);
         assertNull("Expecting no metadata on dynamic fields", actualDynamicField.getDynamicFieldMetadata());
+
+        verify(advertiserReportMock, times(1)).getCampaignSummary(auth.getToken().getAccessTokenForHeader(), "accountId",
+                CampaignSummaryDimensions.DAY.getName(), dateStr, dateStr, Collections.emptyMap());
     }
 
     @Test
-    public void testTryOrganizingDynamicColumns_whenFlagEnabled_expectingMetadataOnField() throws InstantiationException, IllegalAccessException {
-        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, true);
-        CampaignSummaryReport report = generateDummyReport(CampaignSummaryReport.class, CampaignSummaryRow.class, 1, 1);
+    public void campaignSummary_whenAttachDynamicMetadataFlagEnabled_expectingMetadataOnField() throws InstantiationException, IllegalAccessException {
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, backstageInternalTools, true);
 
-        testInstance.tryOrganizingDynamicColumns(report);
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        LocalDate date = LocalDate.of(2018, 1, 2);
+        String dateStr = DateTimeFormatter.ISO_LOCAL_DATE.format(date);
+        CampaignSummaryReport expected = generateDummyReport(CampaignSummaryReport.class, CampaignSummaryRow.class, 1,1);
+        when(advertiserReportMock.getCampaignSummary(auth.getToken().getAccessTokenForHeader(), "accountId",
+                CampaignSummaryDimensions.DAY.getName(), dateStr, dateStr, Collections.emptyMap())).thenReturn(expected);
 
-        assertNotNull("Expecting metadata object", report.getMetadata());
-        DynamicFields dynamicFields = report.getResults().iterator().next().getDynamicFields();
+        CampaignSummaryReport actual = testInstance.getCampaignSummaryReport(auth, "accountId", date, date, CampaignSummaryDimensions.DAY);
+        assertNotNull("Missing report", actual);
+        assertEquals("Invalid timezone", expected.getTimezone(), actual.getTimezone());
+        assertEquals("Invalid last used rawdata update time", expected.getLastUsedRawdataUpdateTime(), actual.getLastUsedRawdataUpdateTime());
+        Collection<CampaignSummaryRow> actualResults = actual.getResults();
+        assertNotNull("Missing report results", actualResults);
+        assertEquals("Invalid number of rows", 1, actualResults.size());
+        assertEquals("Invalid rows", expected.getResults(), actualResults);
+
+        assertNotNull("Expecting metadata object", actual.getMetadata());
+        DynamicFields dynamicFields = actual.getResults().iterator().next().getDynamicFields();
         assertNotNull("Expecting dynamic fields", dynamicFields);
 
-        DynamicFieldsMetadata dynamicFieldsMetadata = report.getMetadata().getDynamicFields();
+        DynamicFieldsMetadata dynamicFieldsMetadata = actual.getMetadata().getDynamicFields();
         for(DynamicField field : dynamicFields) {
             assertEquals("Miss match between dynamic field and its metadata", field.getId(), field.getDynamicFieldMetadata().getId());
             assertThat("Metadata does not exists", dynamicFieldsMetadata, hasItem(field.getDynamicFieldMetadata()));
         }
+
+        verify(advertiserReportMock, times(1)).getCampaignSummary(auth.getToken().getAccessTokenForHeader(), "accountId",
+                CampaignSummaryDimensions.DAY.getName(), dateStr, dateStr, Collections.emptyMap());
     }
 }
