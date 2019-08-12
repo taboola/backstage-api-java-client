@@ -12,6 +12,7 @@ import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.ClientCredentialAuthenticationDetails;
 import com.taboola.backstage.model.auth.PasswordAuthenticationDetails;
 import com.taboola.backstage.model.auth.Token;
+import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.dynamic.DynamicField;
 import com.taboola.backstage.model.dynamic.DynamicFieldMetadata;
@@ -190,5 +191,9 @@ public abstract class BackstageTestBase {
 
     protected CampaignPatch generateDummyCampaignPatch() {
         return factory.manufacturePojo(CampaignPatch.class);
+    }
+
+    protected AudienceSegment generateDummyAudienceSegment() {
+        return factory.manufacturePojo(AudienceSegment.class);
     }
 }

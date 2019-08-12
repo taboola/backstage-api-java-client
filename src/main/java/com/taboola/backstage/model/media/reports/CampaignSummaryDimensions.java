@@ -17,7 +17,8 @@ public enum CampaignSummaryDimensions {
     COUNTRY_BREAKDOWN("country_breakdown"),
     PLATFORM_BREAKDOWN("platform_breakdown"),
     CAMPAIGN_DAY_BREAKDOWN("campaign_day_breakdown"),
-    CAMPAIGN_SITE_DATE_BREAKDOWN("campaign_site_day_breakdown");
+    CAMPAIGN_SITE_DATE_BREAKDOWN("campaign_site_day_breakdown"),
+    USER_SEGMENT_BREAKDOWNM("user_segment_breakdown");
 
 
     private final String name;

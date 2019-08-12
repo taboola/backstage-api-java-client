@@ -7,6 +7,7 @@ import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
+import com.taboola.backstage.model.dictionary.AudienceSegment;
 
 /**
  * Created by vladi
@@ -26,5 +27,18 @@ public class AccountsServiceImpl implements AccountsService {
     public Results<Account> readPublishersUnderTaboolaNetwork(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getAvailablePublishersUnderTaboolaNetwork(accessToken);
+    }
+
+    @Override
+    public Results<AudienceSegment> readAllAudienceSegment(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getAllAudienceSegments(accessToken, accountId);
+    }
+
+    @Override
+    public Results<AudienceSegment> readAudienceSegmentByCountry(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getSpecificCountryAudienceSegments(accessToken, accountId, countryCode);
+
     }
 }

@@ -40,6 +40,9 @@ public class CampaignSummaryRow implements DynamicRow {
     private String platformName;
     private BlockingLevelType blockingLevel;
     private Double roas;
+    private String partnerName;
+    private String audienceName;
+    private String dataPartnerAudienceId;
 
     // dynamic
     private DynamicFields dynamicFields;
@@ -277,6 +280,33 @@ public class CampaignSummaryRow implements DynamicRow {
         return this;
     }
 
+    public String getPartnerName() {
+        return partnerName;
+    }
+
+    public CampaignSummaryRow setPartnerName(String partnerName) {
+        this.partnerName = partnerName;
+        return this;
+    }
+
+    public String getAudienceName() {
+        return audienceName;
+    }
+
+    public CampaignSummaryRow setAudienceName(String audienceName) {
+        this.audienceName = audienceName;
+        return this;
+    }
+
+    public String getDataPartnerAudienceId() {
+        return dataPartnerAudienceId;
+    }
+
+    public CampaignSummaryRow setDataPartnerAudienceId(String dataPartnerAudienceId) {
+        this.dataPartnerAudienceId = dataPartnerAudienceId;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -305,17 +335,19 @@ public class CampaignSummaryRow implements DynamicRow {
                 Objects.equals(countryName, that.countryName) &&
                 Objects.equals(platform, that.platform) &&
                 Objects.equals(platformName, that.platformName) &&
-                Objects.equals(blockingLevel, that.blockingLevel) &&
+                blockingLevel == that.blockingLevel &&
                 Objects.equals(roas, that.roas) &&
+                Objects.equals(partnerName, that.partnerName) &&
+                Objects.equals(audienceName, that.audienceName) &&
+                Objects.equals(dataPartnerAudienceId, that.dataPartnerAudienceId) &&
                 Objects.equals(dynamicFields, that.dynamicFields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(impressions, ctr, clicks, cpc, cpm, cpaConversionRate, cpaActionsNum, spent,
-                currency, date, dateEndPeriod, contentProvider, contentProviderName,
-                campaignsNum, campaign, campaignName, site, siteName, siteId, country,
-                countryName, platform, platformName, blockingLevel, roas, dynamicFields);
+        return Objects.hash(impressions, ctr, clicks, cpc, cpm, cpaConversionRate, cpaActionsNum, spent, currency, date, dateEndPeriod, contentProvider, contentProviderName,
+                campaignsNum, campaign, campaignName, site, siteName, siteId, country, countryName, platform, platformName, blockingLevel, roas, partnerName, audienceName,
+                dataPartnerAudienceId, dynamicFields);
     }
 
     @Override
@@ -346,6 +378,9 @@ public class CampaignSummaryRow implements DynamicRow {
                 ", platformName='" + platformName + '\'' +
                 ", blockingLevel=" + blockingLevel +
                 ", roas=" + roas +
+                ", partnerName='" + partnerName + '\'' +
+                ", audienceName='" + audienceName + '\'' +
+                ", dataPartnerAudienceId='" + dataPartnerAudienceId + '\'' +
                 ", dynamicFields=" + dynamicFields +
                 '}';
     }
