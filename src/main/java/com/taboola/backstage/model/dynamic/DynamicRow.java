@@ -9,7 +9,7 @@ package com.taboola.backstage.model.dynamic;
 public interface DynamicRow {
 
     /**
-     * Returns dynamic fields of specific row
+     * @return dynamic fields of specific row
      */
     DynamicFields getDynamicFields();
 }

@@ -12,6 +12,7 @@ public interface BackstageEndpointsFactory {
     /**
      * Creates backstage authentication endpoint
      * @param endpointClazz interface representing endpoint
+     * @param <A> represents endpoint class
      * @return implementation of a supplied endpoint class
      */
     <A> A createAuthEndpoint(Class<A> endpointClazz);
@@ -19,6 +20,7 @@ public interface BackstageEndpointsFactory {
     /**
      * Creates backstage endpoint
      * @param endpointClazz interface representing endpoint
+     * @param <E> represents auth endpoint class
      * @return implementation of a supplied endpoint class
      */
     <E> E createEndpoint(Class<E> endpointClazz);

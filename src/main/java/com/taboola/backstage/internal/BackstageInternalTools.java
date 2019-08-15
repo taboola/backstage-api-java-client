@@ -28,6 +28,7 @@ public interface BackstageInternalTools {
      *   Side effect: supplied object is changed by reference
      * </p>
      * @param report {@link Report}
+     * @param <R> represents dynamic row model
      */
     <R extends DynamicRow> void attachDynamicFieldMetadataToFields(Report<R> report);
 }
