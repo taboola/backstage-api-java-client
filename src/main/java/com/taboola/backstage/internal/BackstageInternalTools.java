@@ -1,6 +1,8 @@
 package com.taboola.backstage.internal;
 
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
+import com.taboola.backstage.model.Report;
+import com.taboola.backstage.model.dynamic.DynamicRow;
 
 /**
  * <p>
@@ -19,4 +21,13 @@ public interface BackstageInternalTools {
      */
     BackstageEndpointsFactory endpointFactory();
 
+    /**
+     * <p>
+     *   Backstage {@link Report} helper function. Goes over dynamic fields in the given report object
+     *   and attach to each dynamic field its metadata.
+     *   Side effect: supplied object is changed by reference
+     * </p>
+     * @param report {@link Report}
+     */
+    <R extends DynamicRow> void attachDynamicFieldMetadataToFields(Report<R> report);
 }

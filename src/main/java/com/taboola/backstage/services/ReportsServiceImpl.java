@@ -1,27 +1,33 @@
 package com.taboola.backstage.services;
 
-import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
-import com.taboola.backstage.exceptions.BackstageAPIRequestException;
-import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
-import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
-import com.taboola.backstage.model.ColumnsMetadata;
-import com.taboola.backstage.model.Report;
-import com.taboola.backstage.model.ReportFilter;
-import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.dynamic.DynamicField;
-import com.taboola.backstage.model.dynamic.DynamicFieldMetadata;
-import com.taboola.backstage.model.dynamic.DynamicFields;
-import com.taboola.backstage.model.dynamic.DynamicRow;
-import com.taboola.backstage.model.media.reports.*;
-import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
-import com.taboola.backstage.model.publishers.reports.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
+import com.taboola.backstage.exceptions.BackstageAPIRequestException;
+import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
+import com.taboola.backstage.internal.BackstageInternalTools;
+import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
+import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
+import com.taboola.backstage.model.ReportFilter;
+import com.taboola.backstage.model.auth.BackstageAuthentication;
+import com.taboola.backstage.model.media.reports.CampaignSummaryDimensions;
+import com.taboola.backstage.model.media.reports.CampaignSummaryOptionalFilters;
+import com.taboola.backstage.model.media.reports.CampaignSummaryReport;
+import com.taboola.backstage.model.media.reports.TopCampaignContentOptionalFilters;
+import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
+import com.taboola.backstage.model.publishers.reports.RecirculationSummaryDimensions;
+import com.taboola.backstage.model.publishers.reports.RecirculationSummaryOptionalFilters;
+import com.taboola.backstage.model.publishers.reports.RecirculationSummaryReport;
+import com.taboola.backstage.model.publishers.reports.RevenueSummaryDimensions;
+import com.taboola.backstage.model.publishers.reports.RevenueSummaryOptionalFilters;
+import com.taboola.backstage.model.publishers.reports.RevenueSummaryReport;
+import com.taboola.backstage.model.publishers.reports.VisitValueDimensions;
+import com.taboola.backstage.model.publishers.reports.VisitValueOptionalFilters;
+import com.taboola.backstage.model.publishers.reports.VisitValueReport;
 
 /**
  * Created by vladi
@@ -35,11 +41,16 @@ public class ReportsServiceImpl implements ReportsService {
 
     private final BackstageMediaReportsEndpoint mediaReportsEndpoint;
     private final BackstagePublisherReportsEndpoint publisherReportsService;
+    private final BackstageInternalTools backstageInternalTools;
     private final Boolean organizeDynamicColumns;
 
-    public ReportsServiceImpl(BackstageMediaReportsEndpoint mediaReportsEndpoint, BackstagePublisherReportsEndpoint publisherReportsService, Boolean organizeDynamicColumns) {
+    public ReportsServiceImpl(BackstageMediaReportsEndpoint mediaReportsEndpoint,
+                              BackstagePublisherReportsEndpoint publisherReportsService,
+                              BackstageInternalTools backstageInternalTools,
+                              Boolean organizeDynamicColumns) {
         this.mediaReportsEndpoint = mediaReportsEndpoint;
         this.publisherReportsService = publisherReportsService;
+        this.backstageInternalTools = backstageInternalTools;
         this.organizeDynamicColumns = organizeDynamicColumns;
     }
 
@@ -57,7 +68,9 @@ public class ReportsServiceImpl implements ReportsService {
                 DATE_TIME_FORMATTER.format(endDate),
                 formatOptionalFilters(filters));
 
-        tryOrganizingDynamicColumns(report);
+        if(organizeDynamicColumns) {
+            backstageInternalTools.attachDynamicFieldMetadataToFields(report);
+        }
         return report;
     }
 
@@ -75,7 +88,9 @@ public class ReportsServiceImpl implements ReportsService {
                 DATE_TIME_FORMATTER.format(startDate), DATE_TIME_FORMATTER.format(endDate),
                 formatOptionalFilters(filters));
 
-        tryOrganizingDynamicColumns(report);
+        if(organizeDynamicColumns) {
+            backstageInternalTools.attachDynamicFieldMetadataToFields(report);
+        }
         return report;
     }
 
@@ -132,30 +147,5 @@ public class ReportsServiceImpl implements ReportsService {
                                                                DATE_TIME_FORMATTER.format(startDate),
                                                                DATE_TIME_FORMATTER.format(endDate),
                                                                formatOptionalFilters(filters));
-    }
-
-    protected <R extends DynamicRow> void tryOrganizingDynamicColumns(Report<R> report) {
-        if(!organizeDynamicColumns) {
-            return;
-        }
-
-        ColumnsMetadata metadata = report.getMetadata();
-        if(metadata == null || metadata.getDynamicFields() == null) {
-            return;
-        }
-
-        Map<String, DynamicFieldMetadata> dynamicFieldIdToMetadata = metadata.getDynamicFields()
-                                                                    .stream()
-                                                                    .collect(Collectors.toMap(DynamicFieldMetadata::getId, v -> v));
-
-        Collection<R> rows = report.getResults();
-        for(R row : rows) {
-            DynamicFields dynamicFields = row.getDynamicFields();
-            for(DynamicField field : dynamicFields) {
-                DynamicFieldMetadata dynamicFieldMetadata = dynamicFieldIdToMetadata.get(field.getId());
-                field.setDynamicFieldMetadata(dynamicFieldMetadata);
-            }
-        }
-
     }
 }

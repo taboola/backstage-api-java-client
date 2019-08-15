@@ -3,6 +3,8 @@ package com.taboola.backstage.internal;
 import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+
 import retrofit2.http.*;
 
 /**
@@ -36,4 +38,17 @@ public interface BackstageCampaignsEndpoint {
                                   @Path("account_id") String accountId,
                                   @Path("campaign_id") String campaignId,
                                   @Body Campaign campaign) throws BackstageAPIException;
+
+    @PATCH(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}")
+    @Headers("Content-Type: application/json")
+    CampaignPatch patchCampaign(@Header("Authorization") String accessToken,
+                                @Path("account_id") String accountId,
+                                @Path("campaign_id") String campaignId,
+                                @Body CampaignPatch campaignPatch) throws BackstageAPIException;
+
+    @DELETE(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}")
+    @Headers("Content-Type: application/json")
+    Campaign deleteCampaign(@Header("Authorization") String accessToken,
+                            @Path("account_id") String accountId,
+                            @Path("campaign_id") String campaignId);
 }

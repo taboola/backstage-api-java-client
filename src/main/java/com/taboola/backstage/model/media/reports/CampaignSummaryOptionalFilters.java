@@ -14,7 +14,8 @@ public enum CampaignSummaryOptionalFilters implements ReportFilter {
     PLATFORM("platform"),
     COUNTRY("country"),
     SITE("site"),
-    INCLUDE_MULTI_CONVERSIONS("include_multi_conversions");
+    INCLUDE_MULTI_CONVERSIONS("include_multi_conversions"),
+    PARTNER_NAME("partner_name");
 
     private final String name;
 

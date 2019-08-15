@@ -9,5 +9,5 @@ package com.taboola.backstage.model.media.campaigns;
 public enum BidType {
     FIXED,
     OPTIMIZED_CONVERSIONS,
-    OPTIMIZED_PAGEVIEWS
+    @Deprecated OPTIMIZED_PAGEVIEWS
 }

@@ -12,6 +12,7 @@ import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.auth.ClientCredentialAuthenticationDetails;
 import com.taboola.backstage.model.auth.PasswordAuthenticationDetails;
 import com.taboola.backstage.model.auth.Token;
+import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.dynamic.DynamicField;
 import com.taboola.backstage.model.dynamic.DynamicFieldMetadata;
@@ -20,6 +21,7 @@ import com.taboola.backstage.model.dynamic.DynamicFieldsMetadata;
 import com.taboola.backstage.model.dynamic.DynamicRow;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
+import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
@@ -185,5 +187,13 @@ public abstract class BackstageTestBase {
 
         reportMetadata.setDynamicFields(dynamicFieldMetadata);
         return reportMetadata;
+    }
+
+    protected CampaignPatch generateDummyCampaignPatch() {
+        return factory.manufacturePojo(CampaignPatch.class);
+    }
+
+    protected AudienceSegment generateDummyAudienceSegment() {
+        return factory.manufacturePojo(AudienceSegment.class);
     }
 }

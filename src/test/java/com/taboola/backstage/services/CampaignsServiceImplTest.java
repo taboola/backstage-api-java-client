@@ -5,7 +5,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
-import com.taboola.backstage.model.media.campaigns.CampaignTargeting;
+import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 import com.taboola.backstage.model.media.campaigns.SpendingLimitModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -117,4 +117,40 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
         assertEquals("Invalid campaignOperation", campaignOperation, actual);
         verify(endpointMock, times(1)).updateCampaign(any(), any(), any(), any());
     }
+
+
+    @Test
+    public void testPatch() {
+        CampaignPatch campaignPatch = generateDummyCampaignPatch();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.patchCampaign(auth.getToken().getAccessTokenForHeader(),"accountId", "123", campaignPatch)).thenReturn(campaignPatch);
+
+        CampaignPatch actual = testInstance.patch(auth, "accountId", "123", campaignPatch);
+        assertEquals("Invalid campaignPatch", campaignPatch, actual);
+        verify(endpointMock, times(1)).patchCampaign(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testPatch_notPerformingValidations() {
+        testInstance = new CampaignsServiceImpl(false, endpointMock);
+        CampaignPatch campaignPatch = generateDummyCampaignPatch();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.patchCampaign(auth.getToken().getAccessTokenForHeader(),"accountId", "123", campaignPatch)).thenReturn(campaignPatch);
+
+        CampaignPatch actual = testInstance.patch(auth, "accountId", "123", campaignPatch);
+        assertEquals("Invalid campaignPatch", campaignPatch, actual);
+        verify(endpointMock, times(1)).patchCampaign(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testDelete() {
+        Campaign campaign = generateDummyCampaign();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.deleteCampaign(auth.getToken().getAccessTokenForHeader(),"accountId", campaign.getId())).thenReturn(campaign);
+
+        Campaign actual = testInstance.delete(auth, "accountId", campaign.getId());
+        assertEquals("Invalid campaign", campaign, actual);
+        verify(endpointMock, times(1)).deleteCampaign(any(), any(), any());
+    }
+
 }
