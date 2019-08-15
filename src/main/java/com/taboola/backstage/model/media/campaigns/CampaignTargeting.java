@@ -25,7 +25,7 @@ import java.util.Collection;
  *    <br> 3. Publisher Targeting (exclude only) - You can block specific publishers from
  *    serving your campaign.
  *    <br> 4. OS Targeting - The campaign can be targeted for specific operation system
- *    <br> 5. Connectivity Type Targeting - The campaign can be targeted for specific connectivity type (e.g. WIFI)
+ *    <br> 5. Connectivity Type Targeting (include only) - The campaign can be targeted for specific connectivity type (e.g. WIFI)
  * </p>
  *
  * Created by vladi
