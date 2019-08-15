@@ -127,4 +127,9 @@ public class CampaignOperation extends Campaign {
         this.activitySchedule = activitySchedule;
         return this;
     }
+
+    public CampaignOperation setConnectionTypeTargeting(CampaignTargeting<ConnectionType> connectionTypeTargeting) {
+        this.connectionTypeTargeting = connectionTypeTargeting;
+        return this;
+    }
 }

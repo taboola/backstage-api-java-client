@@ -40,6 +40,7 @@ public class Campaign {
     protected CampaignTargeting<String> platformTargeting;
     protected CampaignTargeting<String> publisherTargeting;
     protected CampaignTargeting<OperationSystem> osTargeting;
+    protected CampaignTargeting<ConnectionType> connectionTypeTargeting;
     @ReadOnly
     protected CampaignTargeting<String> postalCodeTargeting;
     protected String comments;
@@ -170,6 +171,10 @@ public class Campaign {
         return activitySchedule;
     }
 
+    public CampaignTargeting<ConnectionType> getConnectionTypeTargeting() {
+        return connectionTypeTargeting;
+    }
+
     @Override
     public String toString() {
         return "Campaign{" +
@@ -190,6 +195,7 @@ public class Campaign {
                 ", platformTargeting=" + platformTargeting +
                 ", publisherTargeting=" + publisherTargeting +
                 ", osTargeting=" + osTargeting +
+                ", connectionTypeTargeting=" + connectionTypeTargeting +
                 ", postalCodeTargeting=" + postalCodeTargeting +
                 ", comments='" + comments + '\'' +
                 ", bidType=" + bidType +
@@ -226,6 +232,7 @@ public class Campaign {
                 Objects.equals(platformTargeting, campaign.platformTargeting) &&
                 Objects.equals(publisherTargeting, campaign.publisherTargeting) &&
                 Objects.equals(osTargeting, campaign.osTargeting) &&
+                Objects.equals(connectionTypeTargeting, campaign.connectionTypeTargeting) &&
                 Objects.equals(postalCodeTargeting, campaign.postalCodeTargeting) &&
                 Objects.equals(comments, campaign.comments) &&
                 bidType == campaign.bidType &&
@@ -242,8 +249,7 @@ public class Campaign {
     @Override
     public int hashCode() {
         return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier,
-                trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting,
-                publisherTargeting, osTargeting, postalCodeTargeting, comments, bidType, marketingObjective, activitySchedule,
-                startDate, endDate, approvalState, isActive, spent, status);
+                trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting,
+                osTargeting, connectionTypeTargeting, postalCodeTargeting, comments, bidType, marketingObjective, activitySchedule, startDate, endDate, approvalState, isActive, spent, status);
     }
 }
