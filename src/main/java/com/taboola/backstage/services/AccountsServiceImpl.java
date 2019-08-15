@@ -30,13 +30,13 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public Results<AudienceSegment> readAllAudienceSegment(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public Results<AudienceSegment> readAudienceSegments(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getAllAudienceSegments(accessToken, accountId);
     }
 
     @Override
-    public Results<AudienceSegment> readAudienceSegmentByCountry(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public Results<AudienceSegment> readAudienceSegments(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getSpecificCountryAudienceSegments(accessToken, accountId, countryCode);
 

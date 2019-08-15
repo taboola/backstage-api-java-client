@@ -46,24 +46,24 @@ public class AccountsServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testReadAllAudienceSegment(){
+    public void testReadAudienceSegments(){
         AudienceSegment audienceSegment = generateDummyAudienceSegment();
         Results<AudienceSegment> expected = new Results<>(Collections.singleton(audienceSegment));
         when(accountsEndpointMock.getAllAudienceSegments(any(), any())).thenReturn(expected);
 
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        Results<AudienceSegment> actual = testInstance.readAllAudienceSegment(auth, "123");
+        Results<AudienceSegment> actual = testInstance.readAudienceSegments(auth, "123");
         assertEquals("Invalid accounts", expected, actual);
     }
 
     @Test
-    public void testReadAudienceSegmentByCountry(){
+    public void testReadAudienceSegmentsByCountry(){
         AudienceSegment audienceSegment = generateDummyAudienceSegment();
         Results<AudienceSegment> expected = new Results<>(Collections.singleton(audienceSegment));
         when(accountsEndpointMock.getSpecificCountryAudienceSegments(any(), any(), any())).thenReturn(expected);
 
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        Results<AudienceSegment> actual = testInstance.readAudienceSegmentByCountry(auth, "123", "US");
+        Results<AudienceSegment> actual = testInstance.readAudienceSegments(auth, "123", "US");
         assertEquals("Invalid accounts", expected, actual);
     }
 }

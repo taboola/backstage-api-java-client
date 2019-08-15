@@ -36,7 +36,7 @@ public interface AccountsService {
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    Results<AudienceSegment> readAllAudienceSegment(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    Results<AudienceSegment> readAudienceSegments(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Read audience segments by given country code (codes supplied by {@link DictionaryService#getCountries})
@@ -49,5 +49,5 @@ public interface AccountsService {
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    Results<AudienceSegment> readAudienceSegmentByCountry(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    Results<AudienceSegment> readAudienceSegments(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }

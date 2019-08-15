@@ -60,7 +60,7 @@ public class CampaignsServiceImpl implements CampaignsService {
     @Override
     public CampaignPatch patch(BackstageAuthentication auth, String accountId, String campaignId, CampaignPatch campaignPatch) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         if(performValidations) {
-            FieldsValidator.validateUpdateOperation(campaignPatch);
+            FieldsValidator.validateCreateOperation(campaignPatch);
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.patchCampaign(accessToken, accountId, campaignId, campaignPatch);
