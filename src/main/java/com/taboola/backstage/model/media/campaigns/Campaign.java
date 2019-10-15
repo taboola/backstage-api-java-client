@@ -58,6 +58,7 @@ public class Campaign {
     protected Double spent;
     @ReadOnly
     protected CampaignStatus status;
+    protected Double cpaGoal;
 
     public String getId() {
         return id;
@@ -175,6 +176,10 @@ public class Campaign {
         return connectionTypeTargeting;
     }
 
+    public Double getCpaGoal() {
+        return cpaGoal;
+    }
+
     @Override
     public String toString() {
         return "Campaign{" +
@@ -207,6 +212,7 @@ public class Campaign {
                 ", isActive=" + isActive +
                 ", spent=" + spent +
                 ", status=" + status +
+                ", cpaGoal=" + cpaGoal +
                 '}';
     }
 
@@ -243,13 +249,15 @@ public class Campaign {
                 approvalState == campaign.approvalState &&
                 Objects.equals(isActive, campaign.isActive) &&
                 Objects.equals(spent, campaign.spent) &&
-                status == campaign.status;
+                status == campaign.status &&
+                Objects.equals(cpaGoal, campaign.cpaGoal);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier,
                 trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting,
-                osTargeting, connectionTypeTargeting, postalCodeTargeting, comments, bidType, marketingObjective, activitySchedule, startDate, endDate, approvalState, isActive, spent, status);
+                osTargeting, connectionTypeTargeting, postalCodeTargeting, comments, bidType, marketingObjective,
+                activitySchedule, startDate, endDate, approvalState, isActive, spent, status, cpaGoal);
     }
 }

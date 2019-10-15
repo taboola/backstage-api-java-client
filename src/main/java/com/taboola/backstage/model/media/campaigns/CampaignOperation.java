@@ -132,4 +132,9 @@ public class CampaignOperation extends Campaign {
         this.connectionTypeTargeting = connectionTypeTargeting;
         return this;
     }
+
+    public CampaignOperation setCpaGoal(Double cpaGoal) {
+        this.cpaGoal = cpaGoal;
+        return this;
+    }
 }
