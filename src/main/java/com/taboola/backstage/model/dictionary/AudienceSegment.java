@@ -13,8 +13,11 @@ public class AudienceSegment {
     private Long taboolaAudienceId;
     private String dataPartner;
     private String dataPartnerAudienceId;
+    private String dataPartnerGroup;
     private String audienceName;
     private List<String> allowedCountries;
+    private List<String> taxonomyCategories;
+    private Long audienceSize;
 
     public Long getTaboolaAudienceId() {
         return taboolaAudienceId;
@@ -61,14 +64,41 @@ public class AudienceSegment {
         return this;
     }
 
+    public String getDataPartnerGroup() {
+        return dataPartnerGroup;
+    }
+
+    public void setDataPartnerGroup(String dataPartnerGroup) {
+        this.dataPartnerGroup = dataPartnerGroup;
+    }
+
+    public List<String> getTaxonomyCategories() {
+        return taxonomyCategories;
+    }
+
+    public void setTaxonomyCategories(List<String> taxonomyCategories) {
+        this.taxonomyCategories = taxonomyCategories;
+    }
+
+    public Long getAudienceSize() {
+        return audienceSize;
+    }
+
+    public void setAudienceSize(Long audienceSize) {
+        this.audienceSize = audienceSize;
+    }
+
     @Override
     public String toString() {
         return "AudienceSegment{" +
                 "taboolaAudienceId=" + taboolaAudienceId +
                 ", dataPartner='" + dataPartner + '\'' +
                 ", dataPartnerAudienceId='" + dataPartnerAudienceId + '\'' +
+                ", dataPartnerGroup='" + dataPartnerGroup + '\'' +
                 ", audienceName='" + audienceName + '\'' +
                 ", allowedCountries=" + allowedCountries +
+                ", taxonomyCategories=" + taxonomyCategories +
+                ", audienceSize=" + audienceSize +
                 '}';
     }
 }
