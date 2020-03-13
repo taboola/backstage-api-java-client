@@ -16,6 +16,7 @@ public class TokenDetails {
     private String fullName;
     private Integer expiresIn;
     private List<String> permissions;
+    private String userId;
 
     public String getUsername() {
         return username;
@@ -57,6 +58,10 @@ public class TokenDetails {
         this.permissions = permissions;
     }
 
+    public String getUserId() { return userId; }
+
+    public void setUserId() { this.userId = userId; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,12 +71,13 @@ public class TokenDetails {
         Objects.equals(accountId, that.accountId) &&
         Objects.equals(fullName, that.fullName) &&
         Objects.equals(expiresIn, that.expiresIn) &&
-        Objects.equals(permissions, that.permissions);
+        Objects.equals(permissions, that.permissions) &&
+        Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, accountId, fullName, expiresIn, permissions);
+        return Objects.hash(username, accountId, fullName, expiresIn, permissions, userId);
     }
 
     @Override
@@ -80,6 +86,7 @@ public class TokenDetails {
         "username='" + username + '\'' +
         ", accountId='" + accountId + '\'' +
         ", fullName='" + fullName + '\'' +
+        ", userId=" + userId + '\'' +
         ", expiresIn=" + expiresIn +
         ", permissions=" + permissions +
         '}';
