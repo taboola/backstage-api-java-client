@@ -67,7 +67,7 @@ public class SynchronousCallAdapterFactory  extends CallAdapter.Factory {
                             throw new BackstageAPIUnauthorizedException();
 
                         } else if(responseCode >= BAD_REQUEST_HTTP_STATUS_CODE && responseCode < INTERNAL_SERVER_ERROR_HTTP_STATUS_CODE) {
-                            throw new BackstageAPIRequestException(responseCode, parseError(response));
+                            throw new BackstageAPIRequestException(responseCode, normalizeError(parseError(response)));
                         }
 
                         throw new BackstageAPIConnectivityException(responseCode);
@@ -91,5 +91,14 @@ public class SynchronousCallAdapterFactory  extends CallAdapter.Factory {
             logger.warn("Failed to parse API error response object [{}]", errorResponse.message());
             return new APIError(errorResponse.message(), errorResponse.code());
         }
+    }
+
+    APIError normalizeError(APIError error) {
+        String message = error.getMessage();
+        if(message != null) {
+            error.setMessage(message.replaceAll("%", "%%"));
+        }
+
+        return error;
     }
 }
