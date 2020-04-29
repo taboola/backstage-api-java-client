@@ -14,18 +14,30 @@ import com.taboola.backstage.model.dynamic.DynamicRow;
 public class CampaignSummaryRow implements DynamicRow {
 
     private Integer impressions;
+    private Integer visibleImpressions;
+    private Double conversionsValue;
     private Double ctr;
+    private Double vctr;
     private Integer clicks;
     private Double cpc;
     private Double cpm;
+    private Double vcpm;
+    private Double cpa;
+    private Double cpaClicks;
+    private Double cpaViews;
     private Double cpaConversionRate;
+    private Double cpaConversionRateClicks;
+    private Double cpaConversionRateViews;
     private Integer cpaActionsNum;
+    private Integer cpaActionsNumFromClicks;
+    private Integer cpaActionsNumFromViews;
     private Double spent;
     private String currency;
 
     // dimension specific
     private String date;
     private String dateEndPeriod;
+    private String hourOfDay;
     private String contentProvider;
     private String contentProviderName;
     private Long campaignsNum;
@@ -36,6 +48,8 @@ public class CampaignSummaryRow implements DynamicRow {
     private Integer siteId;
     private String country;
     private String countryName;
+    private String region;
+    private String dma;
     private String platform;
     private String platformName;
     private BlockingLevelType blockingLevel;
@@ -43,6 +57,7 @@ public class CampaignSummaryRow implements DynamicRow {
     private String partnerName;
     private String audienceName;
     private String dataPartnerAudienceId;
+    private String impressionsPct;
 
     // dynamic
     private DynamicFields dynamicFields;
@@ -307,22 +322,169 @@ public class CampaignSummaryRow implements DynamicRow {
         return this;
     }
 
+    public Integer getVisibleImpressions() {
+        return visibleImpressions;
+    }
+
+    public CampaignSummaryRow setVisibleImpressions(Integer visibleImpressions) {
+        this.visibleImpressions = visibleImpressions;
+        return this;
+    }
+
+    public Double getConversionsValue() {
+        return conversionsValue;
+    }
+
+    public CampaignSummaryRow setConversionsValue(Double conversionsValue) {
+        this.conversionsValue = conversionsValue;
+        return this;
+    }
+
+    public Double getVctr() {
+        return vctr;
+    }
+
+    public CampaignSummaryRow setVctr(Double vctr) {
+        this.vctr = vctr;
+        return this;
+    }
+
+    public Double getVcpm() {
+        return vcpm;
+    }
+
+    public CampaignSummaryRow setVcpm(Double vcpm) {
+        this.vcpm = vcpm;
+        return this;
+    }
+
+    public Double getCpa() {
+        return cpa;
+    }
+
+    public CampaignSummaryRow setCpa(Double cpa) {
+        this.cpa = cpa;
+        return this;
+    }
+
+    public Double getCpaClicks() {
+        return cpaClicks;
+    }
+
+    public CampaignSummaryRow setCpaClicks(Double cpaClicks) {
+        this.cpaClicks = cpaClicks;
+        return this;
+    }
+
+    public Double getCpaViews() {
+        return cpaViews;
+    }
+
+    public CampaignSummaryRow setCpaViews(Double cpaViews) {
+        this.cpaViews = cpaViews;
+        return this;
+    }
+
+    public Double getCpaConversionRateClicks() {
+        return cpaConversionRateClicks;
+    }
+
+    public CampaignSummaryRow setCpaConversionRateClicks(Double cpaConversionRateClicks) {
+        this.cpaConversionRateClicks = cpaConversionRateClicks;
+        return this;
+    }
+
+    public Double getCpaConversionRateViews() {
+        return cpaConversionRateViews;
+    }
+
+    public CampaignSummaryRow setCpaConversionRateViews(Double cpaConversionRateViews) {
+        this.cpaConversionRateViews = cpaConversionRateViews;
+        return this;
+    }
+
+    public Integer getCpaActionsNumFromClicks() {
+        return cpaActionsNumFromClicks;
+    }
+
+    public CampaignSummaryRow setCpaActionsNumFromClicks(Integer cpaActionsNumFromClicks) {
+        this.cpaActionsNumFromClicks = cpaActionsNumFromClicks;
+        return this;
+    }
+
+    public Integer getCpaActionsNumFromViews() {
+        return cpaActionsNumFromViews;
+    }
+
+    public CampaignSummaryRow setCpaActionsNumFromViews(Integer cpaActionsNumFromViews) {
+        this.cpaActionsNumFromViews = cpaActionsNumFromViews;
+        return this;
+    }
+
+    public String getHourOfDay() {
+        return hourOfDay;
+    }
+
+    public CampaignSummaryRow setHourOfDay(String hourOfDay) {
+        this.hourOfDay = hourOfDay;
+        return this;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public CampaignSummaryRow setRegion(String region) {
+        this.region = region;
+        return this;
+    }
+
+    public String getDma() {
+        return dma;
+    }
+
+    public CampaignSummaryRow setDma(String dma) {
+        this.dma = dma;
+        return this;
+    }
+
+    public String getImpressionsPct() {
+        return impressionsPct;
+    }
+
+    public CampaignSummaryRow setImpressionsPct(String impressionsPct) {
+        this.impressionsPct = impressionsPct;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CampaignSummaryRow that = (CampaignSummaryRow) o;
         return Objects.equals(impressions, that.impressions) &&
+                Objects.equals(visibleImpressions, that.visibleImpressions) &&
+                Objects.equals(conversionsValue, that.conversionsValue) &&
                 Objects.equals(ctr, that.ctr) &&
+                Objects.equals(vctr, that.vctr) &&
                 Objects.equals(clicks, that.clicks) &&
                 Objects.equals(cpc, that.cpc) &&
                 Objects.equals(cpm, that.cpm) &&
+                Objects.equals(vcpm, that.vcpm) &&
+                Objects.equals(cpa, that.cpa) &&
+                Objects.equals(cpaClicks, that.cpaClicks) &&
+                Objects.equals(cpaViews, that.cpaViews) &&
                 Objects.equals(cpaConversionRate, that.cpaConversionRate) &&
+                Objects.equals(cpaConversionRateClicks, that.cpaConversionRateClicks) &&
+                Objects.equals(cpaConversionRateViews, that.cpaConversionRateViews) &&
                 Objects.equals(cpaActionsNum, that.cpaActionsNum) &&
+                Objects.equals(cpaActionsNumFromClicks, that.cpaActionsNumFromClicks) &&
+                Objects.equals(cpaActionsNumFromViews, that.cpaActionsNumFromViews) &&
                 Objects.equals(spent, that.spent) &&
                 Objects.equals(currency, that.currency) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(dateEndPeriod, that.dateEndPeriod) &&
+                Objects.equals(hourOfDay, that.hourOfDay) &&
                 Objects.equals(contentProvider, that.contentProvider) &&
                 Objects.equals(contentProviderName, that.contentProviderName) &&
                 Objects.equals(campaignsNum, that.campaignsNum) &&
@@ -333,6 +495,8 @@ public class CampaignSummaryRow implements DynamicRow {
                 Objects.equals(siteId, that.siteId) &&
                 Objects.equals(country, that.country) &&
                 Objects.equals(countryName, that.countryName) &&
+                Objects.equals(region, that.region) &&
+                Objects.equals(dma, that.dma) &&
                 Objects.equals(platform, that.platform) &&
                 Objects.equals(platformName, that.platformName) &&
                 blockingLevel == that.blockingLevel &&
@@ -340,30 +504,45 @@ public class CampaignSummaryRow implements DynamicRow {
                 Objects.equals(partnerName, that.partnerName) &&
                 Objects.equals(audienceName, that.audienceName) &&
                 Objects.equals(dataPartnerAudienceId, that.dataPartnerAudienceId) &&
+                Objects.equals(impressionsPct, that.impressionsPct) &&
                 Objects.equals(dynamicFields, that.dynamicFields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(impressions, ctr, clicks, cpc, cpm, cpaConversionRate, cpaActionsNum, spent, currency, date, dateEndPeriod, contentProvider, contentProviderName,
-                campaignsNum, campaign, campaignName, site, siteName, siteId, country, countryName, platform, platformName, blockingLevel, roas, partnerName, audienceName,
-                dataPartnerAudienceId, dynamicFields);
+        return Objects.hash(impressions, visibleImpressions, conversionsValue, ctr, vctr, clicks, cpc, cpm, vcpm, cpa,
+                cpaClicks, cpaViews, cpaConversionRate, cpaConversionRateClicks, cpaConversionRateViews, cpaActionsNum,
+                cpaActionsNumFromClicks, cpaActionsNumFromViews, spent, currency, date, dateEndPeriod, hourOfDay, contentProvider,
+                contentProviderName, campaignsNum, campaign, campaignName, site, siteName, siteId, country, countryName, region, dma,
+                platform, platformName, blockingLevel, roas, partnerName, audienceName, dataPartnerAudienceId, impressionsPct, dynamicFields);
     }
 
     @Override
     public String toString() {
         return "CampaignSummaryRow{" +
                 "impressions=" + impressions +
+                ", visibleImpressions=" + visibleImpressions +
+                ", conversionsValue=" + conversionsValue +
                 ", ctr=" + ctr +
+                ", vctr=" + vctr +
                 ", clicks=" + clicks +
                 ", cpc=" + cpc +
                 ", cpm=" + cpm +
+                ", vcpm=" + vcpm +
+                ", cpa=" + cpa +
+                ", cpaClicks=" + cpaClicks +
+                ", cpaViews=" + cpaViews +
                 ", cpaConversionRate=" + cpaConversionRate +
+                ", cpaConversionRateClicks=" + cpaConversionRateClicks +
+                ", cpaConversionRateViews=" + cpaConversionRateViews +
                 ", cpaActionsNum=" + cpaActionsNum +
+                ", cpaActionsNumFromClicks=" + cpaActionsNumFromClicks +
+                ", cpaActionsNumFromViews=" + cpaActionsNumFromViews +
                 ", spent=" + spent +
                 ", currency='" + currency + '\'' +
                 ", date='" + date + '\'' +
                 ", dateEndPeriod='" + dateEndPeriod + '\'' +
+                ", hourOfDay='" + hourOfDay + '\'' +
                 ", contentProvider='" + contentProvider + '\'' +
                 ", contentProviderName='" + contentProviderName + '\'' +
                 ", campaignsNum=" + campaignsNum +
@@ -374,6 +553,8 @@ public class CampaignSummaryRow implements DynamicRow {
                 ", siteId=" + siteId +
                 ", country='" + country + '\'' +
                 ", countryName='" + countryName + '\'' +
+                ", region='" + region + '\'' +
+                ", dma='" + dma + '\'' +
                 ", platform='" + platform + '\'' +
                 ", platformName='" + platformName + '\'' +
                 ", blockingLevel=" + blockingLevel +
@@ -381,6 +562,7 @@ public class CampaignSummaryRow implements DynamicRow {
                 ", partnerName='" + partnerName + '\'' +
                 ", audienceName='" + audienceName + '\'' +
                 ", dataPartnerAudienceId='" + dataPartnerAudienceId + '\'' +
+                ", impressionsPct='" + impressionsPct + '\'' +
                 ", dynamicFields=" + dynamicFields +
                 '}';
     }

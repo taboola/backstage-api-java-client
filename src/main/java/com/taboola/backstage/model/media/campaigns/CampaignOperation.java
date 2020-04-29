@@ -137,4 +137,26 @@ public class CampaignOperation extends Campaign {
         this.cpaGoal = cpaGoal;
         return this;
     }
+
+    public CampaignOperation setPublisherBidStrategyModifiers(BidStrategyModifiers publisherBidStrategyModifiers) {
+        this.publisherBidStrategyModifiers = publisherBidStrategyModifiers;
+        return this;
+    }
+
+    public CampaignOperation setDmaCountryTargeting(CampaignTargeting<String> dmaCountryTargeting) {
+        this.dmaCountryTargeting = dmaCountryTargeting;
+        return this;
+    }
+
+    public CampaignOperation setRegionCountryTargeting(CampaignTargeting<String> regionCountryTargeting) {
+        this.regionCountryTargeting = regionCountryTargeting;
+        return this;
+    }
+
+    public CampaignOperation setContextualTargeting(CampaignTargeting<String> contextualTargeting) {
+        this.contextualTargeting = contextualTargeting;
+        return this;
+    }
+
+
 }

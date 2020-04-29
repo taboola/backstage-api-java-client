@@ -61,12 +61,14 @@ public class Backstage {
     private final AccountsService accountsService;
     private final CampaignPostalTargetingService campaignPostalCodeTargetingService;
     private final BackstageInternalTools internalTools;
+    private final CampaignAudienceTargetingService campaignAudienceTargetingService;
 
     private Backstage(BackstageInternalTools internalTools, CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
                       CampaignItemsService campaignItemsService, DictionaryService dictionaryService,
                       ReportsService reportsService, AccountsService accountsService,
-                      CampaignPostalTargetingService campaignPostalCodeTargetingService) {
+                      CampaignPostalTargetingService campaignPostalCodeTargetingService,
+                      CampaignAudienceTargetingService campaignAudienceTargetingService) {
 
         this.internalTools = internalTools;
         this.campaignsService = campaignsService;
@@ -77,6 +79,7 @@ public class Backstage {
         this.reportsService = reportsService;
         this.accountsService = accountsService;
         this.campaignPostalCodeTargetingService = campaignPostalCodeTargetingService;
+        this.campaignAudienceTargetingService = campaignAudienceTargetingService;
     }
 
     public static BackstageBuilder builder() {
@@ -121,6 +124,10 @@ public class Backstage {
 
     public CampaignPostalTargetingService campaignPostalCodeTargetingService() {
         return campaignPostalCodeTargetingService;
+    }
+
+    public CampaignAudienceTargetingService getCampaignAudienceTargetingService() {
+        return campaignAudienceTargetingService;
     }
 
     public BackstageInternalTools internalTools() {
@@ -228,7 +235,8 @@ public class Backstage {
                     new DictionaryServiceImpl(endpointsFactory.createEndpoint(BackstageDictionaryEndpoint.class)),
                     new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), internalTools, organizeDynamicColumns),
                     new AccountsServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
-                    new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class))
+                    new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class)),
+                    new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createAuthEndpoint(BackstageAudienceTargetingEndpoint.class))
             );
         }
 

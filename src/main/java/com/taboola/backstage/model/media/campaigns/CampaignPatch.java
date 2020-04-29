@@ -11,7 +11,9 @@ import com.taboola.backstage.model.Patch;
 public class CampaignPatch extends Patch {
 
     private CampaignPublisherTargetingPatch publisherTargeting;
+    private CampaignAutoPublisherTargetingPatch autoPublisherTargeting;
     private PublisherBidModifier publisherBidModifier;
+    private BidStrategyModifiers publisherBidStrategyModifiers;
 
     public CampaignPublisherTargetingPatch getPublisherTargeting() {
         return publisherTargeting;
@@ -27,5 +29,21 @@ public class CampaignPatch extends Patch {
 
     public void setPublisherBidModifier(PublisherBidModifier publisherBidModifier) {
         this.publisherBidModifier = publisherBidModifier;
+    }
+
+    public CampaignAutoPublisherTargetingPatch getAutoPublisherTargeting() {
+        return autoPublisherTargeting;
+    }
+
+    public void setAutoPublisherTargeting(CampaignAutoPublisherTargetingPatch autoPublisherTargeting) {
+        this.autoPublisherTargeting = autoPublisherTargeting;
+    }
+
+    public BidStrategyModifiers getPublisherBidStrategyModifiers() {
+        return publisherBidStrategyModifiers;
+    }
+
+    public void setPublisherBidStrategyModifiers(BidStrategyModifiers publisherBidStrategyModifiers) {
+        this.publisherBidStrategyModifiers = publisherBidStrategyModifiers;
     }
 }
