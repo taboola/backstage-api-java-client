@@ -59,6 +59,7 @@ public class Campaign {
     @ReadOnly
     protected CampaignStatus status;
     protected Double cpaGoal;
+    protected VerificationPixel verificationPixel;
 
     public String getId() {
         return id;
@@ -180,6 +181,9 @@ public class Campaign {
         return cpaGoal;
     }
 
+    public VerificationPixel getVerificationPixel() {
+        return verificationPixel;
+    }
     @Override
     public String toString() {
         return "Campaign{" +
@@ -213,6 +217,7 @@ public class Campaign {
                 ", spent=" + spent +
                 ", status=" + status +
                 ", cpaGoal=" + cpaGoal +
+                ", verificationPixel=" + verificationPixel +
                 '}';
     }
 
@@ -250,6 +255,7 @@ public class Campaign {
                 Objects.equals(isActive, campaign.isActive) &&
                 Objects.equals(spent, campaign.spent) &&
                 status == campaign.status &&
+                Objects.equals(verificationPixel, campaign.verificationPixel) &&
                 Objects.equals(cpaGoal, campaign.cpaGoal);
     }
 
@@ -258,6 +264,6 @@ public class Campaign {
         return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier,
                 trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, subCountryTargeting, platformTargeting, publisherTargeting,
                 osTargeting, connectionTypeTargeting, postalCodeTargeting, comments, bidType, marketingObjective,
-                activitySchedule, startDate, endDate, approvalState, isActive, spent, status, cpaGoal);
+                activitySchedule, startDate, endDate, approvalState, isActive, spent, status, cpaGoal, verificationPixel);
     }
 }

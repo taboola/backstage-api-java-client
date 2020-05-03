@@ -137,4 +137,9 @@ public class CampaignOperation extends Campaign {
         this.cpaGoal = cpaGoal;
         return this;
     }
+
+    public CampaignOperation setVerificationPixel(VerificationPixel verificationPixel) {
+        this.verificationPixel = verificationPixel;
+        return this;
+    }
 }
