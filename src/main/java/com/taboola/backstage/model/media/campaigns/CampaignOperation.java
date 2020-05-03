@@ -2,7 +2,9 @@ package com.taboola.backstage.model.media.campaigns;
 
 import java.util.Date;
 
+import com.taboola.backstage.model.media.campaigns.brandsafety.ExternalBrandSafety;
 import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
+import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
 
 /**
  * Created by vladi
@@ -158,5 +160,18 @@ public class CampaignOperation extends Campaign {
         return this;
     }
 
+    public CampaignOperation setPricingModel(CampaignPricingModel pricingModel) {
+        this.pricingModel = pricingModel;
+        return this;
+    }
 
+    public CampaignOperation setExternalBrandSafety(ExternalBrandSafety externalBrandSafety) {
+        this.externalBrandSafety = externalBrandSafety;
+        return this;
+    }
+
+    public CampaignOperation setVerificationPixel(VerificationPixel verificationPixel) {
+        this.verificationPixel = verificationPixel;
+        return this;
+    }
 }
