@@ -70,6 +70,4 @@ public interface BackstageAudienceTargetingEndpoint {
     CampaignMultiTargetingCollection<String> readMarkingLabels(@Header("Authorization") String authToken,
                                                                @Path("account_id") String accountId,
                                                                @Path("campaign_id") String campaignId) throws BackstageAPIException;
-
-    //TODO add audience dictionary
 }
