@@ -4,6 +4,7 @@ import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
+import com.taboola.backstage.model.dictionary.LookalikeAudience;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -40,4 +41,14 @@ public interface BackstageAccountEndpoint {
     Results<AudienceSegment> getSpecificCountryAudienceSegments(@Header("Authorization") String accessToken,
                                                                 @Path("account_id") String accountId,
                                                                 @Path("country_code") String countryCode) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/dictionary/lookalike_audiences")
+    @Headers("Content-Type: application/json")
+    Results<LookalikeAudience> getLookalikeAudiences(@Header("Authorization") String accessToken,
+                                                     @Path("account_id") String accountId) throws BackstageAPIException;
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/dictionary/lookalike_audiences/{country_code}")
+    @Headers("Content-Type: application/json")
+    Results<LookalikeAudience> getSpecificCountryLookalikeAudiences(@Header("Authorization") String accessToken,
+                                                                    @Path("account_id") String accountId,
+                                                                    @Path("country_code") String countryCode) throws BackstageAPIException;
 }
