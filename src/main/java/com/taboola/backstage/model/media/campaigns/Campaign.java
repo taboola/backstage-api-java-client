@@ -1,5 +1,6 @@
 package com.taboola.backstage.model.media.campaigns;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taboola.backstage.annotations.Final;
 import com.taboola.backstage.annotations.ReadOnly;
 import com.taboola.backstage.annotations.Required;
@@ -69,8 +70,10 @@ public class Campaign {
     protected Date startDate;
     protected Date endDate;
     @ReadOnly
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date startDateInUtc;
     @ReadOnly
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date endDateInUtc;
     @ReadOnly
     protected CampaignApprovalState approvalState;
