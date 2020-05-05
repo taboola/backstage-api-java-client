@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
+import com.taboola.backstage.model.dictionary.LookalikeAudience;
 
 import java.util.Collections;
 
@@ -64,6 +65,28 @@ public class AccountsServiceImplTest extends BackstageTestBase {
 
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         Results<AudienceSegment> actual = testInstance.readAudienceSegments(auth, "123", "US");
+        assertEquals("Invalid accounts", expected, actual);
+    }
+
+    @Test
+    public void testReadLookalikeAudiences(){
+        LookalikeAudience lookalikeAudience = generateDummyLookalikeAudiences();
+        Results<LookalikeAudience> expected = new Results<>(Collections.singleton(lookalikeAudience));
+        when(accountsEndpointMock.getLookalikeAudiences(any(), any())).thenReturn(expected);
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<LookalikeAudience> actual = testInstance.readLookalikeAudiences(auth, "123");
+        assertEquals("Invalid accounts", expected, actual);
+    }
+
+    @Test
+    public void testReadLookalikeAudiencesByCountry(){
+        LookalikeAudience lookalikeAudience = generateDummyLookalikeAudiences();
+        Results<LookalikeAudience> expected = new Results<>(Collections.singleton(lookalikeAudience));
+        when(accountsEndpointMock.getSpecificCountryLookalikeAudiences(any(), any(), any())).thenReturn(expected);
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<LookalikeAudience> actual = testInstance.readSpecificCountryLookalikeAudiences(auth, "123", "US");
         assertEquals("Invalid accounts", expected, actual);
     }
 }

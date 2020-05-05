@@ -15,6 +15,7 @@ public class AudienceSegment {
     private String dataPartnerAudienceId;
     private String dataPartnerGroup;
     private String audienceName;
+    private String audienceDescription;
     private List<String> allowedCountries;
     private List<String> taxonomyCategories;
     private Long audienceSize;
@@ -88,6 +89,14 @@ public class AudienceSegment {
         this.audienceSize = audienceSize;
     }
 
+    public String getAudienceDescription() {
+        return audienceDescription;
+    }
+
+    public void setAudienceDescription(String audienceDescription) {
+        this.audienceDescription = audienceDescription;
+    }
+
     @Override
     public String toString() {
         return "AudienceSegment{" +
@@ -96,6 +105,7 @@ public class AudienceSegment {
                 ", dataPartnerAudienceId='" + dataPartnerAudienceId + '\'' +
                 ", dataPartnerGroup='" + dataPartnerGroup + '\'' +
                 ", audienceName='" + audienceName + '\'' +
+                ", audienceDescription='" + audienceDescription + '\'' +
                 ", allowedCountries=" + allowedCountries +
                 ", taxonomyCategories=" + taxonomyCategories +
                 ", audienceSize=" + audienceSize +

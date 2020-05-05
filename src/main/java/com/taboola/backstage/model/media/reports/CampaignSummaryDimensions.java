@@ -9,12 +9,15 @@ package com.taboola.backstage.model.media.reports;
 public enum CampaignSummaryDimensions {
 
     DAY("day"),
+    BY_HOUR_OF_DAY("by_hour_of_day"),
     WEEK("week"),
     MONTH("month"),
     CONTENT_PROVIDER_BREAKDOWN("content_provider_breakdown"),
     CAMPAIGN_BREAKDOWN("campaign_breakdown"),
     SITE_BREAKDOWN("site_breakdown"),
     COUNTRY_BREAKDOWN("country_breakdown"),
+    REGION_BREAKDOWN("region_breakdown"),
+    DMA_BREAKDOWN("dma_breakdown"),
     PLATFORM_BREAKDOWN("platform_breakdown"),
     CAMPAIGN_DAY_BREAKDOWN("campaign_day_breakdown"),
     CAMPAIGN_SITE_DATE_BREAKDOWN("campaign_site_day_breakdown"),
