@@ -12,6 +12,7 @@ public class APIError {
 
     private int httpStatus;
     private String message;
+    private String offendingField;
 
     public APIError() {
         //for jackson
@@ -20,6 +21,12 @@ public class APIError {
     public APIError(String message, int httpStatus) {
         this.message = message;
         this.httpStatus = httpStatus;
+    }
+
+    public APIError(String message, int httpStatus, String offendingField) {
+        this.message = message;
+        this.httpStatus = httpStatus;
+        this.offendingField = offendingField;
     }
 
     public int getHttpStatus() {
@@ -38,11 +45,20 @@ public class APIError {
         this.message = message;
     }
 
+    public String getOffendingField() {
+        return offendingField;
+    }
+
+    public void setOffendingField(String offendingField) {
+        this.offendingField = offendingField;
+    }
+
     @Override
     public String toString() {
         return "APIError{" +
-        "httpStatus=" + httpStatus +
-        ", message='" + message + '\'' +
-        '}';
+                "httpStatus=" + httpStatus +
+                ", message='" + message + '\'' +
+                ", offendingField='" + offendingField + '\'' +
+                '}';
     }
 }

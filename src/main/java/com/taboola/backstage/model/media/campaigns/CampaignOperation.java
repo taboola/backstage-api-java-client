@@ -2,7 +2,9 @@ package com.taboola.backstage.model.media.campaigns;
 
 import java.util.Date;
 
+import com.taboola.backstage.model.media.campaigns.brandsafety.ExternalBrandSafety;
 import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
+import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
 
 /**
  * Created by vladi
@@ -135,6 +137,41 @@ public class CampaignOperation extends Campaign {
 
     public CampaignOperation setCpaGoal(Double cpaGoal) {
         this.cpaGoal = cpaGoal;
+        return this;
+    }
+
+    public CampaignOperation setPublisherBidStrategyModifiers(BidStrategyModifiers publisherBidStrategyModifiers) {
+        this.publisherBidStrategyModifiers = publisherBidStrategyModifiers;
+        return this;
+    }
+
+    public CampaignOperation setDmaCountryTargeting(CampaignTargeting<String> dmaCountryTargeting) {
+        this.dmaCountryTargeting = dmaCountryTargeting;
+        return this;
+    }
+
+    public CampaignOperation setRegionCountryTargeting(CampaignTargeting<String> regionCountryTargeting) {
+        this.regionCountryTargeting = regionCountryTargeting;
+        return this;
+    }
+
+    public CampaignOperation setContextualTargeting(CampaignTargeting<String> contextualTargeting) {
+        this.contextualTargeting = contextualTargeting;
+        return this;
+    }
+
+    public CampaignOperation setPricingModel(CampaignPricingModel pricingModel) {
+        this.pricingModel = pricingModel;
+        return this;
+    }
+
+    public CampaignOperation setExternalBrandSafety(ExternalBrandSafety externalBrandSafety) {
+        this.externalBrandSafety = externalBrandSafety;
+        return this;
+    }
+
+    public CampaignOperation setVerificationPixel(VerificationPixel verificationPixel) {
+        this.verificationPixel = verificationPixel;
         return this;
     }
 }

@@ -23,15 +23,18 @@ public class TopCampaignContentRow implements DynamicRow {
     private String contentProviderName;
     private Long impressions;
     private Double ctr;
+    private Double vctr;
     private Long clicks;
     private Double cpc;
     private Double cpm;
+    private Double vcpm;
     private Double spent;
     private String currency;
     private Long actions;
     private Double cpa;
     private Double cvr;
     private Double roas;
+    private Long visibleImpressions;
 
     // dynamic
     private DynamicFields dynamicFields;
@@ -189,6 +192,33 @@ public class TopCampaignContentRow implements DynamicRow {
         return this;
     }
 
+    public Double getVctr() {
+        return vctr;
+    }
+
+    public TopCampaignContentRow setVctr(Double vctr) {
+        this.vctr = vctr;
+        return this;
+    }
+
+    public Double getVcpm() {
+        return vcpm;
+    }
+
+    public TopCampaignContentRow setVcpm(Double vcpm) {
+        this.vcpm = vcpm;
+        return this;
+    }
+
+    public Long getVisibleImpressions() {
+        return visibleImpressions;
+    }
+
+    public TopCampaignContentRow setVisibleImpressions(Long visibleImpressions) {
+        this.visibleImpressions = visibleImpressions;
+        return this;
+    }
+
     public DynamicFields getDynamicFields() {
         return dynamicFields;
     }
@@ -213,22 +243,26 @@ public class TopCampaignContentRow implements DynamicRow {
                 Objects.equals(contentProviderName, that.contentProviderName) &&
                 Objects.equals(impressions, that.impressions) &&
                 Objects.equals(ctr, that.ctr) &&
+                Objects.equals(vctr, that.vctr) &&
                 Objects.equals(clicks, that.clicks) &&
                 Objects.equals(cpc, that.cpc) &&
                 Objects.equals(cpm, that.cpm) &&
+                Objects.equals(vcpm, that.vcpm) &&
                 Objects.equals(spent, that.spent) &&
                 Objects.equals(currency, that.currency) &&
                 Objects.equals(actions, that.actions) &&
                 Objects.equals(cpa, that.cpa) &&
                 Objects.equals(cvr, that.cvr) &&
                 Objects.equals(roas, that.roas) &&
+                Objects.equals(visibleImpressions, that.visibleImpressions) &&
                 Objects.equals(dynamicFields, that.dynamicFields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider, contentProviderName,
-                            impressions, ctr, clicks, cpc, cpm, spent, currency, actions, cpa, cvr, roas, dynamicFields);
+        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider,
+                contentProviderName, impressions, ctr, vctr, clicks, cpc, cpm, vcpm, spent, currency,
+                actions, cpa, cvr, roas, visibleImpressions, dynamicFields);
     }
 
     @Override
@@ -244,15 +278,18 @@ public class TopCampaignContentRow implements DynamicRow {
                 ", contentProviderName='" + contentProviderName + '\'' +
                 ", impressions=" + impressions +
                 ", ctr=" + ctr +
+                ", vctr=" + vctr +
                 ", clicks=" + clicks +
                 ", cpc=" + cpc +
                 ", cpm=" + cpm +
+                ", vcpm=" + vcpm +
                 ", spent=" + spent +
                 ", currency='" + currency + '\'' +
                 ", actions=" + actions +
                 ", cpa=" + cpa +
                 ", cvr=" + cvr +
                 ", roas=" + roas +
+                ", visibleImpressions=" + visibleImpressions +
                 ", dynamicFields=" + dynamicFields +
                 '}';
     }

@@ -13,6 +13,7 @@ import com.taboola.backstage.model.auth.ClientCredentialAuthenticationDetails;
 import com.taboola.backstage.model.auth.PasswordAuthenticationDetails;
 import com.taboola.backstage.model.auth.Token;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
+import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.dynamic.DynamicField;
 import com.taboola.backstage.model.dynamic.DynamicFieldMetadata;
@@ -20,6 +21,8 @@ import com.taboola.backstage.model.dynamic.DynamicFields;
 import com.taboola.backstage.model.dynamic.DynamicFieldsMetadata;
 import com.taboola.backstage.model.dynamic.DynamicRow;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignLookalikeAudienceTargeting;
+import com.taboola.backstage.model.media.campaigns.CampaignMultiTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
@@ -155,6 +158,22 @@ public abstract class BackstageTestBase {
         return factory.manufacturePojo(PostalTargeting.class);
     }
 
+    protected CampaignMultiTargetingCollection<Long> generateDummyAudienceMultiTargeting() {
+        return factory.manufacturePojo(CampaignMultiTargetingCollection.class, Long.class.getGenericSuperclass());
+    }
+
+    protected CampaignMultiTargetingCollection<Long> generateDummyCustomAudience() {
+        return factory.manufacturePojo(CampaignMultiTargetingCollection.class, Long.class.getGenericSuperclass());
+    }
+
+    protected CampaignMultiTargetingCollection<CampaignLookalikeAudienceTargeting> generateDummyLookalikeAudience() {
+        return factory.manufacturePojo(CampaignMultiTargetingCollection.class, CampaignLookalikeAudienceTargeting.class.getGenericSuperclass());
+    }
+
+    protected CampaignMultiTargetingCollection<String> generateDummyMarkingLabels() {
+        return factory.manufacturePojo(CampaignMultiTargetingCollection.class, String.class.getGenericSuperclass());
+    }
+
     protected DynamicFields generateDummyDynamicFields(int numOfFields) {
         if(numOfFields == 0) {
             return null;
@@ -195,5 +214,9 @@ public abstract class BackstageTestBase {
 
     protected AudienceSegment generateDummyAudienceSegment() {
         return factory.manufacturePojo(AudienceSegment.class);
+    }
+
+    protected LookalikeAudience generateDummyLookalikeAudiences() {
+        return factory.manufacturePojo(LookalikeAudience.class);
     }
 }
