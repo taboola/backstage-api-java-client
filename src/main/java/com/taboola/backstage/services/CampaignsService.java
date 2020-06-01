@@ -93,7 +93,7 @@ public interface CampaignsService {
     Campaign duplicate(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
-     * Duplicate campaign entity
+     * Duplicate campaign entity and override fields
      *
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
