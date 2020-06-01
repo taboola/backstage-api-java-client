@@ -80,6 +80,33 @@ public interface CampaignsService {
     Campaign update(BackstageAuthentication auth, String accountId, String campaignId, CampaignOperation campaignOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
+     * Duplicate campaign entity
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId {@link Campaign} that is going to be updated. Taken from {@link Campaign#getId()} object
+     * @return Fully populated {@link Campaign} pojo
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Campaign duplicate(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Duplicate campaign entity and override fields
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId {@link Campaign} that is going to be updated. Taken from {@link Campaign#getId()} object
+     * @param campaignOperation Full or partial {@link CampaignOperation} defines campaign configuration change
+     * @return Fully populated {@link Campaign} pojo
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Campaign duplicate(BackstageAuthentication auth, String accountId, String campaignId, CampaignOperation campaignOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
      * Patch campaign entity, allowing to change inner Campaign entities like publisher targeting or publishers bid modifiers.
      * The main difference of this method from {@link CampaignsService#update} is the ability to receive inner object value without supplying its full state with the change.
      * Example: In case of adding one publisher to publisher targeting list the Patch requiring only this publisher value to be supplied and results with adding/removing based on supplied {@link com.taboola.backstage.model.PatchOperation operation}

@@ -118,6 +118,27 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
         verify(endpointMock, times(1)).updateCampaign(any(), any(), any(), any());
     }
 
+    @Test
+    public void testDuplicate_withJustId() {
+        CampaignOperation campaignOperation = generateDummyCampaignOperation();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.duplicateCampaign(auth.getToken().getAccessTokenForHeader(),"accountId", campaignOperation.getId())).thenReturn(campaignOperation);
+
+        Campaign actual = testInstance.duplicate(auth, "accountId", campaignOperation.getId());
+        assertEquals("Invalid campaignOperation", campaignOperation, actual);
+        verify(endpointMock, times(1)).duplicateCampaign(any(), any(), any());
+    }
+
+    @Test
+    public void testDuplicate_withIdAndPayload() {
+        CampaignOperation campaignOperation = generateDummyCampaignOperation();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.duplicateCampaign(auth.getToken().getAccessTokenForHeader(),"accountId", campaignOperation.getId(), campaignOperation)).thenReturn(campaignOperation);
+
+        Campaign actual = testInstance.duplicate(auth, "accountId", campaignOperation.getId(), campaignOperation);
+        assertEquals("Invalid campaignOperation", campaignOperation, actual);
+        verify(endpointMock, times(1)).duplicateCampaign(any(), any(), any(), any());
+    }
 
     @Test
     public void testPatch() {

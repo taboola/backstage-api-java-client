@@ -39,6 +39,19 @@ public interface BackstageCampaignsEndpoint {
                                   @Path("campaign_id") String campaignId,
                                   @Body Campaign campaign) throws BackstageAPIException;
 
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/duplicate")
+    @Headers("Content-Type: application/json")
+    Campaign duplicateCampaign(@Header("Authorization") String accessToken,
+                               @Path("account_id") String accountId,
+                               @Path("campaign_id") String campaignId) throws BackstageAPIException;
+
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/duplicate")
+    @Headers("Content-Type: application/json")
+    Campaign duplicateCampaign(@Header("Authorization") String accessToken,
+                               @Path("account_id") String accountId,
+                               @Path("campaign_id") String campaignId,
+                               @Body Campaign campaign) throws BackstageAPIException;
+
     @PATCH(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}")
     @Headers("Content-Type: application/json")
     CampaignPatch patchCampaign(@Header("Authorization") String accessToken,
