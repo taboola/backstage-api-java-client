@@ -64,23 +64,32 @@ public class SynchronousCallAdapterFactory  extends CallAdapter.Factory {
                     } else {
                         int responseCode = response.code();
                         if(responseCode == UNAUTHORIZED_HTTP_STATUS_CODE) {
-                            throw new BackstageAPIUnauthorizedException();
+                            throw new BackstageAPIUnauthorizedException(safeCreateCauseException(response));
 
                         } else if(responseCode >= BAD_REQUEST_HTTP_STATUS_CODE && responseCode < INTERNAL_SERVER_ERROR_HTTP_STATUS_CODE) {
                             throw new BackstageAPIRequestException(responseCode, normalizeError(parseError(response)));
                         }
 
-                        throw new BackstageAPIConnectivityException(responseCode);
+                        throw new BackstageAPIConnectivityException(safeCreateCauseException(response), responseCode);
                     }
 
                 } catch (IOException e) {
                     logger.error(e);
-                    throw new BackstageAPIConnectivityException();
+                    throw new BackstageAPIConnectivityException(e);
                 }
 
                 return obj;
             }
         };
+    }
+
+    private IOException safeCreateCauseException(Response<Object> response) {
+        try {
+            return new IOException(response.errorBody().string());
+        } catch (Throwable t) {
+            logger.warn("Failed to parse API error response", t);
+            return new IOException("Failed to parse API error response", t);
+        }
     }
 
     private APIError parseError(Response errorResponse) {

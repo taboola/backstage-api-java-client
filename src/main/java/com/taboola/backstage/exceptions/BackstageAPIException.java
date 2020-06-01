@@ -12,6 +12,10 @@ public abstract class BackstageAPIException extends RuntimeException {
 
     private APIError error = APIError.EMPTY;
 
+    public BackstageAPIException(Throwable cause, String message, Object ... params) {
+        super(String.format(message, params), cause);
+    }
+
     public BackstageAPIException(String message, Object ... params) {
         super(String.format(message, params));
     }
