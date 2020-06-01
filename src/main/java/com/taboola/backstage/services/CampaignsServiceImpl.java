@@ -58,6 +58,16 @@ public class CampaignsServiceImpl implements CampaignsService {
     }
 
     @Override
+    public Campaign duplicate(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return endpoint.duplicateCampaign(auth.getToken().getAccessTokenForHeader(), accountId, campaignId);
+    }
+
+    @Override
+    public Campaign duplicate(BackstageAuthentication auth, String accountId, String campaignId, CampaignOperation campaignOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return endpoint.duplicateCampaign(auth.getToken().getAccessTokenForHeader(), accountId, campaignId,  campaignOperation);
+    }
+
+    @Override
     public CampaignPatch patch(BackstageAuthentication auth, String accountId, String campaignId, CampaignPatch campaignPatch) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         if(performValidations) {
             FieldsValidator.validateCreateOperation(campaignPatch);
