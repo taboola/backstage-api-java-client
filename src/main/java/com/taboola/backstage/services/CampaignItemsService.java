@@ -6,6 +6,7 @@ import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 
 /**
@@ -65,6 +66,21 @@ public interface CampaignItemsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     CampaignItem createItem(BackstageAuthentication auth, String accountId, String campaignId, CampaignItemOperation campaignItemOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Creates massively multiple {@link CampaignItem} in a specific {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}.  This allows
+     * to set the three fields (url, thumbnailUrl and title) in one single call, apart from allowing multiple objects creation at once.
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
+     * @param massiveOperation {@link CampaignItemMassiveOperation} with a collection of {@link CampaignItemOperation}
+     * @return Fully populated collection of {@link CampaignItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignItem> createMassive(BackstageAuthentication auth, String accountId, String campaignId, CampaignItemMassiveOperation massiveOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Fetch all {@link CampaignItem}  associated with a specific {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
