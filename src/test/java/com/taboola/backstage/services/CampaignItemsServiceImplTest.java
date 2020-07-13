@@ -4,6 +4,7 @@ import com.taboola.backstage.internal.BackstageCampaignItemsEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +45,22 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
         CampaignItem actual = testInstance.createItem(auth, "accountId", "1", campaignItemOperation);
         assertEquals("Invalid campaign item", campaignItemOperation, actual);
         verify(endpointMock, times(1)).createItem(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testCreateItemMass() {
+        CampaignItemOperation campaignItemOperation1 = generateDummyCampaignItemOperation();
+        campaignItemOperation1.setUrl("http://www.dummy1.com");
+
+        CampaignItemMassiveOperation massiveOperation = CampaignItemMassiveOperation.create().addItem(campaignItemOperation1).addItem(campaignItemOperation1);
+        Results<CampaignItem> expectedResult = new Results<>(Collections.singletonList(campaignItemOperation1));
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.createMassive(auth.getToken().getAccessTokenForHeader(),"accountId", "1", massiveOperation)).thenReturn(expectedResult);
+
+        Results<CampaignItem> actual = testInstance.createMassive(auth, "accountId", "1", massiveOperation);
+        assertEquals("Invalid campaign item result", expectedResult, actual);
+        verify(endpointMock, times(1)).createMassive(any(), any(), any(), any());
     }
 
     @Test
