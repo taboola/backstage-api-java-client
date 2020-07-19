@@ -8,7 +8,13 @@ package com.taboola.backstage.exceptions;
  */
 public class BackstageAPIUnauthorizedException extends BackstageAPIException {
 
+    private static final String ERROR_STR = "Unauthorized, expired token or invalid credentials";
+
     public BackstageAPIUnauthorizedException() {
-        super("Unauthorized, expired token or invalid credentials");
+        super(ERROR_STR);
+    }
+
+    public BackstageAPIUnauthorizedException(Throwable cause) {
+        super(cause, ERROR_STR);
     }
 }

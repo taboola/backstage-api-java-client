@@ -4,6 +4,7 @@ import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
 import retrofit2.http.*;
 
 /**
@@ -20,6 +21,13 @@ public interface BackstageCampaignItemsEndpoint {
                                               @Path("account_id") String accountId,
                                               @Path("campaign_id") String campaignId,
                                               @Body CampaignItem item) throws BackstageAPIException;
+
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/items/mass")
+    @Headers("Content-Type: application/json")
+    Results<CampaignItem> createMassive(@Header("Authorization") String accessToken,
+                                        @Path("account_id") String accountId,
+                                        @Path("campaign_id") String campaignId,
+                                        @Body CampaignItemMassiveOperation massiveOperation) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/items")
     @Headers("Content-Type: application/json")

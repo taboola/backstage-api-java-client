@@ -13,6 +13,7 @@ public enum DynamicFieldDataType {
     PERCENT,
     NUMERIC,
     DATA,
+    DATE,
     TIMESTAMP,
     URL,
     BOOLEAN
