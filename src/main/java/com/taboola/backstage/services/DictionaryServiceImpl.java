@@ -59,6 +59,12 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
+    public Results<Resource> getSpecificCountryCities(BackstageAuthentication auth, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getSpecificCountryCities(accessToken, countryCode);
+    }
+
+    @Override
     public Results<Resource> getPlatforms(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getPlatforms(accessToken);

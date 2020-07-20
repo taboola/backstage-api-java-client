@@ -37,6 +37,10 @@ public interface BackstageDictionaryEndpoint {
     @Headers("Content-Type: application/json")
     Results<Resource> getUnitedStatesDMA(@Header("Authorization") String authToken) throws BackstageAPIException;
 
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/countries/{country_code}/cities")
+    @Headers("Content-Type: application/json")
+    Results<Resource> getSpecificCountryCities(@Header("Authorization") String authToken, @Path("country_code") String countryCode) throws BackstageAPIException;
+
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/resources/platforms")
     @Headers("Content-Type: application/json")
     Results<Resource> getPlatforms(@Header("Authorization") String authToken) throws BackstageAPIException;

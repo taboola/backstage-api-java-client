@@ -110,6 +110,18 @@ public class DictionaryServiceImplTest extends BackstageTestBase {
     }
 
     @Test
+    public void testGetSpecificCountryCities() {
+        Resource resource = generateDummyResource();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<Resource> results = new Results<>(Collections.singleton(resource));
+        when(endpointMock.getSpecificCountryCities(auth.getToken().getAccessTokenForHeader(), "US")).thenReturn(results);
+
+        Results<Resource> actual = testInstance.getSpecificCountryCities(auth, "US");
+        assertEquals("Invalid specific country city resource", results, actual);
+        verify(endpointMock, times(1)).getSpecificCountryCities(any(), any());
+    }
+
+    @Test
     public void testGtPlatforms() {
         Resource resource = generateDummyResource();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
