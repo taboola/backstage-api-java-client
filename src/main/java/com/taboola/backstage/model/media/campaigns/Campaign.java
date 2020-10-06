@@ -44,6 +44,7 @@ public class Campaign {
     protected CampaignTargeting<String> dmaCountryTargeting;
     protected CampaignTargeting<String> regionCountryTargeting;
     protected CampaignTargeting<String> subCountryTargeting;
+    protected CampaignTargeting<String> cityTargeting;
     protected CampaignTargeting<String> platformTargeting;
     protected CampaignTargeting<String> publisherTargeting;
     @ReadOnly
@@ -139,6 +140,10 @@ public class Campaign {
 
     public CampaignTargeting<String> getSubCountryTargeting() {
         return subCountryTargeting;
+    }
+
+    public CampaignTargeting<String> getCityTargeting() {
+        return cityTargeting;
     }
 
     public CampaignTargeting<String> getPlatformTargeting() {
@@ -293,6 +298,7 @@ public class Campaign {
                 ", dmaCountryTargeting=" + dmaCountryTargeting +
                 ", regionCountryTargeting=" + regionCountryTargeting +
                 ", subCountryTargeting=" + subCountryTargeting +
+                ", cityTargeting=" + cityTargeting +
                 ", platformTargeting=" + platformTargeting +
                 ", publisherTargeting=" + publisherTargeting +
                 ", autoPublisherTargeting=" + autoPublisherTargeting +
@@ -347,6 +353,7 @@ public class Campaign {
                 Objects.equals(dmaCountryTargeting, campaign.dmaCountryTargeting) &&
                 Objects.equals(regionCountryTargeting, campaign.regionCountryTargeting) &&
                 Objects.equals(subCountryTargeting, campaign.subCountryTargeting) &&
+                Objects.equals(cityTargeting, campaign.cityTargeting) &&
                 Objects.equals(platformTargeting, campaign.platformTargeting) &&
                 Objects.equals(publisherTargeting, campaign.publisherTargeting) &&
                 Objects.equals(autoPublisherTargeting, campaign.autoPublisherTargeting) &&
@@ -382,7 +389,7 @@ public class Campaign {
     public int hashCode() {
         return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier,
                 publisherBidStrategyModifiers, trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting,
-                dmaCountryTargeting, regionCountryTargeting, subCountryTargeting, platformTargeting, publisherTargeting,
+                dmaCountryTargeting, regionCountryTargeting, subCountryTargeting, cityTargeting, platformTargeting, publisherTargeting,
                 autoPublisherTargeting, osTargeting, connectionTypeTargeting, contextualTargeting, postalCodeTargeting,
                 audienceSegmentsMultiTargeting, customAudienceTargeting, markingLabelMultiTargeting, lookalikeAudienceTargeting, comments,
                 bidType, marketingObjective, activitySchedule, startDate, endDate, startDateInUtc, endDateInUtc, approvalState, isActive,
