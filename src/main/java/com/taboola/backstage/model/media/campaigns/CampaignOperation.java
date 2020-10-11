@@ -80,6 +80,11 @@ public class CampaignOperation extends Campaign {
         return this;
     }
 
+    public CampaignOperation setCityTargeting(CampaignTargeting<String> cityTargeting) {
+        this.cityTargeting = cityTargeting;
+        return this;
+    }
+
     public CampaignOperation setPublisherTargeting(CampaignTargeting<String> publisherTargeting) {
         this.publisherTargeting = publisherTargeting;
         return this;
