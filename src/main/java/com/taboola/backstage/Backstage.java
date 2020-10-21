@@ -1,11 +1,11 @@
 package com.taboola.backstage;
 
-import com.taboola.backstage.internal.*
+import com.taboola.backstage.internal.*;
 import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
-import com.taboola.backstage.services.*
+import com.taboola.backstage.services.*;
 import java.util.List;
 import okhttp3.Interceptor;
 
