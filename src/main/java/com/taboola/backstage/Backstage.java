@@ -1,13 +1,13 @@
 package com.taboola.backstage;
 
-import com.taboola.backstage.internal.*;
+import com.taboola.backstage.internal.*
 import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
-import com.taboola.backstage.internal.BackstageInternalTools;
-import com.taboola.backstage.internal.BackstageInternalToolsImpl;
-import com.taboola.backstage.services.*;
+import com.taboola.backstage.services.*
+import java.util.List;
+import okhttp3.Interceptor;
 
 /**
  * Backstage is the gateway object to all services.
@@ -157,6 +157,7 @@ public class Backstage {
         private Boolean debug;
         private Boolean organizeDynamicColumns;
         private SerializationConfig serializationConfig;
+        private List<Interceptor> additionalInterceptors;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
@@ -218,12 +219,17 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setAdditionalInterceptors(List<Interceptor> interceptors){
+            this.additionalInterceptors = interceptors;
+            return this;
+        }
+
         public Backstage build() {
             organizeState();
             String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
             CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, maxIdleConnections,
                     keepAliveDurationMillis, finalUserAgent, debug);
-            CommunicationFactory communicator = new CommunicationFactory(config, serializationConfig);
+            CommunicationFactory communicator = new CommunicationFactory(config, serializationConfig, additionalInterceptors);
             BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
             BackstageInternalToolsImpl internalTools = new BackstageInternalToolsImpl(endpointsFactory);
             return new Backstage(
