@@ -1,13 +1,44 @@
 package com.taboola.backstage;
 
-import com.taboola.backstage.internal.*;
+import java.util.Collection;
+
+import com.taboola.backstage.internal.BackstageAccountEndpoint;
+import com.taboola.backstage.internal.BackstageAudienceTargetingEndpoint;
+import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
+import com.taboola.backstage.internal.BackstageCampaignItemsEndpoint;
+import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
+import com.taboola.backstage.internal.BackstageDictionaryEndpoint;
+import com.taboola.backstage.internal.BackstageInternalTools;
+import com.taboola.backstage.internal.BackstageInternalToolsImpl;
+import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
+import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
+import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
+import com.taboola.backstage.internal.CommunicationFactory;
+import com.taboola.backstage.internal.Header;
 import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
-import com.taboola.backstage.services.*;
-import java.util.List;
-import okhttp3.Interceptor;
+import com.taboola.backstage.services.AccountsService;
+import com.taboola.backstage.services.AccountsServiceImpl;
+import com.taboola.backstage.services.AdvertiserReportsService;
+import com.taboola.backstage.services.AuthenticationService;
+import com.taboola.backstage.services.AuthenticationServiceImpl;
+import com.taboola.backstage.services.CampaignAudienceTargetingService;
+import com.taboola.backstage.services.CampaignAudienceTargetingServiceImpl;
+import com.taboola.backstage.services.CampaignItemsService;
+import com.taboola.backstage.services.CampaignItemsServiceImpl;
+import com.taboola.backstage.services.CampaignPostalTargetingService;
+import com.taboola.backstage.services.CampaignPostalTargetingServiceImpl;
+import com.taboola.backstage.services.CampaignsService;
+import com.taboola.backstage.services.CampaignsServiceImpl;
+import com.taboola.backstage.services.DictionaryService;
+import com.taboola.backstage.services.DictionaryServiceImpl;
+import com.taboola.backstage.services.PublisherReportsService;
+import com.taboola.backstage.services.ReportsService;
+import com.taboola.backstage.services.ReportsServiceImpl;
+import com.taboola.backstage.services.UserService;
+import com.taboola.backstage.services.UserServiceImpl;
 
 /**
  * Backstage is the gateway object to all services.
@@ -157,7 +188,7 @@ public class Backstage {
         private Boolean debug;
         private Boolean organizeDynamicColumns;
         private SerializationConfig serializationConfig;
-        private List<Interceptor> additionalInterceptors;
+        private Collection<Header> headers;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
@@ -219,8 +250,8 @@ public class Backstage {
             return this;
         }
 
-        public BackstageBuilder setAdditionalInterceptors(List<Interceptor> interceptors){
-            this.additionalInterceptors = interceptors;
+        public BackstageBuilder setHeaders(Collection<Header> headers){
+            this.headers = headers;
             return this;
         }
 
@@ -229,7 +260,7 @@ public class Backstage {
             String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
             CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, maxIdleConnections,
                     keepAliveDurationMillis, finalUserAgent, debug);
-            CommunicationFactory communicator = new CommunicationFactory(config, serializationConfig, additionalInterceptors);
+            CommunicationFactory communicator = new CommunicationFactory(config, serializationConfig, headers);
             BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
             BackstageInternalToolsImpl internalTools = new BackstageInternalToolsImpl(endpointsFactory);
             return new Backstage(
