@@ -1,6 +1,5 @@
 package com.taboola.backstage.internal;
 
-import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +7,6 @@ import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
 import com.taboola.backstage.internal.interceptors.HeadersInterceptor;
-import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
 import com.taboola.backstage.internal.serialization.SerializationMapperCreator;
 
 import okhttp3.ConnectionPool;
@@ -29,9 +27,9 @@ public final class CommunicationFactory {
     private final Retrofit retrofit;
     private final Retrofit authRetrofit;
 
-    public CommunicationFactory(CommunicationConfig communicationConfig, SerializationConfig serializationConfig, Collection<Header> headers) {
+    public CommunicationFactory(CommunicationConfig communicationConfig, SerializationConfig serializationConfig) {
         this.objectMapper = SerializationMapperCreator.createObjectMapper(serializationConfig);
-        Retrofit.Builder retrofitBuilder = createRetrofitBuilder(communicationConfig, headers);
+        Retrofit.Builder retrofitBuilder = createRetrofitBuilder(communicationConfig);
 
         this.authRetrofit = retrofitBuilder.baseUrl(communicationConfig.getAuthenticationBaseUrl()).build();
         this.retrofit = retrofitBuilder.baseUrl(communicationConfig.getBackstageBaseUrl()).build();
@@ -50,33 +48,26 @@ public final class CommunicationFactory {
         return loggingInterceptor;
     }
 
-    private Retrofit.Builder createRetrofitBuilder(CommunicationConfig config, Collection<Header> headers) {
+    private Retrofit.Builder createRetrofitBuilder(CommunicationConfig config) {
         return new Retrofit.Builder()
                             //TODO add ability to start retrofit2 in mock mode {option retrofit-mock}
                             .addConverterFactory(StringConverterFactory.create())
                             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                             .addCallAdapterFactory(SynchronousCallAdapterFactory.create(objectMapper))
-                            .client(createOkHttpClient(config, headers));
+                            .client(createOkHttpClient(config));
     }
 
-    private OkHttpClient createOkHttpClient(CommunicationConfig config, Collection<Header> headers) {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+    private OkHttpClient createOkHttpClient(CommunicationConfig config) {
+        return new OkHttpClient.Builder()
                 //TODO use global connection pool to prevent OkHttpClient default behaviour from creating too many file descriptors when performing async calls
                 .addInterceptor(createLoggingInterceptor(config))
-                .addInterceptor(new UserAgentInterceptor(config.getUserAgent()))
+                .addInterceptor(new HeadersInterceptor(config.getHeaders()))
                 .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
                 .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
                 .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
                 .connectionPool(new ConnectionPool(config.getMaxIdleConnections(),
-                        config.getKeepAliveDurationMillis(), TimeUnit.MILLISECONDS));
-        applyHeaders(builder, headers);
-        return builder.build();
-    }
-
-    private void applyHeaders(OkHttpClient.Builder builder, Collection<Header> headers) {
-        if (headers != null && !headers.isEmpty()){
-            builder.addInterceptor(new HeadersInterceptor(headers));
-        }
+                        config.getKeepAliveDurationMillis(), TimeUnit.MILLISECONDS))
+                .build();
     }
 
     public <E> E createRetrofitAuthEndpoint(Class<E> clazz) {

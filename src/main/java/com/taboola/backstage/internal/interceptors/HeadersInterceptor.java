@@ -3,7 +3,7 @@ package com.taboola.backstage.internal.interceptors;
 import java.io.IOException;
 import java.util.Collection;
 
-import com.taboola.backstage.internal.Header;
+import com.taboola.backstage.model.RequestHeader;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -13,9 +13,9 @@ import okhttp3.Response;
  * Created on 10/21/20.
  */
 public class HeadersInterceptor implements Interceptor {
-    private final Collection<Header> headers;
+    private final Collection<RequestHeader> headers;
 
-    public HeadersInterceptor(Collection<Header> headers) {
+    public HeadersInterceptor(Collection<RequestHeader> headers) {
         this.headers = headers;
     }
 

@@ -20,9 +20,9 @@ public class CommunicationFactoryTest extends BackstageTestBase {
 
     @Before
     public void beforeTest() {
-        CommunicationConfig communicationConfig = new CommunicationConfig("http://localhost", "http://localhost", 1L, 1L, 1L, 1, 60L, "Dummy-Agent", true);
+        CommunicationConfig communicationConfig = new CommunicationConfig("http://localhost", "http://localhost", 1L, 1L, 1L, 1, 60L, null, true);
         SerializationConfig serializationConfig = new SerializationConfig();
-        testInstance = new CommunicationFactory(communicationConfig, serializationConfig, null);
+        testInstance = new CommunicationFactory(communicationConfig, serializationConfig);
     }
 
     @Test
