@@ -60,13 +60,13 @@ public final class CommunicationFactory {
     private OkHttpClient createOkHttpClient(CommunicationConfig config) {
         return new OkHttpClient.Builder()
                 //TODO use global connection pool to prevent OkHttpClient default behaviour from creating too many file descriptors when performing async calls
-                .addInterceptor(createLoggingInterceptor(config))
-                .addInterceptor(new HeadersInterceptor(config.getHeaders()))
-                .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
-                .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
-                .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
-                .connectionPool(new ConnectionPool(config.getMaxIdleConnections(),
-                        config.getKeepAliveDurationMillis(), TimeUnit.MILLISECONDS))
+                    .addInterceptor(createLoggingInterceptor(config))
+                    .addInterceptor(new HeadersInterceptor(config.getHeaders()))
+                    .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
+                    .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
+                    .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
+                    .connectionPool(new ConnectionPool(config.getMaxIdleConnections(),
+                            config.getKeepAliveDurationMillis(), TimeUnit.MILLISECONDS))
                 .build();
     }
 
