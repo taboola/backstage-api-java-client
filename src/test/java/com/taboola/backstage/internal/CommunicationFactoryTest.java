@@ -1,11 +1,15 @@
 package com.taboola.backstage.internal;
 
-import com.taboola.backstage.internal.config.CommunicationConfig;
-import com.taboola.backstage.internal.config.SerializationConfig;
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.Before;
-import com.taboola.backstage.BackstageTestBase;
 import org.junit.Test;
+
+import com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.internal.config.CommunicationConfig;
+import com.taboola.backstage.internal.config.SerializationConfig;
+import com.taboola.backstage.internal.config.UserAgentHeader;
 
 /**
  * Created by vladi
@@ -19,7 +23,9 @@ public class CommunicationFactoryTest extends BackstageTestBase {
 
     @Before
     public void beforeTest() {
-        CommunicationConfig communicationConfig = new CommunicationConfig("http://localhost", "http://localhost", 1L, 1L, 1L, 1, 60L, "Dummy-Agent", true);
+        CommunicationConfig communicationConfig = new CommunicationConfig("http://localhost", "http://localhost",
+                1L, 1L, 1L, 1, 60L,
+                Collections.singleton(new UserAgentHeader("Dummy-Agent")),true);
         SerializationConfig serializationConfig = new SerializationConfig();
         testInstance = new CommunicationFactory(communicationConfig, serializationConfig);
     }

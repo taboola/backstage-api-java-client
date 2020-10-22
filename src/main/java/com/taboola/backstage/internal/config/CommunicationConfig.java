@@ -1,5 +1,9 @@
 package com.taboola.backstage.internal.config;
 
+import java.util.Collection;
+
+import com.taboola.backstage.model.RequestHeader;
+
 /**
  * Created by vladi
  * Date: 1/16/2018
@@ -15,11 +19,11 @@ public class CommunicationConfig {
     private final long writeTimeoutMillis;
     private final int maxIdleConnections;
     private final long keepAliveDurationMillis;
-    private final String userAgent;
     private final boolean debug;
+    private final Collection<RequestHeader> headers;
 
     public CommunicationConfig(String backstageBaseUrl, String authenticationBaseUrl, Long connectionTimeoutMillis, Long readTimeoutMillis,
-                               Long writeTimeoutMillis, Integer maxIdleConnections, Long keepAliveDurationMillis, String userAgent, boolean debug) {
+                               Long writeTimeoutMillis, Integer maxIdleConnections, Long keepAliveDurationMillis, Collection<RequestHeader> headers, boolean debug) {
         this.backstageBaseUrl = backstageBaseUrl;
         this.authenticationBaseUrl = authenticationBaseUrl;
         this.connectionTimeoutMillis = connectionTimeoutMillis;
@@ -27,7 +31,7 @@ public class CommunicationConfig {
         this.writeTimeoutMillis = writeTimeoutMillis;
         this.maxIdleConnections = maxIdleConnections;
         this.keepAliveDurationMillis = keepAliveDurationMillis;
-        this.userAgent = userAgent;
+        this.headers = headers;
         this.debug = debug;
     }
 
@@ -59,8 +63,8 @@ public class CommunicationConfig {
         return keepAliveDurationMillis;
     }
 
-    public String getUserAgent() {
-        return userAgent;
+    public Collection<RequestHeader> getHeaders(){
+        return headers;
     }
 
     public boolean isDebug() {
@@ -77,7 +81,7 @@ public class CommunicationConfig {
         ", writeTimeoutMillis=" + writeTimeoutMillis +
         ", maxIdleConnections=" + maxIdleConnections +
         ", keepAliveDurationMillis=" + keepAliveDurationMillis +
-        ", userAgent='" + userAgent + '\'' +
+        ", headers='" + headers + '\'' +
         ", debug=" + debug +
         '}';
     }

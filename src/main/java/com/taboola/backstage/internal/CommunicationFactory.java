@@ -1,10 +1,12 @@
 package com.taboola.backstage.internal;
 
+import java.util.concurrent.TimeUnit;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taboola.backstage.internal.config.CommunicationConfig;
 import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.interceptors.CommunicationInterceptor;
-import com.taboola.backstage.internal.interceptors.UserAgentInterceptor;
+import com.taboola.backstage.internal.interceptors.HeadersInterceptor;
 import com.taboola.backstage.internal.serialization.SerializationMapperCreator;
 
 import okhttp3.ConnectionPool;
@@ -12,8 +14,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by vladi
@@ -59,15 +59,15 @@ public final class CommunicationFactory {
 
     private OkHttpClient createOkHttpClient(CommunicationConfig config) {
         return new OkHttpClient.Builder()
-                            //TODO use global connection pool to prevent OkHttpClient default behaviour from creating too many file descriptors when performing async calls
-                            .addInterceptor(createLoggingInterceptor(config))
-                            .addInterceptor(new UserAgentInterceptor(config.getUserAgent()))
-                            .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
-                            .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
-                            .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
-                            .connectionPool(new ConnectionPool(config.getMaxIdleConnections(),
-                                    config.getKeepAliveDurationMillis(), TimeUnit.MILLISECONDS))
-                            .build();
+                //TODO use global connection pool to prevent OkHttpClient default behaviour from creating too many file descriptors when performing async calls
+                    .addInterceptor(createLoggingInterceptor(config))
+                    .addInterceptor(new HeadersInterceptor(config.getHeaders()))
+                    .readTimeout(config.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
+                    .writeTimeout(config.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
+                    .connectTimeout(config.getConnectionTimeoutMillis(), TimeUnit.MILLISECONDS)
+                    .connectionPool(new ConnectionPool(config.getMaxIdleConnections(),
+                            config.getKeepAliveDurationMillis(), TimeUnit.MILLISECONDS))
+                .build();
     }
 
     public <E> E createRetrofitAuthEndpoint(Class<E> clazz) {
