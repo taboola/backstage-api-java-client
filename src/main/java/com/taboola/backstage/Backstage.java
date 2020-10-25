@@ -3,6 +3,8 @@ package com.taboola.backstage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.internal.BackstageAudienceTargetingEndpoint;
@@ -284,7 +286,9 @@ public class Backstage {
         private Collection<RequestHeader> getAllHeaders(Collection<RequestHeader> clientHeaders, String finalUserAgent) {
             List<RequestHeader> headers = new ArrayList<>();
             if (clientHeaders != null){
-                headers.addAll(clientHeaders);
+                headers.addAll(clientHeaders.stream().
+                        filter(Objects::nonNull)
+                        .collect(Collectors.toList()));
             }
             headers.add(new UserAgentHeader(finalUserAgent));
             return headers;

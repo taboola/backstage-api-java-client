@@ -29,6 +29,6 @@ public class HeadersInterceptor implements Interceptor {
     }
 
     private boolean validateHeader(RequestHeader header){
-        return header != null && header.getName() != null && header.getValue() != null;
+        return header.getName() != null && header.getValue() != null;
     }
 }
