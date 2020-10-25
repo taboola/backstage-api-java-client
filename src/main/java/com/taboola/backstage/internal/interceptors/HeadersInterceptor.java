@@ -22,7 +22,13 @@ public class HeadersInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
-        headers.forEach(header -> builder.header(header.getName(), header.getValue()));
+        headers.stream()
+                .filter(this::validateHeader)
+                .forEach(header -> builder.header(header.getName(), header.getValue()));
         return chain.proceed(builder.build());
+    }
+
+    private boolean validateHeader(RequestHeader header){
+        return header.getName() != null && header.getValue() != null;
     }
 }
