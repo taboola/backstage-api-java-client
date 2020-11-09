@@ -33,4 +33,10 @@ public class CampaignItemOperation extends CampaignItem {
         this.isActive = active;
         return this;
     }
+
+    public CampaignItemOperation setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
 }

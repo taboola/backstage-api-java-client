@@ -28,6 +28,7 @@ public class CampaignItem {
     protected Boolean isActive;
     @ReadOnly
     protected ItemStatus status;
+    protected String description;
 
     public String getId() {
         return id;
@@ -65,6 +66,10 @@ public class CampaignItem {
         return status;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "CampaignItem{" +
@@ -77,6 +82,7 @@ public class CampaignItem {
         ", approvalState='" + approvalState + '\'' +
         ", isActive=" + isActive +
         ", status='" + status + '\'' +
+        ", description='" + description + '\'' +
         '}';
     }
 
@@ -93,11 +99,13 @@ public class CampaignItem {
         Objects.equals(title, that.title) &&
         Objects.equals(approvalState, that.approvalState) &&
         Objects.equals(isActive, that.isActive) &&
-        Objects.equals(status, that.status);
+        Objects.equals(status, that.status) &&
+        Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive, status);
+        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive, status,
+                description);
     }
 }
