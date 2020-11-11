@@ -39,4 +39,13 @@ public class CampaignItemOperation extends CampaignItem {
         return this;
     }
 
+    public CampaignItemOperation setCta(CampaignItemCTA cta) {
+        this.cta = cta;
+        return this;
+    }
+
+    public CampaignItemOperation setCreativeFocus(CampaignItemCreativeFocus creativeFocus) {
+        this.creativeFocus = creativeFocus;
+        return this;
+    }
 }

@@ -52,6 +52,7 @@ public class Campaign {
     protected CampaignTargeting<OperationSystem> osTargeting;
     protected CampaignTargeting<ConnectionType> connectionTypeTargeting;
     protected CampaignTargeting<String> contextualTargeting;
+    protected CampaignTargeting<String> browserTargeting;
     @ReadOnly
     protected CampaignTargeting<String> postalCodeTargeting;
     @ReadOnly
@@ -156,6 +157,10 @@ public class Campaign {
 
     public CampaignTargeting<String> getPostalCodeTargeting() {
         return postalCodeTargeting;
+    }
+
+    public CampaignTargeting<String> getBrowserTargeting() {
+        return browserTargeting;
     }
 
     public CampaignTargeting<OperationSystem> getOsTargeting() {
@@ -305,6 +310,7 @@ public class Campaign {
                 ", osTargeting=" + osTargeting +
                 ", connectionTypeTargeting=" + connectionTypeTargeting +
                 ", contextualTargeting=" + contextualTargeting +
+                ", browserTargeting=" + browserTargeting +
                 ", postalCodeTargeting=" + postalCodeTargeting +
                 ", audienceSegmentsMultiTargeting=" + audienceSegmentsMultiTargeting +
                 ", customAudienceTargeting=" + customAudienceTargeting +
@@ -360,6 +366,7 @@ public class Campaign {
                 Objects.equals(osTargeting, campaign.osTargeting) &&
                 Objects.equals(connectionTypeTargeting, campaign.connectionTypeTargeting) &&
                 Objects.equals(contextualTargeting, campaign.contextualTargeting) &&
+                Objects.equals(browserTargeting, campaign.browserTargeting) &&
                 Objects.equals(postalCodeTargeting, campaign.postalCodeTargeting) &&
                 Objects.equals(audienceSegmentsMultiTargeting, campaign.audienceSegmentsMultiTargeting) &&
                 Objects.equals(customAudienceTargeting, campaign.customAudienceTargeting) &&
@@ -387,12 +394,6 @@ public class Campaign {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier,
-                publisherBidStrategyModifiers, trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting,
-                dmaCountryTargeting, regionCountryTargeting, subCountryTargeting, cityTargeting, platformTargeting, publisherTargeting,
-                autoPublisherTargeting, osTargeting, connectionTypeTargeting, contextualTargeting, postalCodeTargeting,
-                audienceSegmentsMultiTargeting, customAudienceTargeting, markingLabelMultiTargeting, lookalikeAudienceTargeting, comments,
-                bidType, marketingObjective, activitySchedule, startDate, endDate, startDateInUtc, endDateInUtc, approvalState, isActive,
-                spent, status, cpaGoal, pricingModel, externalBrandSafety, verificationPixel, viewabilityTag, policyReview);
+        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier, publisherBidStrategyModifiers, trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, dmaCountryTargeting, regionCountryTargeting, subCountryTargeting, cityTargeting, platformTargeting, publisherTargeting, autoPublisherTargeting, osTargeting, connectionTypeTargeting, contextualTargeting, browserTargeting, postalCodeTargeting, audienceSegmentsMultiTargeting, customAudienceTargeting, markingLabelMultiTargeting, lookalikeAudienceTargeting, comments, bidType, marketingObjective, activitySchedule, startDate, endDate, startDateInUtc, endDateInUtc, approvalState, isActive, spent, status, cpaGoal, pricingModel, externalBrandSafety, verificationPixel, viewabilityTag, policyReview);
     }
 }

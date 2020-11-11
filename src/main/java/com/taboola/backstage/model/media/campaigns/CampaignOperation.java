@@ -179,4 +179,9 @@ public class CampaignOperation extends Campaign {
         this.verificationPixel = verificationPixel;
         return this;
     }
+
+    public CampaignOperation setBrowserTargeting(CampaignTargeting<String> browserTargeting) {
+        this.browserTargeting = browserTargeting;
+        return this;
+    }
 }

@@ -29,6 +29,10 @@ public class CampaignItem {
     @ReadOnly
     protected ItemStatus status;
     protected String description;
+    @ReadOnly
+    protected CampaignItemPolicyReview policyReview;
+    protected CampaignItemCTA cta;
+    protected CampaignItemCreativeFocus creativeFocus;
 
     public String getId() {
         return id;
@@ -70,20 +74,39 @@ public class CampaignItem {
         return description;
     }
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public CampaignItemPolicyReview getPolicyReview() {
+        return policyReview;
+    }
+
+    public CampaignItemCTA getCta() {
+        return cta;
+    }
+
+    public CampaignItemCreativeFocus getCreativeFocus() {
+        return creativeFocus;
+    }
+
     @Override
     public String toString() {
         return "CampaignItem{" +
-        "id='" + id + '\'' +
-        ", campaignId='" + campaignId + '\'' +
-        ", type='" + type + '\'' +
-        ", url='" + url + '\'' +
-        ", thumbnailUrl='" + thumbnailUrl + '\'' +
-        ", title='" + title + '\'' +
-        ", approvalState='" + approvalState + '\'' +
-        ", isActive=" + isActive +
-        ", status='" + status + '\'' +
-        ", description='" + description + '\'' +
-        '}';
+                "id='" + id + '\'' +
+                ", campaignId='" + campaignId + '\'' +
+                ", type=" + type +
+                ", url='" + url + '\'' +
+                ", thumbnailUrl='" + thumbnailUrl + '\'' +
+                ", title='" + title + '\'' +
+                ", approvalState=" + approvalState +
+                ", isActive=" + isActive +
+                ", status=" + status +
+                ", description='" + description + '\'' +
+                ", policyReview=" + policyReview +
+                ", cta=" + cta +
+                ", creativeFocus=" + creativeFocus +
+                '}';
     }
 
     @Override
@@ -92,20 +115,22 @@ public class CampaignItem {
         if (o == null || getClass() != o.getClass()) return false;
         CampaignItem that = (CampaignItem) o;
         return Objects.equals(id, that.id) &&
-        Objects.equals(campaignId, that.campaignId) &&
-        Objects.equals(type, that.type) &&
-        Objects.equals(url, that.url) &&
-        Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
-        Objects.equals(title, that.title) &&
-        Objects.equals(approvalState, that.approvalState) &&
-        Objects.equals(isActive, that.isActive) &&
-        Objects.equals(status, that.status) &&
-        Objects.equals(description, that.description);
+                Objects.equals(campaignId, that.campaignId) &&
+                type == that.type &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
+                Objects.equals(title, that.title) &&
+                approvalState == that.approvalState &&
+                Objects.equals(isActive, that.isActive) &&
+                status == that.status &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(policyReview, that.policyReview) &&
+                Objects.equals(cta, that.cta) &&
+                Objects.equals(creativeFocus, that.creativeFocus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive, status,
-                description);
+        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive, status, description, policyReview, cta, creativeFocus);
     }
 }
