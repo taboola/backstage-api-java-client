@@ -6,6 +6,7 @@ import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 
+import com.taboola.backstage.model.media.campaigns.AccountBlockedPublishers;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -51,4 +52,9 @@ public interface BackstageAccountEndpoint {
     Results<LookalikeAudience> getSpecificCountryLookalikeAudiences(@Header("Authorization") String accessToken,
                                                                     @Path("account_id") String accountId,
                                                                     @Path("country_code") String countryCode) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/block-publisher")
+    @Headers("Content-Type: application/json")
+    AccountBlockedPublishers getAccountBlockedPublishers(@Header("Authorization") String accessToken,
+                                                         @Path("account_id") String accountId) throws BackstageAPIException;
 }

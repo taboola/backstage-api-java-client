@@ -4,6 +4,7 @@ import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
+import com.taboola.backstage.model.media.campaigns.AccountBlockedPublishers;
 import org.junit.Before;
 import org.junit.Test;
 import com.taboola.backstage.BackstageTestBase;
@@ -88,5 +89,15 @@ public class AccountsServiceImplTest extends BackstageTestBase {
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         Results<LookalikeAudience> actual = testInstance.readSpecificCountryLookalikeAudiences(auth, "123", "US");
         assertEquals("Invalid accounts", expected, actual);
+    }
+
+    @Test
+    public void testReadAccountBlockedPublishers() {
+        AccountBlockedPublishers publishers = generateDummyAccountBlockedPublishers();
+        when(accountsEndpointMock.getAccountBlockedPublishers(any(), any())).thenReturn(publishers);
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        AccountBlockedPublishers actual = testInstance.readAccountBlockedPublishers(auth, "123");
+        assertEquals("Invalid publishers", publishers, actual);
     }
 }
