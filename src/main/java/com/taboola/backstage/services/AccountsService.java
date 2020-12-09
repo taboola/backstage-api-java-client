@@ -80,8 +80,9 @@ public interface AccountsService {
 
     /**
      * Read account-wide blocked publishers
+     
      * @param auth Authentication object {@link BackstageAuthentication}
-     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link LookalikeAudience} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @param accountId {@link com.taboola.backstage.model.Account Account}. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
      * @return Account blocked publishers model
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
