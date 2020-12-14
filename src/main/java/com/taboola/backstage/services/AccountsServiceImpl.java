@@ -9,6 +9,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
+import com.taboola.backstage.model.media.campaigns.AccountBlockedPublishers;
 
 /**
  * Created by vladi
@@ -52,5 +53,11 @@ public class AccountsServiceImpl implements AccountsService {
     public Results<LookalikeAudience> readSpecificCountryLookalikeAudiences(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getSpecificCountryLookalikeAudiences(accessToken, accountId, countryCode);
+    }
+
+    @Override
+    public AccountBlockedPublishers readAccountBlockedPublishers(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getAccountBlockedPublishers(accessToken, accountId);
     }
 }

@@ -8,6 +8,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
+import com.taboola.backstage.model.media.campaigns.AccountBlockedPublishers;
 
 /**
  * Accounts service allow fetching data regarding different account types (Partners, Publishers)
@@ -76,4 +77,16 @@ public interface AccountsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Results<LookalikeAudience> readSpecificCountryLookalikeAudiences(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Read account-wide blocked publishers
+     
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId {@link com.taboola.backstage.model.Account Account}. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @return Account blocked publishers model
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    AccountBlockedPublishers readAccountBlockedPublishers(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }
