@@ -4,12 +4,14 @@ import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
+import com.taboola.backstage.internal.FieldsValidator;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
-import com.taboola.backstage.model.media.campaigns.AccountBlockedPublishers;
+import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
+import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 
 /**
  * Created by vladi
@@ -19,9 +21,11 @@ import com.taboola.backstage.model.media.campaigns.AccountBlockedPublishers;
  */
 public class AccountsServiceImpl implements AccountsService {
 
+    private final Boolean performClientValidations;
     private final BackstageAccountEndpoint endpoint;
 
-    public AccountsServiceImpl(BackstageAccountEndpoint endpoint) {
+    public AccountsServiceImpl(Boolean performClientValidations, BackstageAccountEndpoint endpoint) {
+        this.performClientValidations = performClientValidations;
         this.endpoint = endpoint;
     }
 
@@ -59,5 +63,25 @@ public class AccountsServiceImpl implements AccountsService {
     public AccountBlockedPublishers readAccountBlockedPublishers(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getAccountBlockedPublishers(accessToken, accountId);
+    }
+
+    @Override
+    public AccountBlockedPublishers createAccountBlockedPublishers(BackstageAuthentication auth, String accountId, AccountBlockedPublishers accountBlockPublishers) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performClientValidations) {
+            FieldsValidator.validateCreateOperation(accountBlockPublishers);
+        }
+
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.createAccountBlockedPublishers(accessToken, accountId, accountBlockPublishers);
+    }
+
+    @Override
+    public AccountBlockedPublishersPatch patchAccountBlockedPublishers(BackstageAuthentication auth, String accountId, AccountBlockedPublishersPatch accountBlockedPublishersPatch) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performClientValidations) {
+            FieldsValidator.validateCreateOperation(accountBlockedPublishersPatch);
+        }
+
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.patchAccountBlockedPublishers(accessToken, accountId, accountBlockedPublishersPatch);
     }
 }

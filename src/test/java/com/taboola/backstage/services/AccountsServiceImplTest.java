@@ -4,12 +4,13 @@ import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.media.campaigns.AccountBlockedPublishers;
+import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import org.junit.Before;
 import org.junit.Test;
 import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
+import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
 
 import java.util.Collections;
 
@@ -31,7 +32,7 @@ public class AccountsServiceImplTest extends BackstageTestBase {
     @Before
     public void beforeTest() {
         accountsEndpointMock = mock(BackstageAccountEndpoint.class);
-        testInstance = new AccountsServiceImpl(accountsEndpointMock);
+        testInstance = new AccountsServiceImpl(false, accountsEndpointMock);
 
         reset(accountsEndpointMock);
     }
@@ -99,5 +100,25 @@ public class AccountsServiceImplTest extends BackstageTestBase {
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         AccountBlockedPublishers actual = testInstance.readAccountBlockedPublishers(auth, "123");
         assertEquals("Invalid publishers", publishers, actual);
+    }
+
+    @Test
+    public void testCreateReadAccountBlockedPublishers() {
+        AccountBlockedPublishers blockedPublishers = generateDummyAccountBlockedPublishers();
+        when(accountsEndpointMock.createAccountBlockedPublishers(any(), any(), any())).thenReturn(blockedPublishers);
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        AccountBlockedPublishers actual = testInstance.createAccountBlockedPublishers(auth, "123", blockedPublishers);
+        assertEquals("Invalid blockedPublishers", blockedPublishers, actual);
+    }
+
+    @Test
+    public void testPatchAccountBlockedPublishers() {
+        AccountBlockedPublishersPatch blockedPublishersPatch = generateDummyAccountBlockedPublishersPatch();
+        when(accountsEndpointMock.patchAccountBlockedPublishers(any(), any(), any())).thenReturn(blockedPublishersPatch);
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        AccountBlockedPublishersPatch actual = testInstance.patchAccountBlockedPublishers(auth, "123", blockedPublishersPatch);
+        assertEquals("Invalid blockedPublishersPatch", blockedPublishersPatch, actual);
     }
 }

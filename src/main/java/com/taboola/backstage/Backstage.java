@@ -277,7 +277,7 @@ public class Backstage {
                     new CampaignItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignItemsEndpoint.class)),
                     new DictionaryServiceImpl(endpointsFactory.createEndpoint(BackstageDictionaryEndpoint.class)),
                     new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), internalTools, organizeDynamicColumns),
-                    new AccountsServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
+                    new AccountsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class)),
                     new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class))
             );

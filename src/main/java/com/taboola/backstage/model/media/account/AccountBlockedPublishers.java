@@ -1,11 +1,13 @@
-package com.taboola.backstage.model.media.campaigns;
+package com.taboola.backstage.model.media.account;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.StringJoiner;
+
+import com.taboola.backstage.annotations.Required;
 
 public class AccountBlockedPublishers {
 
+    @Required
     private Set<String> sites;
 
     public Set<String> getSites() {
@@ -18,12 +20,8 @@ public class AccountBlockedPublishers {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         AccountBlockedPublishers that = (AccountBlockedPublishers) o;
         return Objects.equals(sites, that.sites);
     }
@@ -35,8 +33,8 @@ public class AccountBlockedPublishers {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", AccountBlockedPublishers.class.getSimpleName() + "[", "]")
-                .add("sites=" + sites)
-                .toString();
+        return "AccountBlockedPublishers{" +
+                "sites=" + sites +
+                '}';
     }
 }

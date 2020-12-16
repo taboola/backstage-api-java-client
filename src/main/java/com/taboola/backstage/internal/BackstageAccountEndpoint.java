@@ -6,10 +6,15 @@ import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 
-import com.taboola.backstage.model.media.campaigns.AccountBlockedPublishers;
+import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
+import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
+
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -57,4 +62,16 @@ public interface BackstageAccountEndpoint {
     @Headers("Content-Type: application/json")
     AccountBlockedPublishers getAccountBlockedPublishers(@Header("Authorization") String accessToken,
                                                          @Path("account_id") String accountId) throws BackstageAPIException;
+
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/block-publisher")
+    @Headers("Content-Type: application/json")
+    AccountBlockedPublishers createAccountBlockedPublishers(@Header("Authorization") String accessToken,
+                                                            @Path("account_id") String accountId,
+                                                            @Body AccountBlockedPublishers accountBlockedPublishers) throws BackstageAPIException;
+
+    @PATCH(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/block-publisher")
+    @Headers("Content-Type: application/json")
+    AccountBlockedPublishersPatch patchAccountBlockedPublishers(@Header("Authorization") String accessToken,
+                                                                @Path("account_id") String accountId,
+                                                                @Body AccountBlockedPublishersPatch accountBlockedPublishersPatch) throws BackstageAPIException;
 }
