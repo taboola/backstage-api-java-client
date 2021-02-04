@@ -74,10 +74,6 @@ public class CampaignItem {
         return description;
     }
 
-    public Boolean getActive() {
-        return isActive;
-    }
-
     public CampaignItemPolicyReview getPolicyReview() {
         return policyReview;
     }
