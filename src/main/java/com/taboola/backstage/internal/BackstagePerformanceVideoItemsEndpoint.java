@@ -25,34 +25,34 @@ import retrofit2.http.Path;
  */
 public interface BackstagePerformanceVideoItemsEndpoint {
 
-    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance_video/items")
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items")
     @Headers("Content-Type: application/json")
     PerformanceVideoItem createItem(@Header("Authorization") String accessToken,
                                     @Path("account_id") String accountId,
                                     @Path("campaign_id") String campaignId,
                                     @Body PerformanceVideoItem item) throws BackstageAPIException;
 
-    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance_video/items")
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items")
     @Headers("Content-Type: multipart/form-data")
     PerformanceVideoItem uploadItem(@Header("Authorization") String accessToken,
                                     @Path("account_id") String accountId,
                                     @Path("campaign_id") String campaignId,
                                     @Body MultipartBody body) throws BackstageAPIException;
 
-    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/items")
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items")
     @Headers("Content-Type: application/json")
     Results<PerformanceVideoItem> readItems(@Header("Authorization") String accessToken,
                                             @Path("account_id") String accountId,
                                             @Path("campaign_id") String campaignId) throws BackstageAPIException;
 
-    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance_video/items/{item_id}")
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items/{item_id}")
     @Headers("Content-Type: application/json")
     PerformanceVideoItem readItem(@Header("Authorization") String accessToken,
                                   @Path("account_id") String accountId,
                                   @Path("campaign_id") String campaignId,
                                   @Path("item_id") String itemId) throws BackstageAPIException;
 
-    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance_video/items/{item_id}")
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items/{item_id}")
     @Headers("Content-Type: application/json")
     PerformanceVideoItem updateItem(@Header("Authorization") String accessToken,
                                     @Path("account_id") String accountId,
@@ -60,7 +60,7 @@ public interface BackstagePerformanceVideoItemsEndpoint {
                                     @Path("item_id") String itemId,
                                     @Body PerformanceVideoItem item) throws BackstageAPIException;
 
-    @DELETE(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance_video/items/{item_id}")
+    @DELETE(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items/{item_id}")
     @Headers("Content-Type: application/json")
     PerformanceVideoItem deleteItem(@Header("Authorization") String accessToken,
                                     @Path("account_id") String accountId,
