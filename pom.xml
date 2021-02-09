@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.taboola</groupId>
     <artifactId>backstage-api-java-client</artifactId>
-    <version>1.0.27</version>
+    <version>1.0.27.1</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Backstage API Java Client</description>
@@ -29,22 +29,12 @@
         </developer>
     </developers>
 
-    <scm>
-        <connection>scm:git:git://github.com/taboola/backstage-api-java-client.git</connection>
-        <developerConnection>scm:git:ssh://github.com:taboola/backstage-api-java-client.git</developerConnection>
-        <url>http://github.com/taboola/backstage-api-java-client/tree/master</url>
-    </scm>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
+    <repositories>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>internal</id>
+            <url>http://archiva.inpwrd.net/archiva/repository/internal</url>
         </repository>
-    </distributionManagement>
+    </repositories>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -159,33 +149,6 @@
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
