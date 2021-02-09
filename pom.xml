@@ -29,6 +29,13 @@
         </developer>
     </developers>
 
+    <distributionManagement>
+        <repository>
+            <id>internal</id>
+            <url>http://archiva.inpwrd.net/archiva/repository/internal/</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>internal</id>
