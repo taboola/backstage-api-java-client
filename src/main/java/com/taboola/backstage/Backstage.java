@@ -15,6 +15,7 @@ import com.taboola.backstage.internal.BackstageDictionaryEndpoint;
 import com.taboola.backstage.internal.BackstageInternalTools;
 import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
+import com.taboola.backstage.internal.BackstagePerformanceVideoItemsEndpoint;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
 import com.taboola.backstage.internal.CommunicationFactory;
@@ -39,6 +40,8 @@ import com.taboola.backstage.services.CampaignsService;
 import com.taboola.backstage.services.CampaignsServiceImpl;
 import com.taboola.backstage.services.DictionaryService;
 import com.taboola.backstage.services.DictionaryServiceImpl;
+import com.taboola.backstage.services.PerformanceVideoItemsService;
+import com.taboola.backstage.services.PerformanceVideoItemsServiceImpl;
 import com.taboola.backstage.services.PublisherReportsService;
 import com.taboola.backstage.services.ReportsService;
 import com.taboola.backstage.services.ReportsServiceImpl;
@@ -98,13 +101,15 @@ public class Backstage {
     private final CampaignPostalTargetingService campaignPostalCodeTargetingService;
     private final BackstageInternalTools internalTools;
     private final CampaignAudienceTargetingService campaignAudienceTargetingService;
+    private final PerformanceVideoItemsService performanceVideoItemsService;
 
     private Backstage(BackstageInternalTools internalTools, CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
                       CampaignItemsService campaignItemsService, DictionaryService dictionaryService,
                       ReportsService reportsService, AccountsService accountsService,
                       CampaignPostalTargetingService campaignPostalCodeTargetingService,
-                      CampaignAudienceTargetingService campaignAudienceTargetingService) {
+                      CampaignAudienceTargetingService campaignAudienceTargetingService,
+                      PerformanceVideoItemsService performanceVideoItemsService) {
 
         this.internalTools = internalTools;
         this.campaignsService = campaignsService;
@@ -116,6 +121,7 @@ public class Backstage {
         this.accountsService = accountsService;
         this.campaignPostalCodeTargetingService = campaignPostalCodeTargetingService;
         this.campaignAudienceTargetingService = campaignAudienceTargetingService;
+        this.performanceVideoItemsService = performanceVideoItemsService;
     }
 
     public static BackstageBuilder builder() {
@@ -164,6 +170,10 @@ public class Backstage {
 
     public CampaignAudienceTargetingService campaignAudienceTargetingService() {
         return campaignAudienceTargetingService;
+    }
+
+    public PerformanceVideoItemsService performanceVideoItemsService() {
+        return performanceVideoItemsService;
     }
 
     public BackstageInternalTools internalTools() {
@@ -279,7 +289,8 @@ public class Backstage {
                     new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), internalTools, organizeDynamicColumns),
                     new AccountsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class)),
-                    new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class))
+                    new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class)),
+                    new PerformanceVideoItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePerformanceVideoItemsEndpoint.class))
             );
         }
 
