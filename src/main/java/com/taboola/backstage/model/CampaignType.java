@@ -9,5 +9,7 @@ package com.taboola.backstage.model;
 public enum CampaignType {
     PAID,
     NATIVE,
-    EXCHANGE
+    EXCHANGE,
+    RTB_OPEN_EXCHANGE,
+    PMP
 }
