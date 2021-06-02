@@ -11,5 +11,5 @@ public enum CampaignType {
     NATIVE,
     EXCHANGE,
     RTB_OPEN_EXCHANGE,
-    PMP
+    PMP_DEAL
 }
