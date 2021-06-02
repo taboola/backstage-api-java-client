@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.targeting;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * <p>
  *    <br>⚫ INCLUDE - Only supplied values should be included in Targeting
@@ -15,5 +17,6 @@ package com.taboola.backstage.model.media.campaigns.targeting;
 public enum Type {
     INCLUDE,
     EXCLUDE,
-    ALL
+    ALL,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.targeting;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 16/04/2020
@@ -9,5 +11,6 @@ package com.taboola.backstage.model.media.campaigns.targeting;
 public enum MultiTargetingState {
     ALL,
     EXISTS,
-    UNSUPPORTED
+    UNSUPPORTED,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

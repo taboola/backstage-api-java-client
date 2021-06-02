@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 2019-08-15
@@ -8,4 +10,5 @@ package com.taboola.backstage.model.media.campaigns;
  */
 public enum ConnectionType {
     WIFI,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

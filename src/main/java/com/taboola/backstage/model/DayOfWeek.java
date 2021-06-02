@@ -1,5 +1,7 @@
 package com.taboola.backstage.model;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 03/10/2018
@@ -13,5 +15,6 @@ public enum DayOfWeek {
     THURSDAY,
     FRIDAY,
     SATURDAY,
-    SUNDAY
+    SUNDAY,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }
