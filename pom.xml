@@ -61,6 +61,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.taboola</groupId>
+            <artifactId>rest-api-sdk-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${log4j.api.version}</version>

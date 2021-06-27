@@ -1,10 +1,6 @@
 package com.taboola.backstage;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.internal.BackstageAudienceTargetingEndpoint;
@@ -17,11 +13,6 @@ import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
-import com.taboola.backstage.internal.CommunicationFactory;
-import com.taboola.backstage.internal.config.UserAgentHeader;
-import com.taboola.backstage.model.RequestHeader;
-import com.taboola.backstage.internal.config.CommunicationConfig;
-import com.taboola.backstage.internal.config.SerializationConfig;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
 import com.taboola.backstage.services.AccountsService;
@@ -44,6 +35,9 @@ import com.taboola.backstage.services.ReportsService;
 import com.taboola.backstage.services.ReportsServiceImpl;
 import com.taboola.backstage.services.UserService;
 import com.taboola.backstage.services.UserServiceImpl;
+import com.taboola.rest.api.RestAPIClient;
+import com.taboola.rest.api.internal.config.SerializationConfig;
+import com.taboola.rest.api.model.RequestHeader;
 
 /**
  * Backstage is the gateway object to all services.
@@ -177,9 +171,6 @@ public class Backstage {
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
         private static final String VERSION = "1.0.30";
-        private static final Integer DEFAULT_MAX_IDLE_CONNECTIONS = 5;
-        private static final Long DEFAULT_KEEP_ALIVE_DURATION_MILLIS = 300_000L;
-        private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
 
         private String baseUrl;
         private String authBaseUrl;
@@ -262,12 +253,24 @@ public class Backstage {
 
         public Backstage build() {
             organizeState();
-            String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
-            Collection<RequestHeader> headers = getAllHeaders(this.headers, finalUserAgent);
-            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, maxIdleConnections,
-                    keepAliveDurationMillis, headers, debug);
-            CommunicationFactory communicator = new CommunicationFactory(config, serializationConfig);
-            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
+
+            RestAPIClient.RestAPIClientBuilder restAPIClientBuilder = RestAPIClient.builder()
+                    .setAPIVersion(VERSION)
+                    .setConnectionTimeoutMillis(connectionTimeoutMillis)
+                    .setMaxIdleConnections(maxIdleConnections)
+                    .setReadTimeoutMillis(readTimeoutMillis)
+                    .setWriteTimeoutMillis(writeTimeoutMillis)
+                    .setSerializationConfig(serializationConfig)
+                    .setHeaders(headers)
+                    .setKeepAliveDurationMillis(keepAliveDurationMillis)
+                    .setPerformClientValidations(performClientValidations)
+                    .setUserAgentSuffix(userAgent)
+                    .setDebug(debug);
+
+            RestAPIClient backstageClient = restAPIClientBuilder.setBaseUrl(baseUrl).setUserAgentPrefix("Backstage").build();
+            RestAPIClient authenticationClient = restAPIClientBuilder.setBaseUrl(authBaseUrl).setUserAgentPrefix("Authentication").build();
+
+            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(backstageClient, authenticationClient);
             BackstageInternalToolsImpl internalTools = new BackstageInternalToolsImpl(endpointsFactory);
             return new Backstage(
                     internalTools,
@@ -283,17 +286,6 @@ public class Backstage {
             );
         }
 
-        private Collection<RequestHeader> getAllHeaders(Collection<RequestHeader> clientHeaders, String finalUserAgent) {
-            List<RequestHeader> headers = new ArrayList<>();
-            if (clientHeaders != null){
-                headers.addAll(clientHeaders.stream().
-                        filter(Objects::nonNull)
-                        .collect(Collectors.toList()));
-            }
-            headers.add(new UserAgentHeader(finalUserAgent));
-            return headers;
-        }
-
         private void organizeState() {
             if (baseUrl == null) {
                 baseUrl = DEFAULT_BACKSTAGE_HOST;
@@ -303,44 +295,8 @@ public class Backstage {
                 authBaseUrl = DEFAULT_AUTH_BACKSTAGE_HOST;
             }
 
-            if (connectionTimeoutMillis == null) {
-                connectionTimeoutMillis = 0L;
-            }
-
-            if (readTimeoutMillis == null) {
-                readTimeoutMillis = 0L;
-            }
-
-            if (writeTimeoutMillis == null) {
-                writeTimeoutMillis = 0L;
-            }
-
-            if (maxIdleConnections == null) {
-                maxIdleConnections = DEFAULT_MAX_IDLE_CONNECTIONS;
-            }
-
-            if (keepAliveDurationMillis == null) {
-                keepAliveDurationMillis = DEFAULT_KEEP_ALIVE_DURATION_MILLIS;
-            }
-
             if (userAgent == null) {
                 userAgent = DEFAULT_USER_AGENT;
-            }
-
-            if (performClientValidations == null) {
-                performClientValidations = true;
-            }
-
-            if (debug == null) {
-                debug = false;
-            }
-
-            if (organizeDynamicColumns == null) {
-                organizeDynamicColumns = true;
-            }
-
-            if (serializationConfig == null) {
-                serializationConfig = DEFAULT_SERIALIZATION_CONFIG;
             }
         }
     }

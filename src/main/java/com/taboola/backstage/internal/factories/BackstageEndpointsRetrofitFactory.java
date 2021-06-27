@@ -1,10 +1,11 @@
 package com.taboola.backstage.internal.factories;
 
-import com.taboola.backstage.internal.CommunicationFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
+
+import com.taboola.rest.api.RestAPIClient;
 
 /**
  * Created by vladi
@@ -16,23 +17,25 @@ public class BackstageEndpointsRetrofitFactory implements BackstageEndpointsFact
 
     private static final Logger logger = LogManager.getLogger(BackstageEndpointsRetrofitFactory.class);
 
-    private final CommunicationFactory communicationFactory;
+    private final RestAPIClient backstageClient;
+    private final RestAPIClient authenticationClient;
 
-    public BackstageEndpointsRetrofitFactory(CommunicationFactory communicationFactory) {
-        this.communicationFactory = communicationFactory;
+    public BackstageEndpointsRetrofitFactory(RestAPIClient backstageClient, RestAPIClient authenticationClient) {
+        this.backstageClient = backstageClient;
+        this.authenticationClient = authenticationClient;
     }
 
     @Override
     public <A> A createAuthEndpoint(Class<A> clazz) {
         Objects.requireNonNull(clazz, "clazz");
         logger.debug("creating authentication endpoint using retrofit for class [{}]", clazz::toString);
-        return communicationFactory.createRetrofitAuthEndpoint(clazz);
+        return authenticationClient.createRetrofitEndpoint(clazz);
     }
 
     @Override
     public <E> E createEndpoint(Class<E> clazz) {
         Objects.requireNonNull(clazz, "clazz");
         logger.debug("creating endpoint using retrofit for class [{}]", clazz::toString);
-        return communicationFactory.createRetrofitEndpoint(clazz);
+        return backstageClient.createRetrofitEndpoint(clazz);
     }
 }
