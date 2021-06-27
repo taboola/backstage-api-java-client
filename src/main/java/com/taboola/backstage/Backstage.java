@@ -164,8 +164,6 @@ public class Backstage {
         return internalTools;
     }
 
-    //TODO support async services
-
     public static class BackstageBuilder {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
