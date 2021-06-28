@@ -2,6 +2,7 @@ package com.taboola.backstage;
 
 import java.util.Collection;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.internal.BackstageAudienceTargetingEndpoint;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
@@ -13,6 +14,7 @@ import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
+import com.taboola.backstage.internal.factories.BackstageAPIExceptionFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
 import com.taboola.backstage.services.AccountsService;
@@ -37,6 +39,7 @@ import com.taboola.backstage.services.UserService;
 import com.taboola.backstage.services.UserServiceImpl;
 import com.taboola.rest.api.RestAPIClient;
 import com.taboola.rest.api.internal.config.SerializationConfig;
+import com.taboola.rest.api.internal.serialization.SerializationMapperCreator;
 import com.taboola.rest.api.model.RequestHeader;
 
 /**
@@ -169,6 +172,7 @@ public class Backstage {
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
         private static final String VERSION = "1.0.30";
+        private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
 
         private String baseUrl;
         private String authBaseUrl;
@@ -252,8 +256,10 @@ public class Backstage {
         public Backstage build() {
             organizeState();
 
+            ObjectMapper objectMapper = SerializationMapperCreator.createObjectMapper(serializationConfig);
             RestAPIClient.RestAPIClientBuilder restAPIClientBuilder = RestAPIClient.builder()
                     .setAPIVersion(VERSION)
+                    .setObjectMapper(objectMapper)
                     .setConnectionTimeoutMillis(connectionTimeoutMillis)
                     .setMaxIdleConnections(maxIdleConnections)
                     .setReadTimeoutMillis(readTimeoutMillis)
@@ -261,7 +267,7 @@ public class Backstage {
                     .setSerializationConfig(serializationConfig)
                     .setHeaders(headers)
                     .setKeepAliveDurationMillis(keepAliveDurationMillis)
-                    .setPerformClientValidations(performClientValidations)
+                    .setExceptionFactory(new BackstageAPIExceptionFactory(objectMapper))
                     .setUserAgentSuffix(userAgent)
                     .setDebug(debug);
 
@@ -295,6 +301,10 @@ public class Backstage {
 
             if (userAgent == null) {
                 userAgent = DEFAULT_USER_AGENT;
+            }
+
+            if (serializationConfig == null) {
+                serializationConfig = DEFAULT_SERIALIZATION_CONFIG;
             }
         }
     }
