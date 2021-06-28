@@ -1,13 +1,13 @@
 package com.taboola.backstage.model.media.campaigns;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taboola.backstage.annotations.Final;
-import com.taboola.backstage.annotations.ReadOnly;
-import com.taboola.backstage.annotations.Required;
 import com.taboola.backstage.model.media.campaigns.brandsafety.ExternalBrandSafety;
 import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
 import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
 import com.taboola.backstage.model.media.campaigns.viewability.ViewabilityTag;
+import com.taboola.rest.api.annotations.Final;
+import com.taboola.rest.api.annotations.ReadOnly;
+import com.taboola.rest.api.annotations.Required;
 
 import java.util.Date;
 import java.util.Objects;

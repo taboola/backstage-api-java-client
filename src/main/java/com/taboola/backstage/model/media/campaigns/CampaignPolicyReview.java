@@ -1,6 +1,6 @@
 package com.taboola.backstage.model.media.campaigns;
 
-import com.taboola.backstage.annotations.ReadOnly;
+import com.taboola.rest.api.annotations.ReadOnly;
 
 /**
  * Created by vladi.m

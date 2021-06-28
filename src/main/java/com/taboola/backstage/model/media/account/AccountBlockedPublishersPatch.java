@@ -3,8 +3,8 @@ package com.taboola.backstage.model.media.account;
 import java.util.Objects;
 import java.util.Set;
 
-import com.taboola.backstage.annotations.Required;
 import com.taboola.backstage.model.Patch;
+import com.taboola.rest.api.annotations.Required;
 
 /**
  * Created by vladi.m
