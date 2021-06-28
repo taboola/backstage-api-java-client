@@ -27,13 +27,13 @@ public class BackstageAPIExceptionFactory implements ExceptionFactory {
     }
 
     @Override
-    public void handleAndThrowUnauthorizedException(Throwable cause) {
-        throw new BackstageAPIUnauthorizedException(cause);
+    public RuntimeException createUnauthorizedException(Throwable cause) {
+        return new BackstageAPIUnauthorizedException(cause);
     }
 
     @Override
-    public void handleAndThrowRequestException(int responseCode, byte[] errorBytes, String message) {
-        throw new BackstageAPIRequestException(responseCode, normalizeError(parseError(responseCode, errorBytes, message)));
+    public RuntimeException createRequestException(int responseCode, byte[] errorBytes, String message) {
+        return new BackstageAPIRequestException(responseCode, normalizeError(parseError(responseCode, errorBytes, message)));
     }
 
     private APIError parseError(int responseCode, byte[] errorBytes, String message) {
@@ -55,12 +55,12 @@ public class BackstageAPIExceptionFactory implements ExceptionFactory {
     }
 
     @Override
-    public void handleAndThrowConnectivityException(Throwable cause, int responseCode) {
-        throw new BackstageAPIConnectivityException(cause, responseCode);
+    public RuntimeException createConnectivityException(Throwable cause, int responseCode) {
+        return new BackstageAPIConnectivityException(cause, responseCode);
     }
 
     @Override
-    public void handleAndThrowConnectivityException(Throwable cause) {
-        throw new BackstageAPIConnectivityException(cause);
+    public RuntimeException createConnectivityException(Throwable cause) {
+        return new BackstageAPIConnectivityException(cause);
     }
 }
