@@ -303,6 +303,10 @@ public class Backstage {
                 userAgent = DEFAULT_USER_AGENT;
             }
 
+            if (performClientValidations == null) {
+                performClientValidations = true;
+            }
+
             if (serializationConfig == null) {
                 serializationConfig = DEFAULT_SERIALIZATION_CONFIG;
             }
