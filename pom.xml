@@ -62,7 +62,7 @@
     <dependencies>
         <dependency>
             <groupId>com.taboola</groupId>
-            <artifactId>rest-api-sdk-core</artifactId>
+            <artifactId>api-java-client-core</artifactId>
             <version>1.0.0</version>
         </dependency>
 
