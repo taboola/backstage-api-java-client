@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi
  * Date: 12/23/2017
@@ -9,5 +11,6 @@ package com.taboola.backstage.model.media.campaigns;
 public enum DailyAdDeliveryModel {
     BALANCED,
     ACCELERATED,
-    STRICT
+    STRICT,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

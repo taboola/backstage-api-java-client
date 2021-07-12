@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 11/11/2020
@@ -18,5 +20,6 @@ public enum CtaType {
     GET_QUOTE,
     GET_OFFER,
     TRY_NOW,
-    NONE
+    NONE,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

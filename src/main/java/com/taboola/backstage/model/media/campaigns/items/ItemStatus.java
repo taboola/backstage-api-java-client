@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Items with status=RUNNING is the only item that is being served in Taboola Widgets.
  *
@@ -16,5 +18,6 @@ public enum ItemStatus {
     PAUSED,
     STOPPED,
     PENDING_APPROVAL,
-    REJECTED
+    REJECTED,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

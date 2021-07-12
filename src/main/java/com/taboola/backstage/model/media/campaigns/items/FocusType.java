@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 11/11/2020
@@ -8,5 +10,6 @@ package com.taboola.backstage.model.media.campaigns.items;
  */
 public enum FocusType {
     AUTOMATIC,
-    COORDINATES
+    COORDINATES,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

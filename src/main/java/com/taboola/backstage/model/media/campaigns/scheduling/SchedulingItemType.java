@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.scheduling;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * <p>
  *    <br>⚫ INCLUDE - Only supplied values will activate campaign
@@ -13,5 +15,6 @@ package com.taboola.backstage.model.media.campaigns.scheduling;
  */
 public enum SchedulingItemType {
     INCLUDE,
-    EXCLUDE
+    EXCLUDE,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

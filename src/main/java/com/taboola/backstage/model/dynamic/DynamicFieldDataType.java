@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.dynamic;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 05/10/2018
@@ -16,5 +18,6 @@ public enum DynamicFieldDataType {
     DATE,
     TIMESTAMP,
     URL,
-    BOOLEAN
+    BOOLEAN,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

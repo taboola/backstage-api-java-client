@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * <p>
  *    There are two possible types of items:
@@ -14,5 +16,6 @@ package com.taboola.backstage.model.media.campaigns.items;
  */
 public enum ItemType {
     ITEM,
-    RSS
+    RSS,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

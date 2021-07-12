@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * <p>
  *    <br>⚫ BRAND_AWARENESS - Extent to which customers are able to recall or recognise a brand
@@ -23,5 +25,6 @@ public enum MarketingObjective {
     DRIVE_WEBSITE_TRAFFIC,
     MOBILE_APP_INSTALL,
     OTHER,
-    @Deprecated NONE
+    @Deprecated NONE,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

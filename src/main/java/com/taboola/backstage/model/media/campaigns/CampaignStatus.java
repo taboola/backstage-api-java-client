@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi
  * Date: 12/23/2017
@@ -16,5 +18,6 @@ public enum CampaignStatus {
     TERMINATED,
     FROZEN,
     PENDING_APPROVAL,
-    REJECTED
+    REJECTED,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }
