@@ -1,6 +1,6 @@
 package com.taboola.backstage.model;
 
-import com.taboola.backstage.annotations.Required;
+import com.taboola.rest.api.annotations.Required;
 
 /**
  * Created by vladi.m

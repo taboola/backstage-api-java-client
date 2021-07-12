@@ -2,7 +2,7 @@ package com.taboola.backstage.model.media.campaigns;
 
 import java.util.List;
 
-import com.taboola.backstage.annotations.Required;
+import com.taboola.rest.api.annotations.Required;
 
 /**
  * Created by vladi.m

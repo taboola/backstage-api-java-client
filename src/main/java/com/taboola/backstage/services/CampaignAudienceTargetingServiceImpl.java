@@ -4,10 +4,10 @@ import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.internal.BackstageAudienceTargetingEndpoint;
-import com.taboola.backstage.internal.FieldsValidator;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.CampaignLookalikeAudienceTargeting;
 import com.taboola.backstage.model.media.campaigns.CampaignMultiTargetingCollection;
+import com.taboola.rest.api.internal.FieldsValidator;
 
 /**
  * Created by vladi.m
