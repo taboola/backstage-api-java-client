@@ -1,9 +1,9 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
-import com.taboola.backstage.annotations.ReadOnly;
-import com.taboola.backstage.annotations.Required;
-
 import java.util.Objects;
+
+import com.taboola.rest.api.annotations.ReadOnly;
+import com.taboola.rest.api.annotations.Required;
 
 /**
  * Created by vladi

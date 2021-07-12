@@ -1,8 +1,8 @@
 package com.taboola.backstage.model.media.campaigns;
 
-import com.taboola.backstage.annotations.ReadOnly;
-import com.taboola.backstage.annotations.Required;
 import com.taboola.backstage.model.media.campaigns.targeting.Type;
+import com.taboola.rest.api.annotations.ReadOnly;
+import com.taboola.rest.api.annotations.Required;
 
 import java.util.Collection;
 

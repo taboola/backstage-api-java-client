@@ -4,7 +4,6 @@ import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
-import com.taboola.backstage.internal.FieldsValidator;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
@@ -12,6 +11,7 @@ import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
+import com.taboola.rest.api.internal.FieldsValidator;
 
 /**
  * Created by vladi

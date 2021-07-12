@@ -3,7 +3,7 @@ package com.taboola.backstage.model.media.account;
 import java.util.Objects;
 import java.util.Set;
 
-import com.taboola.backstage.annotations.Required;
+import com.taboola.rest.api.annotations.Required;
 
 public class AccountBlockedPublishers {
 

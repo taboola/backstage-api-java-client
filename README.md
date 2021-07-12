@@ -1,7 +1,7 @@
 ## Backstage API Java Client
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.taboola/backstage-api-java-client/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.taboola/backstage-api-java-client)
-[![Build Status](https://travis-ci.org/taboola/backstage-api-java-client.svg?branch=master)](https://travis-ci.org/taboola/backstage-api-java-client)
+[![Build Status](https://travis-ci.com/taboola/backstage-api-java-client.svg?branch=master)](https://travis-ci.com/taboola/backstage-api-java-client)
 
 ### Table of Contents
 1. [Getting Started](#1-getting-started)

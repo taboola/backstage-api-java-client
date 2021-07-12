@@ -3,13 +3,13 @@ package com.taboola.backstage.services;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
-import com.taboola.backstage.internal.FieldsValidator;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.rest.api.internal.FieldsValidator;
 
 /**
  * Created by vladi

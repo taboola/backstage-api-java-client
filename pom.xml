@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.taboola</groupId>
     <artifactId>backstage-api-java-client</artifactId>
-    <version>1.0.30</version>
+    <version>1.1.0</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Backstage API Java Client</description>
@@ -60,6 +60,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.taboola</groupId>
+            <artifactId>api-java-client-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
