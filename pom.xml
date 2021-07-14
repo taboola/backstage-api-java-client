@@ -51,10 +51,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <log4j.api.version>2.6.1</log4j.api.version>
         <log4j.core.version>2.6.1</log4j.core.version>
-        <retrofit.version>2.9.0</retrofit.version>
-        <converter.jackson.version>2.3.0</converter.jackson.version>
-        <logging.interceptor.version>3.14.9</logging.interceptor.version>
-        <jackson.databind.version>2.9.10.4</jackson.databind.version>
         <junit.version>4.12</junit.version>
         <mockito.all.version>1.10.19</mockito.all.version>
     </properties>
