@@ -53,13 +53,14 @@
         <log4j.core.version>2.6.1</log4j.core.version>
         <junit.version>4.12</junit.version>
         <mockito.all.version>1.10.19</mockito.all.version>
+        <api.java.client.core.version>1.0.0</api.java.client.core.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.taboola</groupId>
             <artifactId>api-java-client-core</artifactId>
-            <version>1.0.0</version>
+            <version>${api.java.client.core.version}</version>
         </dependency>
 
         <dependency>
