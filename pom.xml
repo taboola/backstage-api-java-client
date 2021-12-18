@@ -50,7 +50,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <log4j.api.version>2.17.0</log4j.api.version>
-        <log4j.core.version>2.6.1</log4j.core.version>
+        <log4j.core.version>2.17.0</log4j.core.version>
         <junit.version>4.12</junit.version>
         <mockito.all.version>1.10.19</mockito.all.version>
         <api.java.client.core.version>1.0.1</api.java.client.core.version>
