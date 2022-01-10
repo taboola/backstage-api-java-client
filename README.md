@@ -8,7 +8,7 @@
 2. [Full Example - Create first campaign and item ](#2-full-example---create-first-campaign-and-item)
 3. [Authentication](#3-authentication)
 4. [Exceptions](#4-exceptions)
-5. [Custom endpoints](#5-custom-end-points)
+5. [Custom endpoints](#5-custom-endpoints)
 6. [Usage](#6-usage)
 
 ### Intro
