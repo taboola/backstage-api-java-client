@@ -8,7 +8,8 @@
 2. [Full Example - Create first campaign and item ](#2-full-example---create-first-campaign-and-item)
 3. [Authentication](#3-authentication)
 4. [Exceptions](#4-exceptions)
-5. [Usage](#5-usage)
+5. [Custom endpoints](#5-custom-end-points)
+6. [Usage](#6-usage)
 
 ### Intro
 The Taboola Backstage API allow you to manage your campaign, items and view reports.
@@ -39,6 +40,7 @@ backstage.campaignsService().read(clientAuth, myAccountId);
 
 ## 2. Full Example - Create first campaign and item
 ```
+// Backstage instance should be singleton, its creation is costy 
 Backstage backstage = Backstage.builder().build();
 
 try {
@@ -117,7 +119,51 @@ BackstageAuthentication auth = backstage.authenticationService().reAuthenticate(
 - **BackstageAPIConnectivityException** - Connectivity issues (HTTP status 5xx)
   - Can be resolved by retrying or fixing networking issues
 
-### 5. Usage
+### 5. Custom endpoints
+
+If there are unsupported API endpoints or models, SDK provides tools to extend.
+
+To know what is possible when creating endpoints interface please refer to [Retrofit2 documentation](https://square.github.io/retrofit/)
+
+Lets assume following model and endpoint is not present in current running SDK version
+```
+public class EntityModelExample {
+  private String id;
+  private String name;
+
+  public String getId() { return id; }
+  public void setId(String id) { this.id = id; }
+  public String getName() { return name; }
+  public void setName(String name) { this.name = name; }
+}
+
+public interface ExampleNewEndpoint {
+
+    @POST("/{account_id}")
+    @Headers("Content-Type: application/json")
+    EntityModelExample update(@Header("Authorization") String accessToken,
+                             @Path("account_id") String accountId,
+                             @Body EntityModelExample entity) throws RestAPIException;
+}
+```
+
+In order to create interface instance SDK provides endpoint factory tools 
+
+```
+// Backstage instance should be singleton, its creation is costy
+Backstage backstage = Backstage.builder().build();
+BackstageInternalTools tools = backstage.internalTools();
+BackstageEndpointsFactory backstageEndpointsFactory = tools.endpointFactory();
+
+...
+
+// Worth saving below instance as singleton as its creation is costy
+ExampleNewEndpoint newEndpoint = backstageEndpointsFactory.createEndpoint(ExampleNewEndpoint.class);
+
+// Instance was created, invoke its method
+```
+
+### 6. Usage
 
 If your project is built with Maven add following to your pom file:
 
