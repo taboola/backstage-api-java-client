@@ -7,6 +7,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 import com.taboola.rest.api.internal.FieldsValidator;
@@ -40,6 +41,12 @@ public class CampaignsServiceImpl implements CampaignsService {
     public Campaign read(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getCampaign(accessToken, accountId, campaignId);
+    }
+
+    @Override
+    public Results<CampaignBase> readBase(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getAllCampaignsBase(accessToken, accountId);
     }
 
     @Override

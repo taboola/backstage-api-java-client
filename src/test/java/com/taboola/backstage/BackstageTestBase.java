@@ -23,6 +23,7 @@ import com.taboola.backstage.model.dynamic.DynamicRow;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignLookalikeAudienceTargeting;
 import com.taboola.backstage.model.media.campaigns.CampaignMultiTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
@@ -76,6 +77,10 @@ public abstract class BackstageTestBase {
 
     protected Campaign generateDummyCampaign() {
         return factory.manufacturePojo(Campaign.class);
+    }
+
+    protected CampaignBase generateDummyCampaignBase() {
+        return factory.manufacturePojo(CampaignBase.class);
     }
 
     protected CampaignOperation generateDummyCampaignOperation() {

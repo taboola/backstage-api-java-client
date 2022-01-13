@@ -6,6 +6,7 @@ import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 
@@ -14,6 +15,7 @@ import com.taboola.backstage.model.media.campaigns.CampaignPatch;
  *
  * <p>
  *    The following operations are available via the API:
+ *    <br> {@link CampaignsService#readBase(BackstageAuthentication auth, String accountId) read} 1. Fetch a List of Campaigns base - Fetch a list of Campaigns base associated with a specific partner account.
  *    <br> {@link CampaignsService#read(BackstageAuthentication auth, String accountId) read} 1. Fetch a List of Campaigns - Fetch a list of Campaigns associated with a specific partner account.
  *    <br> {@link CampaignsService#read(BackstageAuthentication auth, String accountId, String campaignId) read} 2. Fetch a Single Campaign - Fetch a single Campaign resource using the Campaign ID.
  *    <br> {@link CampaignsService#create} 3. Create a Campaign - Create a new Campaign under a specific partner account.
@@ -52,6 +54,18 @@ public interface CampaignsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Campaign read(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Read all campaign base entities, will return partial entity fields
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link CampaignBase} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @return Fully populated collection of {@link CampaignBase} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignBase> readBase(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Read all campaign entities
