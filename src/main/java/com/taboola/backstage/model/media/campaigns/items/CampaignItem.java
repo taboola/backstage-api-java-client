@@ -2,6 +2,8 @@ package com.taboola.backstage.model.media.campaigns.items;
 
 import java.util.Objects;
 
+import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
+import com.taboola.backstage.model.media.campaigns.viewability.ViewabilityTag;
 import com.taboola.rest.api.annotations.ReadOnly;
 import com.taboola.rest.api.annotations.Required;
 
@@ -33,6 +35,8 @@ public class CampaignItem {
     protected CampaignItemPolicyReview policyReview;
     protected CampaignItemCTA cta;
     protected CampaignItemCreativeFocus creativeFocus;
+    protected VerificationPixel verificationPixel;
+    protected ViewabilityTag viewabilityTag;
 
     public String getId() {
         return id;
@@ -86,6 +90,14 @@ public class CampaignItem {
         return creativeFocus;
     }
 
+    public VerificationPixel getVerificationPixel() {
+        return verificationPixel;
+    }
+
+    public ViewabilityTag getViewabilityTag() {
+        return viewabilityTag;
+    }
+
     @Override
     public String toString() {
         return "CampaignItem{" +
@@ -102,6 +114,8 @@ public class CampaignItem {
                 ", policyReview=" + policyReview +
                 ", cta=" + cta +
                 ", creativeFocus=" + creativeFocus +
+                ", verificationPixel=" + verificationPixel +
+                ", viewabilityTag=" + viewabilityTag +
                 '}';
     }
 
@@ -122,11 +136,14 @@ public class CampaignItem {
                 Objects.equals(description, that.description) &&
                 Objects.equals(policyReview, that.policyReview) &&
                 Objects.equals(cta, that.cta) &&
-                Objects.equals(creativeFocus, that.creativeFocus);
+                Objects.equals(creativeFocus, that.creativeFocus) &&
+                Objects.equals(verificationPixel, that.verificationPixel) &&
+                Objects.equals(viewabilityTag, that.viewabilityTag);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive, status, description, policyReview, cta, creativeFocus);
+        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive,
+                status, description, policyReview, cta, creativeFocus, verificationPixel, viewabilityTag);
     }
 }

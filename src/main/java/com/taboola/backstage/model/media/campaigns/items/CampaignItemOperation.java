@@ -1,5 +1,8 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
+import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
+import com.taboola.backstage.model.media.campaigns.viewability.ViewabilityTag;
+
 /**
  * Created by vladi
  * Date: 1/19/2018
@@ -46,6 +49,16 @@ public class CampaignItemOperation extends CampaignItem {
 
     public CampaignItemOperation setCreativeFocus(CampaignItemCreativeFocus creativeFocus) {
         this.creativeFocus = creativeFocus;
+        return this;
+    }
+
+    public CampaignItemOperation setVerificationPixel(VerificationPixel verificationPixel) {
+        this.verificationPixel = verificationPixel;
+        return this;
+    }
+
+    public CampaignItemOperation setViewabilityTag(ViewabilityTag viewabilityTag) {
+        this.viewabilityTag = viewabilityTag;
         return this;
     }
 }
