@@ -4,6 +4,7 @@ import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 import com.taboola.backstage.model.media.campaigns.SpendingLimitModel;
@@ -80,6 +81,18 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
         Campaign actual = testInstance.read(auth, "accountId", campaign.getId());
         assertEquals("Invalid campaign", campaign, actual);
         verify(endpointMock, times(1)).getCampaign(any(), any(), any());
+    }
+
+    @Test
+    public void testReadAllBase() {
+        CampaignBase campaignBase = generateDummyCampaignBase();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<CampaignBase> results = new Results<>(Collections.singleton(campaignBase));
+        when(endpointMock.getAllCampaignsBase(auth.getToken().getAccessTokenForHeader(),"accountId")).thenReturn(results);
+
+        Results<CampaignBase> actual = testInstance.readBase(auth, "accountId");
+        assertEquals("Invalid campaign results", results, actual);
+        verify(endpointMock, times(1)).getAllCampaignsBase(any(), any());
     }
 
     @Test
