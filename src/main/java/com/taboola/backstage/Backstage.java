@@ -14,6 +14,7 @@ import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
+import com.taboola.backstage.internal.BackstageSharedBudgetEndpoint;
 import com.taboola.backstage.internal.factories.BackstageAPIExceptionFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
@@ -35,6 +36,8 @@ import com.taboola.backstage.services.DictionaryServiceImpl;
 import com.taboola.backstage.services.PublisherReportsService;
 import com.taboola.backstage.services.ReportsService;
 import com.taboola.backstage.services.ReportsServiceImpl;
+import com.taboola.backstage.services.SharedBudgetService;
+import com.taboola.backstage.services.SharedBudgetServiceImpl;
 import com.taboola.backstage.services.UserService;
 import com.taboola.backstage.services.UserServiceImpl;
 import com.taboola.rest.api.RestAPIClient;
@@ -95,13 +98,15 @@ public class Backstage {
     private final CampaignPostalTargetingService campaignPostalCodeTargetingService;
     private final BackstageInternalTools internalTools;
     private final CampaignAudienceTargetingService campaignAudienceTargetingService;
+    private final SharedBudgetService sharedBudgetService;
 
     private Backstage(BackstageInternalTools internalTools, CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
                       CampaignItemsService campaignItemsService, DictionaryService dictionaryService,
                       ReportsService reportsService, AccountsService accountsService,
                       CampaignPostalTargetingService campaignPostalCodeTargetingService,
-                      CampaignAudienceTargetingService campaignAudienceTargetingService) {
+                      CampaignAudienceTargetingService campaignAudienceTargetingService,
+                      SharedBudgetService sharedBudgetService) {
 
         this.internalTools = internalTools;
         this.campaignsService = campaignsService;
@@ -113,6 +118,7 @@ public class Backstage {
         this.accountsService = accountsService;
         this.campaignPostalCodeTargetingService = campaignPostalCodeTargetingService;
         this.campaignAudienceTargetingService = campaignAudienceTargetingService;
+        this.sharedBudgetService = sharedBudgetService;
     }
 
     public static BackstageBuilder builder() {
@@ -161,6 +167,10 @@ public class Backstage {
 
     public CampaignAudienceTargetingService campaignAudienceTargetingService() {
         return campaignAudienceTargetingService;
+    }
+
+    public SharedBudgetService sharedBudgetService() {
+        return sharedBudgetService;
     }
 
     public BackstageInternalTools internalTools() {
@@ -286,7 +296,8 @@ public class Backstage {
                     new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), internalTools, organizeDynamicColumns),
                     new AccountsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class)),
-                    new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class))
+                    new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class)),
+                    new SharedBudgetServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageSharedBudgetEndpoint.class))
             );
         }
 
