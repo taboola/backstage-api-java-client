@@ -10,6 +10,7 @@ import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
 import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignsBulkOperation;
 import com.taboola.rest.api.internal.FieldsValidator;
 
 /**
@@ -62,6 +63,15 @@ public class CampaignsServiceImpl implements CampaignsService {
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.updateCampaign(accessToken, accountId, campaignId,  campaignOperation);
+    }
+
+    @Override
+    public Results<Campaign> updateMassive(BackstageAuthentication auth, String accountId, CampaignsBulkOperation campaignsBulkOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateUpdateOperation(campaignsBulkOperation);
+        }
+
+        return endpoint.updateMassiveCampaigns(auth.getToken().getAccessTokenForHeader(), accountId,  campaignsBulkOperation);
     }
 
     @Override
