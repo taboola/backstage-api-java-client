@@ -9,7 +9,7 @@ import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
-import com.taboola.backstage.model.media.campaigns.CampaignsBulkOperation;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 
 /**
  * {@link Campaign} entity CRUD operations
@@ -100,13 +100,13 @@ public interface CampaignsService {
      *
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
-     * @param campaignsBulkOperation Full or partial {@link CampaignsBulkOperation} defines campaign configuration change
+     * @param campaignsMassiveOperation Full or partial {@link CampaignsMassiveOperation} defines campaign configuration change
      * @return Fully populated collection of  {@link Campaign} pojo
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    Results<Campaign> updateMassive(BackstageAuthentication auth, String accountId, CampaignsBulkOperation campaignsBulkOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    Results<Campaign> updateMassive(BackstageAuthentication auth, String accountId, CampaignsMassiveOperation campaignsMassiveOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Duplicate campaign entity

@@ -28,7 +28,7 @@ import com.taboola.backstage.model.media.campaigns.CampaignLookalikeAudienceTarg
 import com.taboola.backstage.model.media.campaigns.CampaignMultiTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
-import com.taboola.backstage.model.media.campaigns.CampaignsBulkOperation;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.SharedBudgetBase;
 import com.taboola.backstage.model.media.campaigns.SharedBudgetOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
@@ -86,8 +86,8 @@ public abstract class BackstageTestBase {
         return factory.manufacturePojo(CampaignBase.class);
     }
 
-    protected CampaignsBulkOperation generateDummyCampaignsBulkOperation() {
-        return factory.manufacturePojo(CampaignsBulkOperation.class);
+    protected CampaignsMassiveOperation generateDummyCampaignsBulkOperation() {
+        return factory.manufacturePojo(CampaignsMassiveOperation.class);
     }
 
     protected CampaignOperation generateDummyCampaignOperation() {

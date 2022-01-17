@@ -2,15 +2,15 @@ package com.taboola.backstage.model.media.campaigns;
 
 import java.util.List;
 
-public class CampaignsBulkOperation {
+public class CampaignsMassiveOperation {
     private List<Long> campaigns;
     private List<String> orderIds;
     private Campaign update;
 
-    private CampaignsBulkOperation() { }
+    private CampaignsMassiveOperation() { }
 
-    public static CampaignsBulkOperation create() {
-        return new CampaignsBulkOperation();
+    public static CampaignsMassiveOperation create() {
+        return new CampaignsMassiveOperation();
     }
 
     public List<Long> getCampaigns() {

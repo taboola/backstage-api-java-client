@@ -7,7 +7,7 @@ import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
-import com.taboola.backstage.model.media.campaigns.CampaignsBulkOperation;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.SpendingLimitModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -134,12 +134,12 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
 
     @Test
     public void testUpdateMassive() {
-        CampaignsBulkOperation campaignsBulkOperation = generateDummyCampaignsBulkOperation();
+        CampaignsMassiveOperation campaignsMassiveOperation = generateDummyCampaignsBulkOperation();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        Results<Campaign> expected = new Results<>(Collections.singleton(campaignsBulkOperation.getUpdate()));
-        when(endpointMock.updateMassiveCampaigns(auth.getToken().getAccessTokenForHeader(),"accountId", campaignsBulkOperation)).thenReturn(expected);
+        Results<Campaign> expected = new Results<>(Collections.singleton(campaignsMassiveOperation.getUpdate()));
+        when(endpointMock.updateMassiveCampaigns(auth.getToken().getAccessTokenForHeader(),"accountId", campaignsMassiveOperation)).thenReturn(expected);
 
-        Results<Campaign> actual = testInstance.updateMassive(auth, "accountId", campaignsBulkOperation);
+        Results<Campaign> actual = testInstance.updateMassive(auth, "accountId", campaignsMassiveOperation);
         assertEquals("Invalid campaign bulk response", expected, actual);
         verify(endpointMock, times(1)).updateMassiveCampaigns(any(), any(), any());
     }

@@ -5,7 +5,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
-import com.taboola.backstage.model.media.campaigns.CampaignsBulkOperation;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 
 import retrofit2.http.*;
 
@@ -50,7 +50,7 @@ public interface BackstageCampaignsEndpoint {
     @Headers("Content-Type: application/json")
     Results<Campaign> updateMassiveCampaigns(@Header("Authorization") String accessToken,
                                              @Path("account_id") String accountId,
-                                             @Body CampaignsBulkOperation campaigns) throws BackstageAPIException;
+                                             @Body CampaignsMassiveOperation campaigns) throws BackstageAPIException;
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/duplicate")
     @Headers("Content-Type: application/json")
