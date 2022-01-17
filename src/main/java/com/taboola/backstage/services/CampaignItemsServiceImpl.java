@@ -7,7 +7,9 @@ import com.taboola.backstage.internal.BackstageCampaignItemsEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveCreationOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveUpdateOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import com.taboola.rest.api.internal.FieldsValidator;
 
@@ -43,6 +45,44 @@ public class CampaignItemsServiceImpl implements CampaignItemsService {
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.createMassive(accessToken, accountId, campaignId, massiveOperation);
+    }
+
+    @Override
+    public Results<CampaignItem> createMassive(BackstageAuthentication auth, String accountId, CampaignItemMassiveCreationOperation massiveCreationOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateCreateOperation(massiveCreationOperation);
+        }
+
+        return endpoint.createCrossCampaignsMassive(auth.getToken().getAccessTokenForHeader(), accountId, massiveCreationOperation);
+    }
+
+
+    @Override
+    public Results<CampaignItem> updateMassive(BackstageAuthentication auth, String accountId, CampaignItemMassiveUpdateOperation massiveUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return updateMassive(auth, Boolean.TRUE, accountId, massiveUpdateOperation);
+    }
+
+    @Override
+    public Results<CampaignItem> updateMassive(BackstageAuthentication auth, boolean isAtomic, String accountId, CampaignItemMassiveUpdateOperation massiveUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateUpdateOperation(massiveUpdateOperation);
+        }
+
+        return endpoint.updateCrossCampaignsMassive(auth.getToken().getAccessTokenForHeader(), accountId, isAtomic, massiveUpdateOperation);
+    }
+
+    @Override
+    public Results<CampaignItem> deleteMassive(BackstageAuthentication auth, String accountId, CampaignItemMassiveUpdateOperation massiveUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return deleteMassive(auth, Boolean.TRUE, accountId, massiveUpdateOperation);
+    }
+
+    @Override
+    public Results<CampaignItem> deleteMassive(BackstageAuthentication auth, boolean isAtomic, String accountId, CampaignItemMassiveUpdateOperation massiveUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateUpdateOperation(massiveUpdateOperation);
+        }
+
+        return endpoint.deleteCrossCampaignsMassive(auth.getToken().getAccessTokenForHeader(), accountId, isAtomic, massiveUpdateOperation);
     }
 
     @Override

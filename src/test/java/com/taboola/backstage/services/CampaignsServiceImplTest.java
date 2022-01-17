@@ -4,8 +4,10 @@ import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.SpendingLimitModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,6 +85,18 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
     }
 
     @Test
+    public void testReadAllBase() {
+        CampaignBase campaignBase = generateDummyCampaignBase();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<CampaignBase> results = new Results<>(Collections.singleton(campaignBase));
+        when(endpointMock.getAllCampaignsBase(auth.getToken().getAccessTokenForHeader(),"accountId")).thenReturn(results);
+
+        Results<CampaignBase> actual = testInstance.readBase(auth, "accountId");
+        assertEquals("Invalid campaign results", results, actual);
+        verify(endpointMock, times(1)).getAllCampaignsBase(any(), any());
+    }
+
+    @Test
     public void testReadAll() {
         Campaign campaign = generateDummyCampaign();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
@@ -116,6 +130,18 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
         Campaign actual = testInstance.update(auth, "accountId", campaignOperation.getId(), campaignOperation);
         assertEquals("Invalid campaignOperation", campaignOperation, actual);
         verify(endpointMock, times(1)).updateCampaign(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testUpdateMassive() {
+        CampaignsMassiveOperation campaignsMassiveOperation = generateDummyCampaignsBulkOperation();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<Campaign> expected = new Results<>(Collections.singleton(campaignsMassiveOperation.getUpdate()));
+        when(endpointMock.updateMassiveCampaigns(auth.getToken().getAccessTokenForHeader(),"accountId", campaignsMassiveOperation)).thenReturn(expected);
+
+        Results<Campaign> actual = testInstance.updateMassive(auth, "accountId", campaignsMassiveOperation);
+        assertEquals("Invalid campaign bulk response", expected, actual);
+        verify(endpointMock, times(1)).updateMassiveCampaigns(any(), any(), any());
     }
 
     @Test

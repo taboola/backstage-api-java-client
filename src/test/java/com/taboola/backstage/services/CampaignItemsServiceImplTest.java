@@ -4,7 +4,9 @@ import com.taboola.backstage.internal.BackstageCampaignItemsEndpoint;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveCreationOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveUpdateOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,6 +63,75 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
         Results<CampaignItem> actual = testInstance.createMassive(auth, "accountId", "1", massiveOperation);
         assertEquals("Invalid campaign item result", expectedResult, actual);
         verify(endpointMock, times(1)).createMassive(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testCreateMassive_crossCampaigns() {
+        CampaignItemOperation campaignItemOperation1 = generateDummyCampaignItemOperation();
+        campaignItemOperation1.setUrl("http://www.dummy1.com");
+
+        CampaignItemMassiveCreationOperation massiveOperation = CampaignItemMassiveCreationOperation.create();
+        massiveOperation.setCampaignIds(Collections.singletonList(123L));
+        massiveOperation.setItems(Collections.singletonList(campaignItemOperation1));
+        Results<CampaignItem> expectedResult = new Results<>(Collections.singletonList(campaignItemOperation1));
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.createCrossCampaignsMassive(auth.getToken().getAccessTokenForHeader(),"accountId", massiveOperation)).thenReturn(expectedResult);
+
+        Results<CampaignItem> actual = testInstance.createMassive(auth, "accountId", massiveOperation);
+        assertEquals("Invalid campaign item result", expectedResult, actual);
+        verify(endpointMock, times(1)).createCrossCampaignsMassive(any(), any(), any());
+    }
+
+    @Test
+    public void testCreateMassive_crossCampaigns_notPerformingValidations() {
+        testInstance = new CampaignItemsServiceImpl(false, endpointMock);
+        CampaignItemOperation campaignItemOperation1 = generateDummyCampaignItemOperation();
+        campaignItemOperation1.setUrl(null);
+
+        CampaignItemMassiveCreationOperation massiveOperation = CampaignItemMassiveCreationOperation.create();
+        massiveOperation.setCampaignIds(Collections.singletonList(123L));
+        massiveOperation.setItems(Collections.singletonList(campaignItemOperation1));
+        Results<CampaignItem> expectedResult = new Results<>(Collections.singletonList(campaignItemOperation1));
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.createCrossCampaignsMassive(auth.getToken().getAccessTokenForHeader(),"accountId", massiveOperation)).thenReturn(expectedResult);
+
+        Results<CampaignItem> actual = testInstance.createMassive(auth, "accountId", massiveOperation);
+        assertEquals("Invalid campaign item result", expectedResult, actual);
+        verify(endpointMock, times(1)).createCrossCampaignsMassive(any(), any(), any());
+    }
+
+    @Test
+    public void testUpdateMassive_crossCampaigns() {
+        CampaignItemOperation campaignItemOperation1 = generateDummyCampaignItemOperation();
+        campaignItemOperation1.setTitle("New Title");
+
+        CampaignItemMassiveUpdateOperation massiveOperation = CampaignItemMassiveUpdateOperation.create();
+        massiveOperation.setItemsToUpdate(Collections.singletonList(123L));
+        massiveOperation.setBaselineItem(campaignItemOperation1);
+        Results<CampaignItem> expectedResult = new Results<>(Collections.singletonList(campaignItemOperation1));
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.updateCrossCampaignsMassive(auth.getToken().getAccessTokenForHeader(), "accountId", Boolean.TRUE, massiveOperation)).thenReturn(expectedResult);
+
+        Results<CampaignItem> actual = testInstance.updateMassive(auth, Boolean.TRUE, "accountId", massiveOperation);
+        assertEquals("Invalid campaign item result", expectedResult, actual);
+        verify(endpointMock, times(1)).updateCrossCampaignsMassive(any(), any(), anyBoolean(), any());
+    }
+
+    @Test
+    public void testDeleteMassive_crossCampaigns() {
+        CampaignItemMassiveUpdateOperation massiveOperation = CampaignItemMassiveUpdateOperation.create();
+        massiveOperation.setItemsToUpdate(Collections.singletonList(123L));
+        Results<CampaignItem> expectedResult = new Results<>(Collections.emptyList());
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.deleteCrossCampaignsMassive(auth.getToken().getAccessTokenForHeader(), "accountId", Boolean.TRUE, massiveOperation)).thenReturn(expectedResult);
+
+        Results<CampaignItem> actual = testInstance.deleteMassive(auth, Boolean.TRUE, "accountId", massiveOperation);
+        assertEquals("Invalid campaign item result", expectedResult, actual);
+        verify(endpointMock, times(1)).deleteCrossCampaignsMassive(any(), any(), anyBoolean(), any());
     }
 
     @Test

@@ -6,20 +6,24 @@ import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 
 /**
  * {@link Campaign} entity CRUD operations
  *
  * <p>
  *    The following operations are available via the API:
+ *    <br> {@link CampaignsService#readBase(BackstageAuthentication auth, String accountId) read} 1. Fetch a List of Campaigns base - Fetch a list of Campaigns base associated with a specific partner account.
  *    <br> {@link CampaignsService#read(BackstageAuthentication auth, String accountId) read} 1. Fetch a List of Campaigns - Fetch a list of Campaigns associated with a specific partner account.
  *    <br> {@link CampaignsService#read(BackstageAuthentication auth, String accountId, String campaignId) read} 2. Fetch a Single Campaign - Fetch a single Campaign resource using the Campaign ID.
  *    <br> {@link CampaignsService#create} 3. Create a Campaign - Create a new Campaign under a specific partner account.
  *    <br> {@link CampaignsService#update} 4. Update a Campaign - Update an existing Campaign of a specific partner account.
- *    <br> {@link CampaignsService#patch} 5. Patch Campaign - Update an existing Campaign of a specific partner account.
- *    <br> {@link CampaignsService#delete} 6. Delete Campaign - Delete an existing Campaign of a specific partner account.
+ *    <br> {@link CampaignsService#updateMassive} 5. Update bulk of Campaigns - Update an existing Campaigns of a specific partner account.
+ *    <br> {@link CampaignsService#patch} 6. Patch Campaign - Update an existing Campaign of a specific partner account.
+ *    <br> {@link CampaignsService#delete} 7. Delete Campaign - Delete an existing Campaign of a specific partner account.
  * </p>
  *
  * @author vladi
@@ -54,6 +58,18 @@ public interface CampaignsService {
     Campaign read(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
+     * Read all campaign base entities, will return partial entity fields
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link CampaignBase} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @return Fully populated collection of {@link CampaignBase} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignBase> readBase(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
      * Read all campaign entities
      *
      * @param auth Authentication object {@link BackstageAuthentication}
@@ -78,6 +94,19 @@ public interface CampaignsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Campaign update(BackstageAuthentication auth, String accountId, String campaignId, CampaignOperation campaignOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Update massively multiple {@link Campaign} entities
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignsMassiveOperation Full or partial {@link CampaignsMassiveOperation} defines campaign configuration change
+     * @return Fully populated collection of  {@link Campaign} pojo
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<Campaign> updateMassive(BackstageAuthentication auth, String accountId, CampaignsMassiveOperation campaignsMassiveOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Duplicate campaign entity
