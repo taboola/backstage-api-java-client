@@ -35,7 +35,7 @@ public abstract class BackstageAPIException extends RuntimeException {
             return "";
         }
 
-        return String.format(". Response payload status [%s], message [%s], offending field [%s], message code [%s]", error.getHttpStatus(), error.getMessage(), error.getOffendingField(), error.getMessageCode());
+        return String.format(". Response payload status [%s], message [%s], offending field [%s], message code [%s], message code template [%s], template parameters [%s] ", error.getHttpStatus(), error.getMessage(), error.getOffendingField(), error.getMessageCode(), error.getMessageCodeEnglishTemplate(), error.getTemplateParameters());
     }
 
     public APIError getError() {
