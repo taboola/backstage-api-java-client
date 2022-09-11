@@ -1,6 +1,7 @@
 package com.taboola.backstage.model;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by vladi
@@ -17,7 +18,7 @@ public class APIError {
     private String offendingField;
     private String messageCode;
     private String messageCodeEnglishTemplate;
-    private Collection<String> templateParameters;
+    private List<String> templateParameters;
 
     public APIError() {
         //for jackson
@@ -32,7 +33,7 @@ public class APIError {
         this(message, httpStatus, offendingField, messageCode, null, null);
     }
 
-    public APIError(String message, int httpStatus, String offendingField, String messageCode, String messageCodeEnglishTemplate, Collection<String> templateParameters) {
+    public APIError(String message, int httpStatus, String offendingField, String messageCode, String messageCodeEnglishTemplate, List<String> templateParameters) {
         this.message = message;
         this.httpStatus = httpStatus;
         this.offendingField = offendingField;
@@ -85,7 +86,7 @@ public class APIError {
         return templateParameters;
     }
 
-    public void setTemplateParameters(Collection<String> templateParameters) {
+    public void setTemplateParameters(List<String> templateParameters) {
         this.templateParameters = templateParameters;
     }
 
