@@ -1,5 +1,8 @@
 package com.taboola.backstage.model;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Created by vladi
  * Date: 10/12/2017
@@ -14,6 +17,8 @@ public class APIError {
     private String message;
     private String offendingField;
     private String messageCode;
+    private String messageCodeEnglishTemplate;
+    private List<String> templateParameters;
 
     public APIError() {
         //for jackson
@@ -25,10 +30,16 @@ public class APIError {
     }
 
     public APIError(String message, int httpStatus, String offendingField, String messageCode) {
+        this(message, httpStatus, offendingField, messageCode, null, null);
+    }
+
+    public APIError(String message, int httpStatus, String offendingField, String messageCode, String messageCodeEnglishTemplate, List<String> templateParameters) {
         this.message = message;
         this.httpStatus = httpStatus;
         this.offendingField = offendingField;
         this.messageCode = messageCode;
+        this.messageCodeEnglishTemplate = messageCodeEnglishTemplate;
+        this.templateParameters = templateParameters;
     }
 
     public int getHttpStatus() {
@@ -63,6 +74,22 @@ public class APIError {
         this.messageCode = messageCode;
     }
 
+    public String getMessageCodeEnglishTemplate() {
+        return messageCodeEnglishTemplate;
+    }
+
+    public void setMessageCodeEnglishTemplate(String messageCodeEnglishTemplate) {
+        this.messageCodeEnglishTemplate = messageCodeEnglishTemplate;
+    }
+
+    public Collection<String> getTemplateParameters() {
+        return templateParameters;
+    }
+
+    public void setTemplateParameters(List<String> templateParameters) {
+        this.templateParameters = templateParameters;
+    }
+
     @Override
     public String toString() {
         return "APIError{" +
@@ -70,6 +97,9 @@ public class APIError {
                 ", message='" + message + '\'' +
                 ", offendingField='" + offendingField + '\'' +
                 ", messageCode='" + messageCode + '\'' +
+                ", messageCodeEnglishTemplate='" + messageCodeEnglishTemplate + '\'' +
+                ", templateParameters=" + templateParameters +
                 '}';
     }
+
 }

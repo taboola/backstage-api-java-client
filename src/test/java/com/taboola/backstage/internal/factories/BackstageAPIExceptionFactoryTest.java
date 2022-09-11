@@ -35,6 +35,6 @@ public class BackstageAPIExceptionFactoryTest {
         apiError = testInstance.normalizeError(apiError);
         BackstageAPIException ex = new BackstageAPIRequestException(400, apiError);
         logger.info(ex);
-        assertEquals("Failed to perform API call with response code [400]. Response payload status [400], message [Cpc boost value must be between -99% and 100%], offending field [null], message code [null]", ex.getMessage());
+        assertEquals("Failed to perform API call with response code [400]. Response payload status [400], message [Cpc boost value must be between -99% and 100%], offending field [null], message code [null], message code template [null], template parameters [null] ", ex.getMessage());
     }
 }
