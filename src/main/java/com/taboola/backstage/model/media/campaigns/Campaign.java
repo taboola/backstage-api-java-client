@@ -10,6 +10,8 @@ import com.taboola.rest.api.annotations.Final;
 import com.taboola.rest.api.annotations.ReadOnly;
 import com.taboola.rest.api.annotations.Required;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,6 +23,8 @@ import java.util.Objects;
  */
 public class Campaign {
 
+    private final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    protected final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT);
     @ReadOnly
     protected String id;
     @ReadOnly
@@ -71,14 +75,12 @@ public class Campaign {
     protected MarketingObjective marketingObjective;
     protected ActivitySchedule activitySchedule;
     @Final
-    protected Date startDate;
-    protected Date endDate;
+    protected String startDate;
+    protected String endDate;
     @ReadOnly
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    protected Date startDateInUtc;
+    protected String startDateInUtc;
     @ReadOnly
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    protected Date endDateInUtc;
+    protected String endDateInUtc;
     @ReadOnly
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     protected Date trafficAllocationAbTestEndDate;
@@ -181,11 +183,25 @@ public class Campaign {
     }
 
     public Date getStartDate() {
-        return startDate;
+        if (startDate != null) {
+            try {
+                return dateFormat.parse(startDate);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
     }
 
     public Date getEndDate() {
-        return endDate;
+        if (endDate != null) {
+            try {
+                return dateFormat.parse(endDate);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
     }
 
     public CampaignApprovalState getApprovalState() {
@@ -269,11 +285,25 @@ public class Campaign {
     }
 
     public Date getStartDateInUtc() {
-        return startDateInUtc;
+        if (startDateInUtc != null) {
+            try {
+                return dateFormat.parse(startDateInUtc);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
     }
 
     public Date getEndDateInUtc() {
-        return endDateInUtc;
+        if (endDateInUtc != null) {
+            try {
+                return dateFormat.parse(endDateInUtc);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
     }
 
     public CampaignPricingModel getPricingModel() {

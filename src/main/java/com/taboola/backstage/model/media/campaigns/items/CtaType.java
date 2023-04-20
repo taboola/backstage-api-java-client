@@ -21,5 +21,6 @@ public enum CtaType {
     GET_OFFER,
     TRY_NOW,
     NONE,
-    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE,
+    SEARCH_NOW
 }
