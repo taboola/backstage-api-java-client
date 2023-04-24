@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 public class Campaign {
 
-    private final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final String DATE_TIME_FORMAT = "yyyy-MM-dd";
     protected final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT);
     @ReadOnly
     protected String id;
