@@ -102,6 +102,7 @@ public class CampaignOperation extends Campaign {
 
     public CampaignOperation setStartDate(Date startDate) {
         if (startDate != null) {
+            dateFormat.applyPattern(DATE_TIME_FORMAT);
             this.startDate = dateFormat.format(startDate);
         } else {
             this.startDate = null;
@@ -111,6 +112,7 @@ public class CampaignOperation extends Campaign {
 
     public CampaignOperation setEndDate(Date endDate) {
         if (endDate != null) {
+            dateFormat.applyPattern(DATE_TIME_FORMAT);
             this.endDate = dateFormat.format(endDate);
         } else {
             this.startDate = null;
