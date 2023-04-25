@@ -24,6 +24,8 @@ import java.util.Objects;
 public class Campaign {
 
     private final String DATE_TIME_FORMAT = "yyyy-MM-dd";
+    private final String EXTENDED_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final SimpleDateFormat extendedDateFormat = new SimpleDateFormat(EXTENDED_DATE_TIME_FORMAT);
     protected final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT);
     @ReadOnly
     protected String id;
@@ -287,7 +289,7 @@ public class Campaign {
     public Date getStartDateInUtc() {
         if (startDateInUtc != null) {
             try {
-                return dateFormat.parse(startDateInUtc);
+                return extendedDateFormat.parse(startDateInUtc);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
@@ -298,7 +300,7 @@ public class Campaign {
     public Date getEndDateInUtc() {
         if (endDateInUtc != null) {
             try {
-                return dateFormat.parse(endDateInUtc);
+                return extendedDateFormat.parse(endDateInUtc);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
