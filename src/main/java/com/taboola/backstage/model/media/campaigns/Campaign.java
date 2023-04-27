@@ -1,6 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.taboola.backstage.model.CampaignType;
 import com.taboola.backstage.model.media.campaigns.brandsafety.ExternalBrandSafety;
 import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
@@ -195,6 +196,11 @@ public class Campaign {
         return null;
     }
 
+    @JsonIgnore
+    public String getStartDateStr() {
+        return startDate;
+    }
+
     public Date getEndDate() {
         if (endDate != null) {
             try {
@@ -204,6 +210,11 @@ public class Campaign {
             }
         }
         return null;
+    }
+
+    @JsonIgnore
+    public String getEndDateStr() {
+        return endDate;
     }
 
     public CampaignApprovalState getApprovalState() {
@@ -297,6 +308,10 @@ public class Campaign {
         return null;
     }
 
+    public String getStartDateInUtcStr() {
+        return startDateInUtc;
+    }
+
     public Date getEndDateInUtc() {
         if (endDateInUtc != null) {
             try {
@@ -306,6 +321,10 @@ public class Campaign {
             }
         }
         return null;
+    }
+
+    public String getEndDateInUtcStr() {
+        return endDateInUtc;
     }
 
     public CampaignPricingModel getPricingModel() {
