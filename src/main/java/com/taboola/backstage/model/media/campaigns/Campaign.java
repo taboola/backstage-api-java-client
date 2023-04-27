@@ -1,6 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.taboola.backstage.model.CampaignType;
 import com.taboola.backstage.model.media.campaigns.brandsafety.ExternalBrandSafety;
 import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
@@ -10,6 +11,8 @@ import com.taboola.rest.api.annotations.Final;
 import com.taboola.rest.api.annotations.ReadOnly;
 import com.taboola.rest.api.annotations.Required;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,6 +24,10 @@ import java.util.Objects;
  */
 public class Campaign {
 
+    private static final String EXTENDED_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd";
+    protected final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT);
+    private final SimpleDateFormat extendedDateFormat = new SimpleDateFormat(EXTENDED_DATE_TIME_FORMAT);
     @ReadOnly
     protected String id;
     @ReadOnly
@@ -71,14 +78,12 @@ public class Campaign {
     protected MarketingObjective marketingObjective;
     protected ActivitySchedule activitySchedule;
     @Final
-    protected Date startDate;
-    protected Date endDate;
+    protected String startDate;
+    protected String endDate;
     @ReadOnly
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    protected Date startDateInUtc;
+    protected String startDateInUtc;
     @ReadOnly
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    protected Date endDateInUtc;
+    protected String endDateInUtc;
     @ReadOnly
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     protected Date trafficAllocationAbTestEndDate;
@@ -181,10 +186,34 @@ public class Campaign {
     }
 
     public Date getStartDate() {
+        if (startDate != null) {
+            try {
+                return dateFormat.parse(startDate);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
+
+    @JsonIgnore
+    public String getStartDateStr() {
         return startDate;
     }
 
     public Date getEndDate() {
+        if (endDate != null) {
+            try {
+                return dateFormat.parse(endDate);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
+
+    @JsonIgnore
+    public String getEndDateStr() {
         return endDate;
     }
 
@@ -269,10 +298,32 @@ public class Campaign {
     }
 
     public Date getStartDateInUtc() {
+        if (startDateInUtc != null) {
+            try {
+                return extendedDateFormat.parse(startDateInUtc);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
+
+    public String getStartDateInUtcStr() {
         return startDateInUtc;
     }
 
     public Date getEndDateInUtc() {
+        if (endDateInUtc != null) {
+            try {
+                return extendedDateFormat.parse(endDateInUtc);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
+
+    public String getEndDateInUtcStr() {
         return endDateInUtc;
     }
 
