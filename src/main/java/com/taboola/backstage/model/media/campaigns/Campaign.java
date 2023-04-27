@@ -23,9 +23,10 @@ import java.util.Objects;
  */
 public class Campaign {
 
-    private final String EXTENDED_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    protected final String DATE_TIME_FORMAT = "yyyy-MM-dd";
-    protected final SimpleDateFormat dateFormat = new SimpleDateFormat();
+    private static final String EXTENDED_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd";
+    protected final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT);
+    private final SimpleDateFormat extendedDateFormat = new SimpleDateFormat(EXTENDED_DATE_TIME_FORMAT);
     @ReadOnly
     protected String id;
     @ReadOnly
@@ -186,7 +187,6 @@ public class Campaign {
     public Date getStartDate() {
         if (startDate != null) {
             try {
-                dateFormat.applyPattern(DATE_TIME_FORMAT);
                 return dateFormat.parse(startDate);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
@@ -198,7 +198,6 @@ public class Campaign {
     public Date getEndDate() {
         if (endDate != null) {
             try {
-                dateFormat.applyPattern(DATE_TIME_FORMAT);
                 return dateFormat.parse(endDate);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
@@ -290,8 +289,7 @@ public class Campaign {
     public Date getStartDateInUtc() {
         if (startDateInUtc != null) {
             try {
-                dateFormat.applyPattern(EXTENDED_DATE_TIME_FORMAT);
-                return dateFormat.parse(startDateInUtc);
+                return extendedDateFormat.parse(startDateInUtc);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
@@ -302,8 +300,7 @@ public class Campaign {
     public Date getEndDateInUtc() {
         if (endDateInUtc != null) {
             try {
-                dateFormat.applyPattern(EXTENDED_DATE_TIME_FORMAT);
-                return dateFormat.parse(endDateInUtc);
+                return extendedDateFormat.parse(endDateInUtc);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
