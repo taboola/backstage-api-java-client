@@ -27,5 +27,6 @@ import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 public enum SpendingLimitModel {
     MONTHLY,
     ENTIRE,
+    NONE,
     @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }
