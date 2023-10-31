@@ -6,11 +6,11 @@
  */
 package com.taboola.backstage.model.media.campaigns.performancevideos;
 
-import com.taboola.backstage.annotations.ReadOnly;
-import com.taboola.backstage.annotations.Required;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemPolicyReview;
 import com.taboola.backstage.model.media.campaigns.items.ItemApprovalState;
 import com.taboola.backstage.model.media.campaigns.items.ItemStatus;
+import com.taboola.rest.api.annotations.ReadOnly;
+import com.taboola.rest.api.annotations.Required;
 
 import java.io.File;
 import java.util.Objects;
