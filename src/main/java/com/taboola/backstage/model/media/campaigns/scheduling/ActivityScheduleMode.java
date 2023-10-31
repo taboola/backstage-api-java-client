@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns.scheduling;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 03/10/2018
@@ -8,5 +10,6 @@ package com.taboola.backstage.model.media.campaigns.scheduling;
  */
 public enum ActivityScheduleMode {
     ALWAYS,
-    CUSTOM
+    CUSTOM,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

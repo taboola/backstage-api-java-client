@@ -2,8 +2,8 @@ package com.taboola.backstage.model.media.campaigns.scheduling;
 
 import java.util.Objects;
 
-import com.taboola.backstage.annotations.Required;
 import com.taboola.backstage.model.DayOfWeek;
+import com.taboola.rest.api.annotations.Required;
 
 /**
  * Created by vladi.m

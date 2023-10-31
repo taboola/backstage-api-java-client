@@ -17,7 +17,7 @@ public class TopCampaignContentRow implements DynamicRow {
     private String itemName;
     private String thumbnailUrl;
     private String url;
-    private String campaigns;
+    private Long campaign;
     private String campaignName;
     private String contentProvider;
     private String contentProviderName;
@@ -71,12 +71,12 @@ public class TopCampaignContentRow implements DynamicRow {
         this.url = url;
     }
 
-    public String getCampaigns() {
-        return campaigns;
+    public Long getCampaign() {
+        return campaign;
     }
 
-    public void setCampaigns(String campaigns) {
-        this.campaigns = campaigns;
+    public void setCampaign(Long campaign) {
+        this.campaign = campaign;
     }
 
     public String getCampaignName() {
@@ -237,7 +237,7 @@ public class TopCampaignContentRow implements DynamicRow {
                 Objects.equals(itemName, that.itemName) &&
                 Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
                 Objects.equals(url, that.url) &&
-                Objects.equals(campaigns, that.campaigns) &&
+                Objects.equals(campaign, that.campaign) &&
                 Objects.equals(campaignName, that.campaignName) &&
                 Objects.equals(contentProvider, that.contentProvider) &&
                 Objects.equals(contentProviderName, that.contentProviderName) &&
@@ -260,7 +260,7 @@ public class TopCampaignContentRow implements DynamicRow {
 
     @Override
     public int hashCode() {
-        return Objects.hash(item, itemName, thumbnailUrl, url, campaigns, campaignName, contentProvider,
+        return Objects.hash(item, itemName, thumbnailUrl, url, campaign, campaignName, contentProvider,
                 contentProviderName, impressions, ctr, vctr, clicks, cpc, cpm, vcpm, spent, currency,
                 actions, cpa, cvr, roas, visibleImpressions, dynamicFields);
     }
@@ -272,7 +272,7 @@ public class TopCampaignContentRow implements DynamicRow {
                 ", itemName='" + itemName + '\'' +
                 ", thumbnailUrl='" + thumbnailUrl + '\'' +
                 ", url='" + url + '\'' +
-                ", campaigns='" + campaigns + '\'' +
+                ", campaign='" + campaign + '\'' +
                 ", campaignName='" + campaignName + '\'' +
                 ", contentProvider='" + contentProvider + '\'' +
                 ", contentProviderName='" + contentProviderName + '\'' +

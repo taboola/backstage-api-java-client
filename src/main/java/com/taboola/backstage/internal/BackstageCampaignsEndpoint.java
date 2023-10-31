@@ -3,7 +3,9 @@ package com.taboola.backstage.internal;
 import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 
 import retrofit2.http.*;
 
@@ -20,6 +22,11 @@ public interface BackstageCampaignsEndpoint {
     Campaign createCampaign(@Header("Authorization") String accessToken,
                                   @Path("account_id") String accountId,
                                   @Body Campaign campaign) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/base")
+    @Headers("Content-Type: application/json")
+    Results<CampaignBase> getAllCampaignsBase(@Header("Authorization") String authToken,
+                                              @Path("account_id") String accountId) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns")
     @Headers("Content-Type: application/json")
@@ -38,6 +45,12 @@ public interface BackstageCampaignsEndpoint {
                                   @Path("account_id") String accountId,
                                   @Path("campaign_id") String campaignId,
                                   @Body Campaign campaign) throws BackstageAPIException;
+
+    @PUT(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/bulk")
+    @Headers("Content-Type: application/json")
+    Results<Campaign> updateMassiveCampaigns(@Header("Authorization") String accessToken,
+                                             @Path("account_id") String accountId,
+                                             @Body CampaignsMassiveOperation campaigns) throws BackstageAPIException;
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/duplicate")
     @Headers("Content-Type: application/json")

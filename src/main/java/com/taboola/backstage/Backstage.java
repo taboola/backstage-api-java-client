@@ -1,11 +1,8 @@
 package com.taboola.backstage;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.internal.BackstageAudienceTargetingEndpoint;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
@@ -18,11 +15,8 @@ import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 import com.taboola.backstage.internal.BackstagePerformanceVideoItemsEndpoint;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
-import com.taboola.backstage.internal.CommunicationFactory;
-import com.taboola.backstage.internal.config.UserAgentHeader;
-import com.taboola.backstage.model.RequestHeader;
-import com.taboola.backstage.internal.config.CommunicationConfig;
-import com.taboola.backstage.internal.config.SerializationConfig;
+import com.taboola.backstage.internal.BackstageSharedBudgetEndpoint;
+import com.taboola.backstage.internal.factories.BackstageAPIExceptionFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
 import com.taboola.backstage.services.AccountsService;
@@ -45,8 +39,14 @@ import com.taboola.backstage.services.PerformanceVideoItemsServiceImpl;
 import com.taboola.backstage.services.PublisherReportsService;
 import com.taboola.backstage.services.ReportsService;
 import com.taboola.backstage.services.ReportsServiceImpl;
+import com.taboola.backstage.services.SharedBudgetService;
+import com.taboola.backstage.services.SharedBudgetServiceImpl;
 import com.taboola.backstage.services.UserService;
 import com.taboola.backstage.services.UserServiceImpl;
+import com.taboola.rest.api.RestAPIClient;
+import com.taboola.rest.api.internal.config.SerializationConfig;
+import com.taboola.rest.api.internal.serialization.SerializationMapperCreator;
+import com.taboola.rest.api.model.RequestHeader;
 
 /**
  * Backstage is the gateway object to all services.
@@ -101,6 +101,7 @@ public class Backstage {
     private final CampaignPostalTargetingService campaignPostalCodeTargetingService;
     private final BackstageInternalTools internalTools;
     private final CampaignAudienceTargetingService campaignAudienceTargetingService;
+    private final SharedBudgetService sharedBudgetService;
     private final PerformanceVideoItemsService performanceVideoItemsService;
 
     private Backstage(BackstageInternalTools internalTools, CampaignsService campaignsService,
@@ -109,6 +110,7 @@ public class Backstage {
                       ReportsService reportsService, AccountsService accountsService,
                       CampaignPostalTargetingService campaignPostalCodeTargetingService,
                       CampaignAudienceTargetingService campaignAudienceTargetingService,
+                      SharedBudgetService sharedBudgetService,
                       PerformanceVideoItemsService performanceVideoItemsService) {
 
         this.internalTools = internalTools;
@@ -121,6 +123,7 @@ public class Backstage {
         this.accountsService = accountsService;
         this.campaignPostalCodeTargetingService = campaignPostalCodeTargetingService;
         this.campaignAudienceTargetingService = campaignAudienceTargetingService;
+        this.sharedBudgetService = sharedBudgetService;
         this.performanceVideoItemsService = performanceVideoItemsService;
     }
 
@@ -172,6 +175,10 @@ public class Backstage {
         return campaignAudienceTargetingService;
     }
 
+    public SharedBudgetService sharedBudgetService() {
+        return sharedBudgetService;
+    }
+
     public PerformanceVideoItemsService performanceVideoItemsService() {
         return performanceVideoItemsService;
     }
@@ -180,15 +187,11 @@ public class Backstage {
         return internalTools;
     }
 
-    //TODO support async services
-
     public static class BackstageBuilder {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
-        private static final String VERSION = "1.0.27";
-        private static final Integer DEFAULT_MAX_IDLE_CONNECTIONS = 5;
-        private static final Long DEFAULT_KEEP_ALIVE_DURATION_MILLIS = 300_000L;
+        private static final String VERSION = "1.1.4";
         private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
 
         private String baseUrl;
@@ -272,12 +275,26 @@ public class Backstage {
 
         public Backstage build() {
             organizeState();
-            String finalUserAgent = String.format("Backstage/%s (%s)", VERSION, userAgent);
-            Collection<RequestHeader> headers = getAllHeaders(this.headers, finalUserAgent);
-            CommunicationConfig config = new CommunicationConfig(baseUrl, authBaseUrl, connectionTimeoutMillis, readTimeoutMillis, writeTimeoutMillis, maxIdleConnections,
-                    keepAliveDurationMillis, headers, debug);
-            CommunicationFactory communicator = new CommunicationFactory(config, serializationConfig);
-            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(communicator);
+
+            ObjectMapper objectMapper = SerializationMapperCreator.createObjectMapper(serializationConfig);
+            RestAPIClient.RestAPIClientBuilder restAPIClientBuilder = RestAPIClient.builder()
+                    .setAPIVersion(VERSION)
+                    .setObjectMapper(objectMapper)
+                    .setConnectionTimeoutMillis(connectionTimeoutMillis)
+                    .setMaxIdleConnections(maxIdleConnections)
+                    .setReadTimeoutMillis(readTimeoutMillis)
+                    .setWriteTimeoutMillis(writeTimeoutMillis)
+                    .setSerializationConfig(serializationConfig)
+                    .setHeaders(headers)
+                    .setKeepAliveDurationMillis(keepAliveDurationMillis)
+                    .setExceptionFactory(new BackstageAPIExceptionFactory(objectMapper))
+                    .setUserAgentSuffix(userAgent)
+                    .setDebug(debug);
+
+            RestAPIClient backstageClient = restAPIClientBuilder.setBaseUrl(baseUrl).setUserAgentPrefix("Backstage").build();
+            RestAPIClient authenticationClient = restAPIClientBuilder.setBaseUrl(authBaseUrl).setUserAgentPrefix("Authentication").build();
+
+            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(backstageClient, authenticationClient);
             BackstageInternalToolsImpl internalTools = new BackstageInternalToolsImpl(endpointsFactory);
             return new Backstage(
                     internalTools,
@@ -290,19 +307,9 @@ public class Backstage {
                     new AccountsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class)),
                     new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class)),
+                    new SharedBudgetServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageSharedBudgetEndpoint.class)),
                     new PerformanceVideoItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePerformanceVideoItemsEndpoint.class))
             );
-        }
-
-        private Collection<RequestHeader> getAllHeaders(Collection<RequestHeader> clientHeaders, String finalUserAgent) {
-            List<RequestHeader> headers = new ArrayList<>();
-            if (clientHeaders != null){
-                headers.addAll(clientHeaders.stream().
-                        filter(Objects::nonNull)
-                        .collect(Collectors.toList()));
-            }
-            headers.add(new UserAgentHeader(finalUserAgent));
-            return headers;
         }
 
         private void organizeState() {
@@ -314,40 +321,12 @@ public class Backstage {
                 authBaseUrl = DEFAULT_AUTH_BACKSTAGE_HOST;
             }
 
-            if (connectionTimeoutMillis == null) {
-                connectionTimeoutMillis = 0L;
-            }
-
-            if (readTimeoutMillis == null) {
-                readTimeoutMillis = 0L;
-            }
-
-            if (writeTimeoutMillis == null) {
-                writeTimeoutMillis = 0L;
-            }
-
-            if (maxIdleConnections == null) {
-                maxIdleConnections = DEFAULT_MAX_IDLE_CONNECTIONS;
-            }
-
-            if (keepAliveDurationMillis == null) {
-                keepAliveDurationMillis = DEFAULT_KEEP_ALIVE_DURATION_MILLIS;
-            }
-
             if (userAgent == null) {
                 userAgent = DEFAULT_USER_AGENT;
             }
 
             if (performClientValidations == null) {
                 performClientValidations = true;
-            }
-
-            if (debug == null) {
-                debug = false;
-            }
-
-            if (organizeDynamicColumns == null) {
-                organizeDynamicColumns = true;
             }
 
             if (serializationConfig == null) {

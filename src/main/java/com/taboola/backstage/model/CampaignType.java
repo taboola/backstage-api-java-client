@@ -1,5 +1,7 @@
 package com.taboola.backstage.model;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 2019-04-18
@@ -9,5 +11,8 @@ package com.taboola.backstage.model;
 public enum CampaignType {
     PAID,
     NATIVE,
-    EXCHANGE
+    EXCHANGE,
+    RTB_OPEN_EXCHANGE,
+    PMP_DEAL,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

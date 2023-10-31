@@ -23,10 +23,14 @@ import com.taboola.backstage.model.dynamic.DynamicRow;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
 import com.taboola.backstage.model.media.campaigns.Campaign;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignLookalikeAudienceTargeting;
 import com.taboola.backstage.model.media.campaigns.CampaignMultiTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
+import com.taboola.backstage.model.media.campaigns.SharedBudgetBase;
+import com.taboola.backstage.model.media.campaigns.SharedBudgetOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
@@ -78,6 +82,14 @@ public abstract class BackstageTestBase {
         return factory.manufacturePojo(Campaign.class);
     }
 
+    protected CampaignBase generateDummyCampaignBase() {
+        return factory.manufacturePojo(CampaignBase.class);
+    }
+
+    protected CampaignsMassiveOperation generateDummyCampaignsBulkOperation() {
+        return factory.manufacturePojo(CampaignsMassiveOperation.class);
+    }
+
     protected CampaignOperation generateDummyCampaignOperation() {
         CampaignOperation campaign = factory.manufacturePojo(CampaignOperation.class);
         campaign.setName(null);
@@ -87,6 +99,19 @@ public abstract class BackstageTestBase {
         campaign.setSpendingLimitModel(null);
         campaign.setStartDate(null);
         return campaign;
+    }
+
+    protected SharedBudgetOperation generateDummySharedBudgetOperation() {
+        SharedBudgetOperation sharedBudgetOperation = factory.manufacturePojo(SharedBudgetOperation.class);
+        sharedBudgetOperation.setName(null);
+        sharedBudgetOperation.setSpendingLimit(null);
+        sharedBudgetOperation.setSpendingLimitModel(null);
+        sharedBudgetOperation.setStartDate(null);
+        return sharedBudgetOperation;
+    }
+
+    protected SharedBudgetBase generateDummyShareBudgetBase() {
+        return factory.manufacturePojo(SharedBudgetBase.class);
     }
 
     protected CampaignItem generateDummyCampaignItem() {

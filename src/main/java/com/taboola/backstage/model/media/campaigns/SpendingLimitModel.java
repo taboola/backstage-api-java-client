@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * <p>
  *    Generally speaking, Campaigns have two possible "Spending Models":
@@ -24,5 +26,6 @@ package com.taboola.backstage.model.media.campaigns;
  */
 public enum SpendingLimitModel {
     MONTHLY,
-    ENTIRE
+    ENTIRE,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

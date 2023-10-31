@@ -1,9 +1,9 @@
 package com.taboola.backstage.model.media.campaigns.targeting;
 
-import com.taboola.backstage.annotations.Required;
-
 import java.util.Collection;
 import java.util.Objects;
+
+import com.taboola.rest.api.annotations.Required;
 
 /**
  * Created by vladi

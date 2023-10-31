@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.reports;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi
  * Date: 12/7/2017
@@ -13,5 +15,6 @@ public enum BlockingLevelType {
     AUTO,
     EMULATED,
     NETWORK,
-    ADVERTISER_NETWORK
+    ADVERTISER_NETWORK,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

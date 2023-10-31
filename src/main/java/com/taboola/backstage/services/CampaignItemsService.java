@@ -6,7 +6,9 @@ import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveCreationOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
+import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveUpdateOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 
 /**
@@ -24,6 +26,9 @@ import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
  *    <br> {@link CampaignItemsService#readRSSChildrenItems} - Fetch Children Items of an RSS Item
  *    <br> {@link CampaignItemsService#readSpecificRSSChildItem} - Fetch a specific Child Item of an RSS Item
  *    <br> {@link CampaignItemsService#updateSpecificRSSChildItem} - Update a child of an RSS Item
+ *    <br> {@link CampaignItemsService#createMassive} - Create an Items via providing title,thumbnail,url
+ *    <br> {@link CampaignItemsService#updateMassive} - Update an item - Update an existing Item.
+ *    <br> {@link CampaignItemsService#deleteMassive} - Delete (Stop) an Item - Move an existing Item to a 'STOPPED' status.
  * </p>
  *
  *
@@ -59,7 +64,7 @@ public interface CampaignItemsService {
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
      * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
-     * @param campaignItemOperation {@link CampaignItemOperation} with single populated field {@link CampaignItem#url url}
+     * @param campaignItemOperation {@link CampaignItemOperation} with single populated field {@link CampaignItem#getUrl()}  url}
      * @return {@link CampaignItem} pojo with status {@link com.taboola.backstage.model.media.campaigns.items.ItemStatus#CRAWLING CRAWLING}
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
@@ -81,6 +86,83 @@ public interface CampaignItemsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Results<CampaignItem> createMassive(BackstageAuthentication auth, String accountId, String campaignId, CampaignItemMassiveOperation massiveOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Creates massively multiple {@link CampaignItem} cross different provided {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}.
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaigns belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param massiveCreationOperation {@link CampaignItemMassiveCreationOperation} with a collection of {@link CampaignItemOperation}
+     * @return Fully populated collection of {@link CampaignItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignItem> createMassive(BackstageAuthentication auth, String accountId, CampaignItemMassiveCreationOperation massiveCreationOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Update massively multiple {@link CampaignItem} cross different provided {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}.
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param isAtomic in case of single item update fail should operation proceed or fail immediately with rollback
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaigns belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param massiveUpdateOperation {@link CampaignItemMassiveUpdateOperation} with a collection of {@link CampaignItemOperation}
+     * @return Fully populated collection of {@link CampaignItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignItem> updateMassive(BackstageAuthentication auth, boolean isAtomic, String accountId, CampaignItemMassiveUpdateOperation massiveUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Update massively multiple {@link CampaignItem} cross different provided {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}.
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaigns belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param massiveUpdateOperation {@link CampaignItemMassiveUpdateOperation} with a collection of {@link CampaignItemOperation}
+     * @return Fully populated collection of {@link CampaignItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignItem> updateMassive(BackstageAuthentication auth, String accountId, CampaignItemMassiveUpdateOperation massiveUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Massively move an existing {@link CampaignItem} to a 'STOPPED' status.
+     *
+     * <p>
+     *    Deleting Items is not possible in Taboola's system. Instead, the Item status is set to
+     *    STOPPED, it will stop appearing in the Campaign's items list and will not be served as an ad.
+     * </p>
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param isAtomic in case of single item update fail should operation proceed or fail immediately with rollback
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaigns belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param massiveUpdateOperation {@link CampaignItemMassiveUpdateOperation} with a collection of {@link CampaignItemOperation}
+     * @return Fully populated collection of {@link CampaignItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignItem> deleteMassive(BackstageAuthentication auth, boolean isAtomic, String accountId, CampaignItemMassiveUpdateOperation massiveUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Massively move an existing {@link CampaignItem} to a 'STOPPED' status.
+     *
+     * <p>
+     *    Deleting Items is not possible in Taboola's system. Instead, the Item status is set to
+     *    STOPPED, it will stop appearing in the Campaign's items list and will not be served as an ad.
+     * </p>
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaigns belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param massiveUpdateOperation {@link CampaignItemMassiveUpdateOperation} with a collection of {@link CampaignItemOperation}
+     * @return Fully populated collection of {@link CampaignItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignItem> deleteMassive(BackstageAuthentication auth, String accountId, CampaignItemMassiveUpdateOperation massiveUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Fetch all {@link CampaignItem}  associated with a specific {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}

@@ -2,8 +2,8 @@ package com.taboola.backstage.model.media.campaigns;
 
 import java.util.Collection;
 
-import com.taboola.backstage.annotations.ReadOnly;
 import com.taboola.backstage.model.media.campaigns.targeting.MultiTargetingState;
+import com.taboola.rest.api.annotations.ReadOnly;
 
 /**
  * Created by vladi.m

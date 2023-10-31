@@ -3,13 +3,15 @@ package com.taboola.backstage.services;
 import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
-import com.taboola.backstage.internal.FieldsValidator;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
+import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
+import com.taboola.rest.api.internal.FieldsValidator;
 
 /**
  * Created by vladi
@@ -43,6 +45,12 @@ public class CampaignsServiceImpl implements CampaignsService {
     }
 
     @Override
+    public Results<CampaignBase> readBase(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getAllCampaignsBase(accessToken, accountId);
+    }
+
+    @Override
     public Results<Campaign> read(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getAllCampaigns(accessToken, accountId);
@@ -55,6 +63,15 @@ public class CampaignsServiceImpl implements CampaignsService {
         }
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.updateCampaign(accessToken, accountId, campaignId,  campaignOperation);
+    }
+
+    @Override
+    public Results<Campaign> updateMassive(BackstageAuthentication auth, String accountId, CampaignsMassiveOperation campaignsMassiveOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateUpdateOperation(campaignsMassiveOperation);
+        }
+
+        return endpoint.updateMassiveCampaigns(auth.getToken().getAccessTokenForHeader(), accountId, campaignsMassiveOperation);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.taboola.backstage.model;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi.m
  * Date 2019-07-25
@@ -9,5 +11,6 @@ package com.taboola.backstage.model;
 public enum PatchOperation {
     ADD,
     REMOVE,
-    REPLACE
+    REPLACE,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

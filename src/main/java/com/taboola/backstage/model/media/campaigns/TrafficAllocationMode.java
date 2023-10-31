@@ -1,5 +1,7 @@
 package com.taboola.backstage.model.media.campaigns;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 /**
  * Created by vladi
  * Date: 3/4/2018
@@ -8,5 +10,6 @@ package com.taboola.backstage.model.media.campaigns;
  */
 public enum TrafficAllocationMode {
     OPTIMIZED,
-    EVEN
+    EVEN,
+    @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

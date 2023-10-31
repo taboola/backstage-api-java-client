@@ -101,11 +101,29 @@ public class CampaignOperation extends Campaign {
     }
 
     public CampaignOperation setStartDate(Date startDate) {
+        if (startDate != null) {
+            this.startDate = dateFormat.format(startDate);
+        } else {
+            this.startDate = null;
+        }
+        return this;
+    }
+
+    public CampaignOperation setStartDateStr(String startDate) {
         this.startDate = startDate;
         return this;
     }
 
     public CampaignOperation setEndDate(Date endDate) {
+        if (endDate != null) {
+            this.endDate = dateFormat.format(endDate);
+        } else {
+            this.endDate = null;
+        }
+        return this;
+    }
+
+    public CampaignOperation setEndDateStr(String endDate) {
         this.endDate = endDate;
         return this;
     }
