@@ -44,7 +44,6 @@ public class Campaign {
     protected PublisherBidModifier publisherBidModifier;
     protected BidStrategyModifiers publisherBidStrategyModifiers;
     protected TrafficAllocationMode trafficAllocationMode;
-    @Required
     protected Double spendingLimit;
     @Required
     protected SpendingLimitModel spendingLimitModel;
