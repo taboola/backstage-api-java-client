@@ -249,4 +249,5 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
         verify(endpointMock, times(1)).createCampaign(any(), any(), any());
     }
 
+    //TODO add test for readTargetingWhiteList
 }

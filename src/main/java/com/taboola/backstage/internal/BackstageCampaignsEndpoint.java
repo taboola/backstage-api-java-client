@@ -5,6 +5,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 
 import retrofit2.http.*;
@@ -77,4 +78,10 @@ public interface BackstageCampaignsEndpoint {
     Campaign deleteCampaign(@Header("Authorization") String accessToken,
                             @Path("account_id") String accountId,
                             @Path("campaign_id") String campaignId);
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "{account_id}/campaigns/{campaign_id}/targeting/publisher_targeting/whitelist")
+    @Headers("Content-Type: application/json")
+    CampaignTargetingCollection<String> getCampaignTargetingWhiteList(@Header("Authorization") String accessToken,
+                                                                      @Path("account_id") String accountId,
+                                                                      @Path("campaign_id") String campaignId);
 }

@@ -9,6 +9,7 @@ import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 
 /**
@@ -162,4 +163,16 @@ public interface CampaignsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Campaign delete(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Read whitelist of publisher targeting
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link Campaign} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @return Populated {@link CampaignTargetingCollection} pojo represent collection of whitelisted Publishers
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    CampaignTargetingCollection<String> readTargetingWhiteList(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }
