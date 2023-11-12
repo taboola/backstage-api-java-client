@@ -105,7 +105,7 @@ public class Campaign {
     @ReadOnly
     protected CampaignType type;
     @ReadOnly
-    private CampaignLearningState learningState;
+    protected CampaignLearningState learningState;
     protected CampaignBidStrategy bidStrategy;
     protected ExternalMetadata externalMetadata;
 
