@@ -10,6 +10,10 @@ import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveCrea
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveUpdateOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItemOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkCreateOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkUpdateOperation;
 
 /**
  * {@link CampaignItem} entity CRUD operations
@@ -263,4 +267,130 @@ public interface CampaignItemsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     CampaignItem deleteItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Fetch all {@link CampaignPerformanceVideoItem} associated with a specific {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
+     * @return Fully populated collection of {@link CampaignPerformanceVideoItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignPerformanceVideoItem> readPerformanceVideoItems(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Fetch specific by id {@link CampaignPerformanceVideoItem} associated with a specific {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
+     * @param itemId {@link CampaignPerformanceVideoItem} Id to read. Taken from {@link CampaignPerformanceVideoItem#getId()} object
+     * @return {@link CampaignPerformanceVideoItem} , Taken from {@link CampaignPerformanceVideoItem#getId()} object
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    CampaignPerformanceVideoItem readPerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Create {@link CampaignPerformanceVideoItem} under given {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
+     * @param item {@link CampaignPerformanceVideoItemOperation}
+     * @return Created {@link CampaignPerformanceVideoItem} pojo
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    CampaignPerformanceVideoItem createPerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, CampaignPerformanceVideoItemOperation item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Update {@link CampaignPerformanceVideoItem} under given {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
+     * @param itemId {@link CampaignPerformanceVideoItem} , Taken from {@link CampaignPerformanceVideoItem#getId()} object
+     * @param item {@link CampaignPerformanceVideoItemOperation}
+     * @return Updated {@link CampaignPerformanceVideoItem} pojo
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    CampaignPerformanceVideoItem updatePerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignPerformanceVideoItemOperation item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Update {@link CampaignPerformanceVideoItem} under given {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
+     * @param itemId {@link CampaignPerformanceVideoItem} , Taken from {@link CampaignPerformanceVideoItem#getId()} object
+     * @param item {@link CampaignPerformanceVideoItemOperation}
+     * @param bypassUrlResponseValidation Avoid URL validation
+     * @return Updated {@link CampaignPerformanceVideoItem} pojo
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    CampaignPerformanceVideoItem updatePerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignPerformanceVideoItemOperation item, boolean bypassUrlResponseValidation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Delete {@link CampaignPerformanceVideoItem} under given {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param campaignId Under what {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} the new {@link CampaignItem} is going to be create. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign#getId Campaign#getId()} object
+     * @param itemId {@link CampaignPerformanceVideoItem} , Taken from {@link CampaignPerformanceVideoItem#getId()} object
+     * @return Deleted {@link CampaignPerformanceVideoItem} pojo
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    CampaignPerformanceVideoItem deletePerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Bulk create {@link CampaignPerformanceVideoItem}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param bulkCreateOperation {@link PerformanceVideoBulkCreateOperation}
+     * @return Fully populated collection of {@link CampaignPerformanceVideoItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignPerformanceVideoItem> bulkCreatePerformanceVideoItem(BackstageAuthentication auth, String accountId, PerformanceVideoBulkCreateOperation bulkCreateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Bulk Update {@link CampaignPerformanceVideoItem}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param bulkUpdateOperation {@link PerformanceVideoBulkUpdateOperation}
+     * @return Fully populated collection of {@link CampaignPerformanceVideoItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignPerformanceVideoItem> bulkUpdatePerformanceVideoItem(BackstageAuthentication auth, String accountId, PerformanceVideoBulkUpdateOperation bulkUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Bulk Update {@link CampaignPerformanceVideoItem}
+     *
+     * @param auth Authentication object ({@link BackstageAuthentication})
+     * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
+     * @param bulkUpdateOperation {@link PerformanceVideoBulkUpdateOperation}
+     * @param bypassUrlResponseValidation Avoid URL validation
+     * @return Fully populated collection of {@link CampaignPerformanceVideoItem} pojos
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CampaignPerformanceVideoItem> bulkUpdatePerformanceVideoItem(BackstageAuthentication auth, String accountId, PerformanceVideoBulkUpdateOperation bulkUpdateOperation, boolean bypassUrlResponseValidation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }
