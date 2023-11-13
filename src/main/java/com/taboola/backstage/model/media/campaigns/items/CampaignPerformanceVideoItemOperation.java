@@ -37,11 +37,6 @@ public class CampaignPerformanceVideoItemOperation extends CampaignPerformanceVi
         return this;
     }
 
-    public CampaignPerformanceVideoItemOperation setApprovalState(ItemApprovalState approvalState) {
-        this.approvalState = approvalState;
-        return this;
-    }
-
     public CampaignPerformanceVideoItemOperation setActive(Boolean active) {
         isActive = active;
         return this;

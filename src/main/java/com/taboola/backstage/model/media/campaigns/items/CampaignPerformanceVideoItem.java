@@ -17,6 +17,7 @@ public class CampaignPerformanceVideoItem {
     protected String url;
     protected String title;
     protected String description;
+    @ReadOnly
     protected ItemApprovalState approvalState;
     protected Boolean isActive;
     @ReadOnly
