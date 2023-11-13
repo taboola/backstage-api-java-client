@@ -2,6 +2,7 @@ package com.taboola.backstage.internal;
 
 import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.media.reports.CampaignSummaryReport;
+import com.taboola.backstage.model.media.reports.HistoryReport;
 import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
 import retrofit2.http.*;
 
@@ -32,4 +33,11 @@ public interface BackstageMediaReportsEndpoint {
                                    @Query("start_date") String startDate,
                                    @Query("end_date") String endDate,
                                    @QueryMap Map<String, String> filters) throws BackstageAPIException;
-    }
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/reports/campaign-history/dimensions/by_account")
+    @Headers("Content-Type: application/json")
+    HistoryReport getCampaignHistoryByAccountReport(@Header("Authorization") String authToken,
+                                                    @Path("account_id") String accountId,
+                                                    @Query("start_date") String startDate,
+                                                    @Query("end_date") String endDate) throws BackstageAPIException;
+}

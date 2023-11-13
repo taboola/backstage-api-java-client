@@ -99,4 +99,18 @@ public interface AdvertiserReportsService {
      */
     CampaignSummaryReport getCampaignSummaryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
                                                    CampaignSummaryDimensions dimension, Map<CampaignSummaryOptionalFilters, String> filters) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     *  The "History" report is an advertiser report. This report provide insight into changes done on advertiser and its entities
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId Specific {@link com.taboola.backstage.model.Account Account.getId()}
+     * @param startDate From {@link LocalDate} period
+     * @param endDate To {@link LocalDate} period
+     * @return Report data in form of {@link HistoryReport} object
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    HistoryReport getHistoryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }
