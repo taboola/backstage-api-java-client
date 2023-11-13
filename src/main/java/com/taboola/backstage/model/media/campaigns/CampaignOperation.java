@@ -208,4 +208,14 @@ public class CampaignOperation extends Campaign {
         this.externalMetadata = externalMetadata;
         return this;
     }
+
+    public CampaignOperation setConversionRules(CampaignUnipRuleOptimizations conversionRules) {
+        this.conversionRules = conversionRules;
+        return this;
+    }
+
+    public CampaignOperation setConversionConfiguration(AttributionConfig conversionConfiguration) {
+        this.conversionConfiguration = conversionConfiguration;
+        return this;
+    }
 }
