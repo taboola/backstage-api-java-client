@@ -83,6 +83,11 @@ public class CampaignItemOperation extends CampaignItem {
         return this;
     }
 
+    public CampaignItemOperation setDisclaimer(CampaignItemDisclaimer disclaimer) {
+        this.disclaimer = disclaimer;
+        return this;
+    }
+
     public CampaignItemOperation setExternalMetadata(ExternalMetadata externalMetadata) {
         this.externalMetadata = externalMetadata;
         return this;
