@@ -33,6 +33,13 @@ import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkUpd
  *    <br> {@link CampaignItemsService#createMassive} - Create an Items via providing title,thumbnail,url
  *    <br> {@link CampaignItemsService#updateMassive} - Update an item - Update an existing Item.
  *    <br> {@link CampaignItemsService#deleteMassive} - Delete (Stop) an Item - Move an existing Item to a 'STOPPED' status.
+ *    <br> {@link CampaignItemsService#readPerformanceVideoItems}
+ *    <br> {@link CampaignItemsService#readPerformanceVideoItem}
+ *    <br> {@link CampaignItemsService#createPerformanceVideoItem}
+ *    <br> {@link CampaignItemsService#updatePerformanceVideoItem}
+ *    <br> {@link CampaignItemsService#deletePerformanceVideoItem}
+ *    <br> {@link CampaignItemsService#bulkCreatePerformanceVideoItem}
+ *    <br> {@link CampaignItemsService#bulkUpdatePerformanceVideoItem}
  * </p>
  *
  *
