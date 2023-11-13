@@ -63,11 +63,6 @@ public class CampaignItemOperation extends CampaignItem {
         return this;
     }
 
-    public CampaignItemOperation setLearningState(CampaignItemsLearningState learningState) {
-        this.learningState = learningState;
-        return this;
-    }
-
     public CampaignItemOperation setAppInstall(CampaignItemAppInstall appInstall) {
         this.appInstall = appInstall;
         return this;
