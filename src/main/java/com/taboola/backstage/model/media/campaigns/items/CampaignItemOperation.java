@@ -2,6 +2,7 @@ package com.taboola.backstage.model.media.campaigns.items;
 
 import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
 import com.taboola.backstage.model.media.campaigns.viewability.ViewabilityTag;
+import com.taboola.backstage.model.metadata.ExternalMetadata;
 
 /**
  * Created by vladi
@@ -59,6 +60,31 @@ public class CampaignItemOperation extends CampaignItem {
 
     public CampaignItemOperation setViewabilityTag(ViewabilityTag viewabilityTag) {
         this.viewabilityTag = viewabilityTag;
+        return this;
+    }
+
+    public CampaignItemOperation setAppInstall(CampaignItemAppInstall appInstall) {
+        this.appInstall = appInstall;
+        return this;
+    }
+
+    public CampaignItemOperation setRating(CampaignItemRating rating) {
+        this.rating = rating;
+        return this;
+    }
+
+    public CampaignItemOperation setLogo(CampaignItemLogo logo) {
+        this.logo = logo;
+        return this;
+    }
+
+    public CampaignItemOperation setDisclaimer(CampaignItemDisclaimer disclaimer) {
+        this.disclaimer = disclaimer;
+        return this;
+    }
+
+    public CampaignItemOperation setExternalMetadata(ExternalMetadata externalMetadata) {
+        this.externalMetadata = externalMetadata;
         return this;
     }
 }

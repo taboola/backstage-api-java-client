@@ -33,6 +33,10 @@ import com.taboola.backstage.model.media.campaigns.SharedBudgetBase;
 import com.taboola.backstage.model.media.campaigns.SharedBudgetOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItemOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkCreateOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkUpdateOperation;
 import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
 
 import uk.co.jemos.podam.api.PodamFactory;
@@ -116,6 +120,22 @@ public abstract class BackstageTestBase {
 
     protected CampaignItem generateDummyCampaignItem() {
         return factory.manufacturePojo(CampaignItem.class);
+    }
+
+    protected CampaignPerformanceVideoItem generateDummyCampaignPerformanceVideoItem() {
+        return factory.manufacturePojo(CampaignPerformanceVideoItem.class);
+    }
+
+    protected CampaignPerformanceVideoItemOperation generateDummyCampaignPerformanceVideoItemOperation() {
+        return factory.manufacturePojo(CampaignPerformanceVideoItemOperation.class);
+    }
+
+    protected PerformanceVideoBulkCreateOperation generateDummyPerformanceVideoBulkCreateOperation() {
+        return factory.manufacturePojo(PerformanceVideoBulkCreateOperation.class);
+    }
+
+    protected PerformanceVideoBulkUpdateOperation generateDummyPerformanceVideoBulkUpdateOperation() {
+        return factory.manufacturePojo(PerformanceVideoBulkUpdateOperation.class);
     }
 
     protected CampaignItemOperation generateDummyCampaignItemOperation() {

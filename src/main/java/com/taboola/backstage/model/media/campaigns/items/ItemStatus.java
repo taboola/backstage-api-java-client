@@ -19,5 +19,6 @@ public enum ItemStatus {
     STOPPED,
     PENDING_APPROVAL,
     REJECTED,
+    FAILED_TO_CREATE,
     @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

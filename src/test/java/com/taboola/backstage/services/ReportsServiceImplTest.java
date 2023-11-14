@@ -94,6 +94,27 @@ public class ReportsServiceImplTest extends BackstageTestBase {
     }
 
     @Test
+    public void testHappyFlow_History() throws Exception {
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        LocalDate date = LocalDate.of(2018, 1, 2);
+        String dateStr = DateTimeFormatter.ISO_LOCAL_DATE.format(date);
+        HistoryReport expected = generateDummyReport(HistoryReport.class, HistoryReportRow.class, 3);
+        when(advertiserReportMock.getCampaignHistoryByAccountReport(auth.getToken().getAccessTokenForHeader(), "accountId", dateStr, dateStr)).thenReturn(expected);
+
+        HistoryReport actual = testInstance.getHistoryReport(auth, "accountId", date, date);
+        assertNotNull("Missing report", actual);
+        assertEquals("Invalid timezone", expected.getTimezone(), actual.getTimezone());
+        assertEquals("Invalid last used rawdata update time", expected.getLastUsedRawdataUpdateTime(), actual.getLastUsedRawdataUpdateTime());
+        Collection<HistoryReportRow> actualResults = actual.getResults();
+        assertNotNull("Missing report results", actualResults);
+        assertEquals("Invalid number of rows", 3, actualResults.size());
+        assertEquals("Invalid rows", expected.getResults(), actualResults);
+
+        verify(advertiserReportMock, times(1))
+                .getCampaignHistoryByAccountReport(auth.getToken().getAccessTokenForHeader(), "accountId", dateStr, dateStr);
+    }
+
+    @Test
     public void testHappyFlow_RevenueSummary() throws Exception {
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         LocalDate date = LocalDate.of(2018, 1, 2);

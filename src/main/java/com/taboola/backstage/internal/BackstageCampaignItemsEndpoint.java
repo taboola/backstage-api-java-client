@@ -7,6 +7,9 @@ import com.taboola.backstage.model.media.campaigns.items.CampaignItem;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveCreationOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveUpdateOperation;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItem;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkCreateOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkUpdateOperation;
 
 import retrofit2.http.*;
 
@@ -103,4 +106,53 @@ public interface BackstageCampaignItemsEndpoint {
                                   @Path("account_id") String accountId,
                                   @Path("campaign_id") String campaignId,
                                   @Path("item_id") String itemId) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items")
+    @Headers("Content-Type: application/json")
+    Results<CampaignPerformanceVideoItem> getVideoCreatives(@Header("Authorization") String authToken,
+                                                             @Path("account_id") String accountId,
+                                                             @Path("campaign_id") String campaignId) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items/{creative_id}")
+    @Headers("Content-Type: application/json")
+    CampaignPerformanceVideoItem getVideoCreative(@Header("Authorization") String authToken,
+                                                  @Path("account_id") String accountId,
+                                                  @Path("campaign_id") String campaignId,
+                                                  @Path("creative_id") String creativeId) throws BackstageAPIException;
+
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items")
+    @Headers("Content-Type: application/json")
+    CampaignPerformanceVideoItem insertVideoCreative(@Header("Authorization") String accessToken,
+                                                     @Path("account_id") String accountId,
+                                                     @Path("campaign_id") String campaignId,
+                                                     @Body CampaignPerformanceVideoItem newItem) throws BackstageAPIException;
+
+    @PUT(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items/{creative_id}")
+    @Headers("Content-Type: application/json")
+    CampaignPerformanceVideoItem updateVideoCreative(@Header("Authorization") String accessToken,
+                                                     @Path("account_id") String accountId,
+                                                     @Path("campaign_id") String campaignId,
+                                                     @Path("creative_id") String creativeId,
+                                                     @Query("bypass_url_response_validation") boolean bypassUrlResponseValidation,
+                                                     @Body CampaignPerformanceVideoItem updatePojo) throws BackstageAPIException;
+
+    @DELETE(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/performance-video/items/{creative_id}")
+    @Headers("Content-Type: application/json")
+    CampaignPerformanceVideoItem deleteVideoCreative(@Header("Authorization") String accessToken,
+                                                     @Path("account_id") String accountId,
+                                                     @Path("campaign_id") String campaignId,
+                                                     @Path("creative_id") String creativeId) throws BackstageAPIException;
+
+    @PUT(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/items/bulk/performance-video")
+    @Headers("Content-Type: application/json")
+    Results<CampaignPerformanceVideoItem> bulkCreateVideo(@Header("Authorization") String accessToken,
+                                                          @Path("account_id") String accountId,
+                                                          @Body PerformanceVideoBulkCreateOperation create) throws BackstageAPIException;
+
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/items/bulk/performance-video")
+    @Headers("Content-Type: application/json")
+    Results<CampaignPerformanceVideoItem> bulkUpdateVideo(@Header("Authorization") String accessToken,
+                                                          @Path("account_id") String accountId,
+                                                          @Query("bypass_url_response_validation") boolean bypassUrlResponseValidation,
+                                                          @Body PerformanceVideoBulkUpdateOperation update) throws BackstageAPIException;
 }

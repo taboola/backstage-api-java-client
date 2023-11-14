@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
 import com.taboola.backstage.model.media.campaigns.viewability.ViewabilityTag;
+import com.taboola.backstage.model.metadata.ExternalMetadata;
 import com.taboola.rest.api.annotations.ReadOnly;
 import com.taboola.rest.api.annotations.Required;
 
@@ -37,6 +38,13 @@ public class CampaignItem {
     protected CampaignItemCreativeFocus creativeFocus;
     protected VerificationPixel verificationPixel;
     protected ViewabilityTag viewabilityTag;
+    @ReadOnly
+    protected CampaignItemsLearningState learningState;
+    protected CampaignItemAppInstall appInstall;
+    protected CampaignItemRating rating;
+    protected CampaignItemLogo logo;
+    protected CampaignItemDisclaimer disclaimer;
+    protected ExternalMetadata externalMetadata;
 
     public String getId() {
         return id;
@@ -98,6 +106,30 @@ public class CampaignItem {
         return viewabilityTag;
     }
 
+    public CampaignItemsLearningState getLearningState() {
+        return learningState;
+    }
+
+    public CampaignItemAppInstall getAppInstall() {
+        return appInstall;
+    }
+
+    public CampaignItemRating getRating() {
+        return rating;
+    }
+
+    public CampaignItemLogo getLogo() {
+        return logo;
+    }
+
+    public ExternalMetadata getExternalMetadata() {
+        return externalMetadata;
+    }
+
+    public CampaignItemDisclaimer getDisclaimer() {
+        return disclaimer;
+    }
+
     @Override
     public String toString() {
         return "CampaignItem{" +
@@ -116,6 +148,12 @@ public class CampaignItem {
                 ", creativeFocus=" + creativeFocus +
                 ", verificationPixel=" + verificationPixel +
                 ", viewabilityTag=" + viewabilityTag +
+                ", learningState=" + learningState +
+                ", appInstall=" + appInstall +
+                ", rating=" + rating +
+                ", logo=" + logo +
+                ", disclaimer=" + disclaimer +
+                ", externalMetadata=" + externalMetadata +
                 '}';
     }
 
@@ -124,26 +162,11 @@ public class CampaignItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CampaignItem that = (CampaignItem) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(campaignId, that.campaignId) &&
-                type == that.type &&
-                Objects.equals(url, that.url) &&
-                Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
-                Objects.equals(title, that.title) &&
-                approvalState == that.approvalState &&
-                Objects.equals(isActive, that.isActive) &&
-                status == that.status &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(policyReview, that.policyReview) &&
-                Objects.equals(cta, that.cta) &&
-                Objects.equals(creativeFocus, that.creativeFocus) &&
-                Objects.equals(verificationPixel, that.verificationPixel) &&
-                Objects.equals(viewabilityTag, that.viewabilityTag);
+        return Objects.equals(id, that.id) && Objects.equals(campaignId, that.campaignId) && type == that.type && Objects.equals(url, that.url) && Objects.equals(thumbnailUrl, that.thumbnailUrl) && Objects.equals(title, that.title) && approvalState == that.approvalState && Objects.equals(isActive, that.isActive) && status == that.status && Objects.equals(description, that.description) && Objects.equals(policyReview, that.policyReview) && Objects.equals(cta, that.cta) && Objects.equals(creativeFocus, that.creativeFocus) && Objects.equals(verificationPixel, that.verificationPixel) && Objects.equals(viewabilityTag, that.viewabilityTag) && learningState == that.learningState && Objects.equals(appInstall, that.appInstall) && Objects.equals(rating, that.rating) && Objects.equals(logo, that.logo) && Objects.equals(disclaimer, that.disclaimer) && Objects.equals(externalMetadata, that.externalMetadata);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive,
-                status, description, policyReview, cta, creativeFocus, verificationPixel, viewabilityTag);
+        return Objects.hash(id, campaignId, type, url, thumbnailUrl, title, approvalState, isActive, status, description, policyReview, cta, creativeFocus, verificationPixel, viewabilityTag, learningState, appInstall, rating, logo, disclaimer, externalMetadata);
     }
 }
