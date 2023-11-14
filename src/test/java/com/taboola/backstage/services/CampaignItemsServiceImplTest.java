@@ -11,6 +11,10 @@ import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
 import org.junit.Before;
 import org.junit.Test;
 import com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItemOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkCreateOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkUpdateOperation;
 
 import java.util.Collections;
 
@@ -250,5 +254,88 @@ public class CampaignItemsServiceImplTest extends BackstageTestBase {
         CampaignItem actual = testInstance.deleteItem(auth, "accountId", "1", "2");
         assertEquals("Invalid campaign item", campaignItem, actual);
         verify(endpointMock, times(1)).deleteItem(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testReadPerformanceVideoItems() {
+        CampaignPerformanceVideoItem campaignItem = generateDummyCampaignPerformanceVideoItem();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<CampaignPerformanceVideoItem> expectedResult = new Results<>(Collections.singletonList(campaignItem));
+        when(endpointMock.getVideoCreatives(auth.getToken().getAccessTokenForHeader(),"accountId", "1")).thenReturn(expectedResult);
+
+        Results<CampaignPerformanceVideoItem> actual = testInstance.readPerformanceVideoItems(auth, "accountId", "1");
+        assertEquals("Invalid return value", expectedResult, actual);
+        assertEquals("Invalid results", expectedResult.getResults(), actual.getResults());
+        verify(endpointMock, times(1)).getVideoCreatives(any(), any(), any());
+    }
+
+    @Test
+    public void testReadPerformanceVideoItem() {
+        CampaignPerformanceVideoItem campaignItem = generateDummyCampaignPerformanceVideoItem();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.getVideoCreative(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2")).thenReturn(campaignItem);
+
+        CampaignPerformanceVideoItem actual = testInstance.readPerformanceVideoItem(auth, "accountId", "1", "2");
+        assertEquals("Invalid return value", campaignItem, actual);
+        verify(endpointMock, times(1)).getVideoCreative(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testCreatePerformanceVideoItem() {
+        CampaignPerformanceVideoItemOperation campaignItem = generateDummyCampaignPerformanceVideoItemOperation();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.insertVideoCreative(auth.getToken().getAccessTokenForHeader(),"accountId", "1", campaignItem)).thenReturn(campaignItem);
+
+        CampaignPerformanceVideoItem actual = testInstance.createPerformanceVideoItem(auth, "accountId", "1", campaignItem);
+        assertEquals("Invalid return value", campaignItem, actual);
+        verify(endpointMock, times(1)).insertVideoCreative(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testUpdatePerformanceVideoItem() {
+        CampaignPerformanceVideoItemOperation campaignItem = generateDummyCampaignPerformanceVideoItemOperation();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.updateVideoCreative(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2", false, campaignItem)).thenReturn(campaignItem);
+
+        CampaignPerformanceVideoItem actual = testInstance.updatePerformanceVideoItem(auth, "accountId", "1", "2", campaignItem);
+        assertEquals("Invalid return value", campaignItem, actual);
+        verify(endpointMock, times(1)).updateVideoCreative(any(), any(), any(), any(), anyBoolean(), any());
+    }
+
+    @Test
+    public void testDeletePerformanceVideoItem() {
+        CampaignPerformanceVideoItemOperation campaignItem = generateDummyCampaignPerformanceVideoItemOperation();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        when(endpointMock.deleteVideoCreative(auth.getToken().getAccessTokenForHeader(),"accountId", "1", "2")).thenReturn(campaignItem);
+
+        CampaignPerformanceVideoItem actual = testInstance.deletePerformanceVideoItem(auth, "accountId", "1", "2");
+        assertEquals("Invalid return value", campaignItem, actual);
+        verify(endpointMock, times(1)).deleteVideoCreative(any(), any(), any(), any());
+    }
+
+    @Test
+    public void testBulkCreatePerformanceVideoItem() {
+        CampaignPerformanceVideoItemOperation campaignItem = generateDummyCampaignPerformanceVideoItemOperation();
+        PerformanceVideoBulkCreateOperation bulkCreateOperation = generateDummyPerformanceVideoBulkCreateOperation();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<CampaignPerformanceVideoItem> expectedResult = new Results<>(Collections.singletonList(campaignItem));
+        when(endpointMock.bulkCreateVideo(auth.getToken().getAccessTokenForHeader(),"accountId", bulkCreateOperation)).thenReturn(expectedResult);
+
+        Results<CampaignPerformanceVideoItem> actual = testInstance.bulkCreatePerformanceVideoItem(auth, "accountId", bulkCreateOperation);
+        assertEquals("Invalid return value", campaignItem, actual.getResults().iterator().next());
+        verify(endpointMock, times(1)).bulkCreateVideo(any(), any(), any());
+    }
+
+    @Test
+    public void testBulkUpdatePerformanceVideoItem() {
+        CampaignPerformanceVideoItemOperation campaignItem = generateDummyCampaignPerformanceVideoItemOperation();
+        PerformanceVideoBulkUpdateOperation bulkUpdateOperation = generateDummyPerformanceVideoBulkUpdateOperation();
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<CampaignPerformanceVideoItem> expectedResult = new Results<>(Collections.singletonList(campaignItem));
+        when(endpointMock.bulkUpdateVideo(auth.getToken().getAccessTokenForHeader(),"accountId", false, bulkUpdateOperation)).thenReturn(expectedResult);
+
+        Results<CampaignPerformanceVideoItem> actual = testInstance.bulkUpdatePerformanceVideoItem(auth, "accountId", bulkUpdateOperation);
+        assertEquals("Invalid return value", campaignItem, actual.getResults().iterator().next());
+        verify(endpointMock, times(1)).bulkUpdateVideo(any(), any(), anyBoolean(), any());
     }
 }
