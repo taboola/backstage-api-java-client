@@ -181,7 +181,7 @@ public class Backstage {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
-        private static final String VERSION = "1.1.5";
+        private static final String VERSION = "1.1.6";
         private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
 
         private String baseUrl;
