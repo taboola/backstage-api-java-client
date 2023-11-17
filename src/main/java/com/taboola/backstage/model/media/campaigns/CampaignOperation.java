@@ -144,6 +144,11 @@ public class CampaignOperation extends Campaign {
         return this;
     }
 
+    public CampaignOperation setBidStrategy(CampaignBidStrategy bidStrategy) {
+        this.bidStrategy = bidStrategy;
+        return this;
+    }
+
     public CampaignOperation setMarketingObjective(MarketingObjective marketingObjective) {
         this.marketingObjective = marketingObjective;
         return this;
