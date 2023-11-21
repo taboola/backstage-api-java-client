@@ -28,6 +28,5 @@ public enum SpendingLimitModel {
     NONE,
     MONTHLY,
     ENTIRE,
-    NONE,
     @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }
