@@ -1,7 +1,5 @@
 package com.taboola.backstage;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.internal.BackstageAudienceTargetingEndpoint;
@@ -12,7 +10,6 @@ import com.taboola.backstage.internal.BackstageDictionaryEndpoint;
 import com.taboola.backstage.internal.BackstageInternalTools;
 import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
-import com.taboola.backstage.internal.BackstagePerformanceVideoItemsEndpoint;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
 import com.taboola.backstage.internal.BackstageSharedBudgetEndpoint;
@@ -34,8 +31,6 @@ import com.taboola.backstage.services.CampaignsService;
 import com.taboola.backstage.services.CampaignsServiceImpl;
 import com.taboola.backstage.services.DictionaryService;
 import com.taboola.backstage.services.DictionaryServiceImpl;
-import com.taboola.backstage.services.PerformanceVideoItemsService;
-import com.taboola.backstage.services.PerformanceVideoItemsServiceImpl;
 import com.taboola.backstage.services.PublisherReportsService;
 import com.taboola.backstage.services.ReportsService;
 import com.taboola.backstage.services.ReportsServiceImpl;
@@ -47,6 +42,8 @@ import com.taboola.rest.api.RestAPIClient;
 import com.taboola.rest.api.internal.config.SerializationConfig;
 import com.taboola.rest.api.internal.serialization.SerializationMapperCreator;
 import com.taboola.rest.api.model.RequestHeader;
+
+import java.util.Collection;
 
 /**
  * Backstage is the gateway object to all services.
@@ -102,7 +99,6 @@ public class Backstage {
     private final BackstageInternalTools internalTools;
     private final CampaignAudienceTargetingService campaignAudienceTargetingService;
     private final SharedBudgetService sharedBudgetService;
-    private final PerformanceVideoItemsService performanceVideoItemsService;
 
     private Backstage(BackstageInternalTools internalTools, CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
@@ -110,8 +106,7 @@ public class Backstage {
                       ReportsService reportsService, AccountsService accountsService,
                       CampaignPostalTargetingService campaignPostalCodeTargetingService,
                       CampaignAudienceTargetingService campaignAudienceTargetingService,
-                      SharedBudgetService sharedBudgetService,
-                      PerformanceVideoItemsService performanceVideoItemsService) {
+                      SharedBudgetService sharedBudgetService) {
 
         this.internalTools = internalTools;
         this.campaignsService = campaignsService;
@@ -124,7 +119,6 @@ public class Backstage {
         this.campaignPostalCodeTargetingService = campaignPostalCodeTargetingService;
         this.campaignAudienceTargetingService = campaignAudienceTargetingService;
         this.sharedBudgetService = sharedBudgetService;
-        this.performanceVideoItemsService = performanceVideoItemsService;
     }
 
     public static BackstageBuilder builder() {
@@ -177,10 +171,6 @@ public class Backstage {
 
     public SharedBudgetService sharedBudgetService() {
         return sharedBudgetService;
-    }
-
-    public PerformanceVideoItemsService performanceVideoItemsService() {
-        return performanceVideoItemsService;
     }
 
     public BackstageInternalTools internalTools() {
@@ -307,8 +297,7 @@ public class Backstage {
                     new AccountsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class)),
                     new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class)),
-                    new SharedBudgetServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageSharedBudgetEndpoint.class)),
-                    new PerformanceVideoItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePerformanceVideoItemsEndpoint.class))
+                    new SharedBudgetServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageSharedBudgetEndpoint.class))
             );
         }
 
