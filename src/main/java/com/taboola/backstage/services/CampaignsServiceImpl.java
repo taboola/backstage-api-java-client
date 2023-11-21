@@ -10,6 +10,7 @@ import com.taboola.backstage.internal.BackstageCampaignsEndpoint;
 import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 import com.taboola.rest.api.internal.FieldsValidator;
 
@@ -97,5 +98,11 @@ public class CampaignsServiceImpl implements CampaignsService {
     public Campaign delete(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.deleteCampaign(accessToken, accountId, campaignId);
+    }
+
+    @Override
+    public CampaignTargetingCollection<String> readTargetingWhiteList(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getCampaignTargetingWhiteList(accessToken, accountId, campaignId);
     }
 }

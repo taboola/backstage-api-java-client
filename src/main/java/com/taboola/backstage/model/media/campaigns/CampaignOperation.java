@@ -5,6 +5,7 @@ import java.util.Date;
 import com.taboola.backstage.model.media.campaigns.brandsafety.ExternalBrandSafety;
 import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
 import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
+import com.taboola.backstage.model.metadata.ExternalMetadata;
 
 /**
  * Created by vladi
@@ -143,6 +144,11 @@ public class CampaignOperation extends Campaign {
         return this;
     }
 
+    public CampaignOperation setBidStrategy(CampaignBidStrategy bidStrategy) {
+        this.bidStrategy = bidStrategy;
+        return this;
+    }
+
     public CampaignOperation setMarketingObjective(MarketingObjective marketingObjective) {
         this.marketingObjective = marketingObjective;
         return this;
@@ -200,6 +206,21 @@ public class CampaignOperation extends Campaign {
 
     public CampaignOperation setBrowserTargeting(CampaignTargeting<String> browserTargeting) {
         this.browserTargeting = browserTargeting;
+        return this;
+    }
+
+    public CampaignOperation setExternalMetadata(ExternalMetadata externalMetadata) {
+        this.externalMetadata = externalMetadata;
+        return this;
+    }
+
+    public CampaignOperation setConversionRules(CampaignUnipRuleOptimizations conversionRules) {
+        this.conversionRules = conversionRules;
+        return this;
+    }
+
+    public CampaignOperation setConversionConfiguration(AttributionConfig conversionConfiguration) {
+        this.conversionConfiguration = conversionConfiguration;
         return this;
     }
 }

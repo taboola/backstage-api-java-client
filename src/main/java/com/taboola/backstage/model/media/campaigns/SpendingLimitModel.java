@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
  * By Taboola
  */
 public enum SpendingLimitModel {
+    NONE,
     MONTHLY,
     ENTIRE,
     NONE,

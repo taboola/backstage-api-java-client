@@ -7,11 +7,13 @@ import com.taboola.backstage.model.media.campaigns.Campaign;
 import com.taboola.backstage.model.media.campaigns.CampaignBase;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.SpendingLimitModel;
 import org.junit.Before;
 import org.junit.Test;
 import com.taboola.backstage.BackstageTestBase;
+import com.taboola.backstage.model.media.campaigns.targeting.Type;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;
@@ -249,4 +251,14 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
         verify(endpointMock, times(1)).createCampaign(any(), any(), any());
     }
 
+    @Test
+    public void testReadTargetingWhiteList() {
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        CampaignTargetingCollection<String> results = new CampaignTargetingCollection<>(Collections.singleton("987654123"), Type.INCLUDE);
+        when(endpointMock.getCampaignTargetingWhiteList(auth.getToken().getAccessTokenForHeader(),"accountId", "123")).thenReturn(results);
+
+        CampaignTargetingCollection<String> actual = testInstance.readTargetingWhiteList(auth, "accountId", "123");
+        assertEquals("Invalid campaign results", results, actual);
+        verify(endpointMock, times(1)).getCampaignTargetingWhiteList(any(), any(), any());
+    }
 }

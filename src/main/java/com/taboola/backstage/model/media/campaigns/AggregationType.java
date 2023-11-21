@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 
 /**
  * Created by vladi.m
- * Date 16/04/2020
- * Time 13
+ * Date 13/11/2023
+ * Time 9:46
  * Copyright Taboola
  */
-public enum CampaignBidStrategy {
-    SMART,
-    FIXED,
-    TARGET_CPA,
-    MAX_CONVERSIONS,
+public enum AggregationType {
+    AGGREGATED,
+    LAST_VALUE,
     @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }

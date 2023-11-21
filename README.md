@@ -1,7 +1,8 @@
 ## Backstage API Java Client
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.taboola/backstage-api-java-client/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.taboola/backstage-api-java-client)
-[![Build Status](https://app.travis-ci.com/taboola/backstage-api-java-client.svg?branch=master)](https://app.travis-ci.com/taboola/backstage-api-java-client)
+
+[//]: # ([![Build Status]&#40;https://app.travis-ci.com/taboola/backstage-api-java-client.svg?branch=master&#41;]&#40;https://app.travis-ci.com/taboola/backstage-api-java-client&#41;)
 
 ### Table of Contents
 1. [Getting Started](#1-getting-started)
@@ -65,21 +66,21 @@ try {
     //create campaign
     Campaign campaign = backstage.campaignsService().create(clientAuth, accountId, createCampaignOperation);
 
-    //configure item
-    CampaignItemOperation campaignItemOperation = CampaignItemOperation.create()
-                                                    .setUrl("http://www.example.com");
+    //configure first item
+    CampaignItemOperation firstCampaignItem = CampaignItemOperation.create()
+            .setUrl("http://www.example.com")
+            .setTitle("Example Title")
+            .setThumbnailUrl("http://www.example.com/thumbnail.png");
 
-    //create item
-    CampaignItem item = backstage.campaignItemsService().createItem(clientAuth, accountId,
-                                                                    campaign.getId(), campaignItemOperation);
+    //configure collection item creation request
+    CampaignItemMassiveOperation campaignItemMassiveOperation = CampaignItemMassiveOperation.create()
+            .addItem(firstCampaignItem);
 
-    //polling until Taboola crawler done crawling our supplied URL
-    while(ItemStatus.CRAWLING.equals(item.getStatus())) {
-        Thread.sleep(10_000L);
-        item = backstage.campaignItemsService().readItem(clientAuth, accountId, campaign.getId(), item.getId());
-    }
+    //create items
+    Results<CampaignItem> item = backstage.campaignItemsService().createMassive(clientAuth, accountId,
+            campaign.getId(), campaignItemMassiveOperation);
 
-    //item done crawling, do something...
+    //items and campaigns were created, do something...
 
 } catch (BackstageAPIUnauthorizedException e) {
     logger.warn("Token is expired or bad credentials", e);
@@ -93,7 +94,7 @@ try {
 ### 3. Authentication
 
 Supports:
-1. CLIENT_CREDENTIALS
+1. CLIENT_CREDENTIALS - Recommended for server to server integrations
 2. PASSWORD_AUTHENTICATION
 
 Authentication service can be found under Backstage instance, see below:

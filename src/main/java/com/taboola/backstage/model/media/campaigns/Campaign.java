@@ -7,6 +7,7 @@ import com.taboola.backstage.model.media.campaigns.brandsafety.ExternalBrandSafe
 import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
 import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
 import com.taboola.backstage.model.media.campaigns.viewability.ViewabilityTag;
+import com.taboola.backstage.model.metadata.ExternalMetadata;
 import com.taboola.rest.api.annotations.Final;
 import com.taboola.rest.api.annotations.ReadOnly;
 import com.taboola.rest.api.annotations.Required;
@@ -103,6 +104,12 @@ public class Campaign {
     protected CampaignsGroup campaignGroups;
     @ReadOnly
     protected CampaignType type;
+    @ReadOnly
+    protected CampaignLearningState learningState;
+    protected CampaignBidStrategy bidStrategy;
+    protected ExternalMetadata externalMetadata;
+    protected CampaignUnipRuleOptimizations conversionRules;
+    protected AttributionConfig conversionConfiguration;
 
     public String getId() {
         return id;
@@ -358,35 +365,33 @@ public class Campaign {
         return type;
     }
 
+    public ExternalMetadata getExternalMetadata() {
+        return externalMetadata;
+    }
+
+    public CampaignLearningState getLearningState() {
+        return learningState;
+    }
+
+    public CampaignUnipRuleOptimizations getConversionRules() {
+        return conversionRules;
+    }
+
+    public AttributionConfig getConversionConfiguration() {
+        return conversionConfiguration;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Campaign campaign = (Campaign) o;
-        return Objects.equals(id, campaign.id) && Objects.equals(advertiserId, campaign.advertiserId) && Objects.equals(name, campaign.name) && Objects.equals(brandingText, campaign.brandingText) && Objects.equals(trackingCode, campaign.trackingCode) &&
-                Objects.equals(cpc, campaign.cpc) && Objects.equals(dailyCap, campaign.dailyCap) && dailyAdDeliveryModel == campaign.dailyAdDeliveryModel && Objects.equals(publisherBidModifier, campaign.publisherBidModifier) &&
-                Objects.equals(publisherBidStrategyModifiers, campaign.publisherBidStrategyModifiers) && trafficAllocationMode == campaign.trafficAllocationMode && Objects.equals(spendingLimit, campaign.spendingLimit) &&
-                spendingLimitModel == campaign.spendingLimitModel && Objects.equals(countryTargeting, campaign.countryTargeting) && Objects.equals(dmaCountryTargeting, campaign.dmaCountryTargeting) &&
-                Objects.equals(regionCountryTargeting, campaign.regionCountryTargeting) && Objects.equals(subCountryTargeting, campaign.subCountryTargeting) && Objects.equals(cityTargeting, campaign.cityTargeting) &&
-                Objects.equals(platformTargeting, campaign.platformTargeting) && Objects.equals(publisherTargeting, campaign.publisherTargeting) && Objects.equals(autoPublisherTargeting, campaign.autoPublisherTargeting) &&
-                Objects.equals(osTargeting, campaign.osTargeting) && Objects.equals(connectionTypeTargeting, campaign.connectionTypeTargeting) && Objects.equals(contextualTargeting, campaign.contextualTargeting) &&
-                Objects.equals(browserTargeting, campaign.browserTargeting) && Objects.equals(postalCodeTargeting, campaign.postalCodeTargeting) && Objects.equals(audienceSegmentsMultiTargeting, campaign.audienceSegmentsMultiTargeting) &&
-                Objects.equals(customAudienceTargeting, campaign.customAudienceTargeting) && Objects.equals(markingLabelMultiTargeting, campaign.markingLabelMultiTargeting) && Objects.equals(contextualSegmentsTargeting, campaign.contextualSegmentsTargeting) &&
-                Objects.equals(lookalikeAudienceTargeting, campaign.lookalikeAudienceTargeting) && Objects.equals(comments, campaign.comments) && bidType == campaign.bidType && marketingObjective == campaign.marketingObjective &&
-                Objects.equals(activitySchedule, campaign.activitySchedule) && Objects.equals(startDate, campaign.startDate) && Objects.equals(endDate, campaign.endDate) && Objects.equals(startDateInUtc, campaign.startDateInUtc) &&
-                Objects.equals(endDateInUtc, campaign.endDateInUtc) && Objects.equals(trafficAllocationAbTestEndDate, campaign.trafficAllocationAbTestEndDate) && approvalState == campaign.approvalState && Objects.equals(isActive, campaign.isActive) &&
-                Objects.equals(spent, campaign.spent) && status == campaign.status && Objects.equals(cpaGoal, campaign.cpaGoal) && pricingModel == campaign.pricingModel && Objects.equals(externalBrandSafety, campaign.externalBrandSafety) &&
-                Objects.equals(verificationPixel, campaign.verificationPixel) && Objects.equals(viewabilityTag, campaign.viewabilityTag) && Objects.equals(policyReview, campaign.policyReview) && Objects.equals(campaignGroups, campaign.campaignGroups) && type == campaign.type;
+        return Objects.equals(dateFormat, campaign.dateFormat) && Objects.equals(extendedDateFormat, campaign.extendedDateFormat) && Objects.equals(id, campaign.id) && Objects.equals(advertiserId, campaign.advertiserId) && Objects.equals(name, campaign.name) && Objects.equals(brandingText, campaign.brandingText) && Objects.equals(trackingCode, campaign.trackingCode) && Objects.equals(cpc, campaign.cpc) && Objects.equals(dailyCap, campaign.dailyCap) && dailyAdDeliveryModel == campaign.dailyAdDeliveryModel && Objects.equals(publisherBidModifier, campaign.publisherBidModifier) && Objects.equals(publisherBidStrategyModifiers, campaign.publisherBidStrategyModifiers) && trafficAllocationMode == campaign.trafficAllocationMode && Objects.equals(spendingLimit, campaign.spendingLimit) && spendingLimitModel == campaign.spendingLimitModel && Objects.equals(countryTargeting, campaign.countryTargeting) && Objects.equals(dmaCountryTargeting, campaign.dmaCountryTargeting) && Objects.equals(regionCountryTargeting, campaign.regionCountryTargeting) && Objects.equals(subCountryTargeting, campaign.subCountryTargeting) && Objects.equals(cityTargeting, campaign.cityTargeting) && Objects.equals(platformTargeting, campaign.platformTargeting) && Objects.equals(publisherTargeting, campaign.publisherTargeting) && Objects.equals(autoPublisherTargeting, campaign.autoPublisherTargeting) && Objects.equals(osTargeting, campaign.osTargeting) && Objects.equals(connectionTypeTargeting, campaign.connectionTypeTargeting) && Objects.equals(contextualTargeting, campaign.contextualTargeting) && Objects.equals(browserTargeting, campaign.browserTargeting) && Objects.equals(postalCodeTargeting, campaign.postalCodeTargeting) && Objects.equals(audienceSegmentsMultiTargeting, campaign.audienceSegmentsMultiTargeting) && Objects.equals(customAudienceTargeting, campaign.customAudienceTargeting) && Objects.equals(markingLabelMultiTargeting, campaign.markingLabelMultiTargeting) && Objects.equals(contextualSegmentsTargeting, campaign.contextualSegmentsTargeting) && Objects.equals(lookalikeAudienceTargeting, campaign.lookalikeAudienceTargeting) && Objects.equals(comments, campaign.comments) && bidType == campaign.bidType && marketingObjective == campaign.marketingObjective && Objects.equals(activitySchedule, campaign.activitySchedule) && Objects.equals(startDate, campaign.startDate) && Objects.equals(endDate, campaign.endDate) && Objects.equals(startDateInUtc, campaign.startDateInUtc) && Objects.equals(endDateInUtc, campaign.endDateInUtc) && Objects.equals(trafficAllocationAbTestEndDate, campaign.trafficAllocationAbTestEndDate) && approvalState == campaign.approvalState && Objects.equals(isActive, campaign.isActive) && Objects.equals(spent, campaign.spent) && status == campaign.status && Objects.equals(cpaGoal, campaign.cpaGoal) && pricingModel == campaign.pricingModel && Objects.equals(externalBrandSafety, campaign.externalBrandSafety) && Objects.equals(verificationPixel, campaign.verificationPixel) && Objects.equals(viewabilityTag, campaign.viewabilityTag) && Objects.equals(policyReview, campaign.policyReview) && Objects.equals(campaignGroups, campaign.campaignGroups) && type == campaign.type && learningState == campaign.learningState && bidStrategy == campaign.bidStrategy && Objects.equals(externalMetadata, campaign.externalMetadata) && Objects.equals(conversionRules, campaign.conversionRules) && Objects.equals(conversionConfiguration, campaign.conversionConfiguration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier, publisherBidStrategyModifiers,
-                trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, dmaCountryTargeting, regionCountryTargeting, subCountryTargeting, cityTargeting,
-                platformTargeting, publisherTargeting, autoPublisherTargeting, osTargeting, connectionTypeTargeting, contextualTargeting, browserTargeting, postalCodeTargeting,
-                audienceSegmentsMultiTargeting, customAudienceTargeting, markingLabelMultiTargeting, contextualSegmentsTargeting, lookalikeAudienceTargeting, comments, bidType,
-                marketingObjective, activitySchedule, startDate, endDate, startDateInUtc, endDateInUtc, trafficAllocationAbTestEndDate, approvalState, isActive, spent, status,
-                cpaGoal, pricingModel, externalBrandSafety, verificationPixel, viewabilityTag, policyReview, campaignGroups, type);
+        return Objects.hash(dateFormat, extendedDateFormat, id, advertiserId, name, brandingText, trackingCode, cpc, dailyCap, dailyAdDeliveryModel, publisherBidModifier, publisherBidStrategyModifiers, trafficAllocationMode, spendingLimit, spendingLimitModel, countryTargeting, dmaCountryTargeting, regionCountryTargeting, subCountryTargeting, cityTargeting, platformTargeting, publisherTargeting, autoPublisherTargeting, osTargeting, connectionTypeTargeting, contextualTargeting, browserTargeting, postalCodeTargeting, audienceSegmentsMultiTargeting, customAudienceTargeting, markingLabelMultiTargeting, contextualSegmentsTargeting, lookalikeAudienceTargeting, comments, bidType, marketingObjective, activitySchedule, startDate, endDate, startDateInUtc, endDateInUtc, trafficAllocationAbTestEndDate, approvalState, isActive, spent, status, cpaGoal, pricingModel, externalBrandSafety, verificationPixel, viewabilityTag, policyReview, campaignGroups, type, learningState, bidStrategy, externalMetadata, conversionRules, conversionConfiguration);
     }
 
     @Override
@@ -444,6 +449,10 @@ public class Campaign {
                 ", policyReview=" + policyReview +
                 ", campaignGroups=" + campaignGroups +
                 ", type=" + type +
+                ", externalMetadata=" + externalMetadata +
+                ", learningState=" + learningState +
+                ", conversionRules=" + conversionRules +
+                ", conversionConfiguration=" + conversionConfiguration +
                 '}';
     }
 

@@ -11,6 +11,10 @@ import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveCrea
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemMassiveUpdateOperation;
 import com.taboola.backstage.model.media.campaigns.items.CampaignItemOperation;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItem;
+import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItemOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkCreateOperation;
+import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkUpdateOperation;
 import com.taboola.rest.api.internal.FieldsValidator;
 
 /**
@@ -131,5 +135,83 @@ public class CampaignItemsServiceImpl implements CampaignItemsService {
     public CampaignItem deleteItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.deleteItem(accessToken, accountId, campaignId, itemId);
+    }
+
+    @Override
+    public Results<CampaignPerformanceVideoItem> readPerformanceVideoItems(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getVideoCreatives(accessToken, accountId, campaignId);
+    }
+
+    @Override
+    public CampaignPerformanceVideoItem readPerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getVideoCreative(accessToken, accountId, campaignId, itemId);
+    }
+
+    @Override
+    public CampaignPerformanceVideoItem createPerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, CampaignPerformanceVideoItemOperation item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateCreateOperation(item);
+        }
+
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.insertVideoCreative(accessToken, accountId, campaignId, item);
+    }
+
+    @Override
+    public CampaignPerformanceVideoItem updatePerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignPerformanceVideoItemOperation item) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateUpdateOperation(item);
+        }
+
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.updateVideoCreative(accessToken, accountId, campaignId, itemId, false, item);
+    }
+
+    @Override
+    public CampaignPerformanceVideoItem updatePerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId, CampaignPerformanceVideoItemOperation item, boolean bypassUrlResponseValidation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateUpdateOperation(item);
+        }
+
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.updateVideoCreative(accessToken, accountId, campaignId, itemId, bypassUrlResponseValidation, item);
+    }
+
+    @Override
+    public CampaignPerformanceVideoItem deletePerformanceVideoItem(BackstageAuthentication auth, String accountId, String campaignId, String itemId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.deleteVideoCreative(accessToken, accountId, campaignId, itemId);
+    }
+
+    @Override
+    public Results<CampaignPerformanceVideoItem> bulkCreatePerformanceVideoItem(BackstageAuthentication auth, String accountId, PerformanceVideoBulkCreateOperation bulkCreateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateCreateOperation(bulkCreateOperation);
+        }
+
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.bulkCreateVideo(accessToken, accountId, bulkCreateOperation);
+    }
+
+    @Override
+    public Results<CampaignPerformanceVideoItem> bulkUpdatePerformanceVideoItem(BackstageAuthentication auth, String accountId, PerformanceVideoBulkUpdateOperation bulkUpdateOperation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateCreateOperation(bulkUpdateOperation);
+        }
+
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.bulkUpdateVideo(accessToken, accountId, false, bulkUpdateOperation);
+    }
+
+    @Override
+    public Results<CampaignPerformanceVideoItem> bulkUpdatePerformanceVideoItem(BackstageAuthentication auth, String accountId, PerformanceVideoBulkUpdateOperation bulkUpdateOperation, boolean bypassUrlResponseValidation) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performValidations) {
+            FieldsValidator.validateCreateOperation(bulkUpdateOperation);
+        }
+
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.bulkUpdateVideo(accessToken, accountId, bypassUrlResponseValidation, bulkUpdateOperation);
     }
 }
