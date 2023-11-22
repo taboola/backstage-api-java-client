@@ -4,6 +4,7 @@ import com.taboola.backstage.exceptions.BackstageAPIException;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
+import com.taboola.backstage.model.dictionary.ContextualSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
@@ -16,6 +17,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by vladi
@@ -47,6 +49,12 @@ public interface BackstageAccountEndpoint {
     Results<AudienceSegment> getSpecificCountryAudienceSegments(@Header("Authorization") String accessToken,
                                                                 @Path("account_id") String accountId,
                                                                 @Path("country_code") String countryCode) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/dictionary/contextual_segments")
+    @Headers("Content-Type: application/json")
+    Results<ContextualSegment> getContextualSegments(@Header("Authorization") String accessToken,
+                                                     @Path("account_id") String accountId,
+                                                     @Query("countryCodes") String countryCodes) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/dictionary/lookalike_audiences")
     @Headers("Content-Type: application/json")

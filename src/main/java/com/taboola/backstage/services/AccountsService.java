@@ -7,9 +7,12 @@ import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
+import com.taboola.backstage.model.dictionary.ContextualSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
+
+import java.util.List;
 
 /**
  * Accounts service allow fetching data regarding different account types (Partners, Publishers)
@@ -53,6 +56,10 @@ public interface AccountsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Results<AudienceSegment> readAudienceSegments(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    Results<ContextualSegment> readContextualSegments(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException;
+
+    Results<ContextualSegment> readContextualSegments(BackstageAuthentication auth, String accountId, String... countryCodes) throws BackstageAPIUnauthorizedException;
 
     /**
      * Read all lookalike audiences
