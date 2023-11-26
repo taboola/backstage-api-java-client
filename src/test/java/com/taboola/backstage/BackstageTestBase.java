@@ -1,10 +1,5 @@
 package com.taboola.backstage;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.stream.Collectors;
-
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.ColumnsMetadata;
 import com.taboola.backstage.model.Report;
@@ -28,6 +23,7 @@ import com.taboola.backstage.model.media.campaigns.CampaignLookalikeAudienceTarg
 import com.taboola.backstage.model.media.campaigns.CampaignMultiTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignOperation;
 import com.taboola.backstage.model.media.campaigns.CampaignPatch;
+import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 import com.taboola.backstage.model.media.campaigns.SharedBudgetBase;
 import com.taboola.backstage.model.media.campaigns.SharedBudgetOperation;
@@ -37,10 +33,13 @@ import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVide
 import com.taboola.backstage.model.media.campaigns.items.CampaignPerformanceVideoItemOperation;
 import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkCreateOperation;
 import com.taboola.backstage.model.media.campaigns.items.PerformanceVideoBulkUpdateOperation;
-import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
-
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 /**
  * Created by vladi
@@ -201,8 +200,8 @@ public abstract class BackstageTestBase {
 
     }
 
-    protected PostalTargeting generateDummyPostalCodeTargeting() {
-        return factory.manufacturePojo(PostalTargeting.class);
+    protected CampaignTargetingCollection<String> generateDummyPostalCodeTargeting() {
+        return factory.manufacturePojo(CampaignTargetingCollection.class, Long.class.getGenericSuperclass());
     }
 
     protected CampaignMultiTargetingCollection<Long> generateDummyAudienceMultiTargeting() {

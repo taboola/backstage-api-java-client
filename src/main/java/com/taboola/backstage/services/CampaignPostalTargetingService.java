@@ -4,7 +4,7 @@ import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
+import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 
 /**
  *
@@ -25,12 +25,12 @@ public interface CampaignPostalTargetingService {
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
      * @param campaignId {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} Id. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign#getId()} object
-     * @return Fully populated {@link PostalTargeting}
+     * @return Fully populated {@link CampaignTargetingCollection}
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    PostalTargeting read(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignTargetingCollection<String> read(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * <p>
@@ -42,11 +42,11 @@ public interface CampaignPostalTargetingService {
      * @param auth Authentication object ({@link BackstageAuthentication})
      * @param accountId To which {@link com.taboola.backstage.model.Account Account} the campaign belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId() Account.getAccountId()}
      * @param campaignId {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign} Id. Taken from {@link com.taboola.backstage.model.media.campaigns.Campaign Campaign#getId()} object
-     * @param targeting Full or partial {@link PostalTargeting} pojo to update.
-     * @return Fully populated {@link PostalTargeting}
+     * @param targeting Full or partial {@link CampaignTargetingCollection} pojo to update.
+     * @return Fully populated {@link CampaignTargetingCollection}
      * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
      * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
-    PostalTargeting update(BackstageAuthentication auth, String accountId, String campaignId, PostalTargeting targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+    CampaignTargetingCollection<String> update(BackstageAuthentication auth, String accountId, String campaignId, CampaignTargetingCollection<String> targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 }

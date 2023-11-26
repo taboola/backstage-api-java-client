@@ -1,8 +1,13 @@
 package com.taboola.backstage.internal;
 
 import com.taboola.backstage.exceptions.BackstageAPIException;
-import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
-import retrofit2.http.*;
+import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by vladi
@@ -14,14 +19,14 @@ public interface BackstagePostalTargetingEndpoint {
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/targeting/postal_code")
     @Headers("Content-Type: application/json")
-    PostalTargeting update(@Header("Authorization") String accessToken,
-                           @Path("account_id") String accountId,
-                           @Path("campaign_id") String campaignId,
-                           @Body PostalTargeting campaign) throws BackstageAPIException;
+    CampaignTargetingCollection<String> update(@Header("Authorization") String accessToken,
+                                               @Path("account_id") String accountId,
+                                               @Path("campaign_id") String campaignId,
+                                               @Body CampaignTargetingCollection<String> targeting) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/targeting/postal_code")
     @Headers("Content-Type: application/json")
-    PostalTargeting read(@Header("Authorization") String authToken,
+    CampaignTargetingCollection<String> read(@Header("Authorization") String authToken,
                          @Path("account_id") String accountId,
                          @Path("campaign_id") String campaignId) throws BackstageAPIException;
 }

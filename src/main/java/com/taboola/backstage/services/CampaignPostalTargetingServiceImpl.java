@@ -5,7 +5,7 @@ import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.media.campaigns.targeting.PostalTargeting;
+import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 import com.taboola.rest.api.internal.FieldsValidator;
 
 /**
@@ -25,13 +25,13 @@ public class CampaignPostalTargetingServiceImpl implements CampaignPostalTargeti
     }
 
     @Override
-    public PostalTargeting read(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignTargetingCollection<String> read(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessTokenForHeader = auth.getToken().getAccessTokenForHeader();
         return endpoint.read(accessTokenForHeader, accountId, campaignId);
     }
 
     @Override
-    public PostalTargeting update(BackstageAuthentication auth, String accountId, String campaignId, PostalTargeting targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignTargetingCollection<String> update(BackstageAuthentication auth, String accountId, String campaignId, CampaignTargetingCollection<String> targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         if(performClientValidations) {
             FieldsValidator.validateCreateOperation(targeting);
         }
