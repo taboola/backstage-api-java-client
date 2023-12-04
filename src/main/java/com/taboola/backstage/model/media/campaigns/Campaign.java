@@ -373,6 +373,10 @@ public class Campaign {
         return learningState;
     }
 
+    public CampaignBidStrategy getBidStrategy() {
+        return bidStrategy;
+    }
+
     public CampaignUnipRuleOptimizations getConversionRules() {
         return conversionRules;
     }
