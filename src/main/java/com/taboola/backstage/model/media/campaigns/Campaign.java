@@ -38,7 +38,6 @@ public class Campaign {
     @Required
     protected String brandingText;
     protected String trackingCode;
-    @Required
     protected Double cpc;
     protected Double dailyCap;
     protected DailyAdDeliveryModel dailyAdDeliveryModel;
