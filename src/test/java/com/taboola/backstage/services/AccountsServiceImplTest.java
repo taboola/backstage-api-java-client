@@ -4,6 +4,7 @@ import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
+import com.taboola.backstage.model.dictionary.ContextualSegment;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,6 +69,31 @@ public class AccountsServiceImplTest extends BackstageTestBase {
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         Results<AudienceSegment> actual = testInstance.readAudienceSegments(auth, "123", "US");
         assertEquals("Invalid accounts", expected, actual);
+    }
+
+    @Test
+    public void testReadContextualSegments(){
+        String accountId = "123";
+        ContextualSegment contextualSegment = generateDummyContextualSegment();
+        Results<ContextualSegment> expected = new Results<>(Collections.singleton(contextualSegment));
+        when(accountsEndpointMock.getContextualSegments(any(), eq(accountId), isNull(String.class))).thenReturn(expected);
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<ContextualSegment> actual = testInstance.readContextualSegments(auth, accountId);
+        assertEquals("Invalid contextual segments", expected, actual);
+    }
+
+    @Test
+    public void testReadContextualSegmentsByCountry(){
+        String countryCode = "US";
+        String accountId = "123";
+        ContextualSegment contextualSegment = generateDummyContextualSegment();
+        Results<ContextualSegment> expected = new Results<>(Collections.singleton(contextualSegment));
+        when(accountsEndpointMock.getContextualSegments(any(), eq(accountId), eq(countryCode))).thenReturn(expected);
+
+        BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
+        Results<ContextualSegment> actual = testInstance.readContextualSegments(auth, accountId, countryCode);
+        assertEquals("Invalid contextual segments", expected, actual);
     }
 
     @Test

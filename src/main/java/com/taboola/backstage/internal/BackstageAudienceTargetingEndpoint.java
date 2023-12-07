@@ -32,6 +32,19 @@ public interface BackstageAudienceTargetingEndpoint {
                                                                 @Path("account_id") String accountId,
                                                                 @Path("campaign_id") String campaignId) throws BackstageAPIException;
 
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/targeting/contextual_segments")
+    @Headers("Content-Type: application/json")
+    CampaignMultiTargetingCollection<Long> updateContextualSegments(@Header("Authorization") String accessToken,
+                                                                    @Path("account_id") String accountId,
+                                                                    @Path("campaign_id") String campaignId,
+                                                                    @Body CampaignMultiTargetingCollection<Long> targeting) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/targeting/contextual_segments")
+    @Headers("Content-Type: application/json")
+    CampaignMultiTargetingCollection<Long> readContextualSegments(@Header("Authorization") String authToken,
+                                                                  @Path("account_id") String accountId,
+                                                                  @Path("campaign_id") String campaignId) throws BackstageAPIException;
+
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/targeting/custom_audience")
     @Headers("Content-Type: application/json")
     CampaignMultiTargetingCollection<Long> updateCustomAudience(@Header("Authorization") String accessToken,
