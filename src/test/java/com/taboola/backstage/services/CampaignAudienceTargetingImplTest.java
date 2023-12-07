@@ -1,6 +1,8 @@
 package com.taboola.backstage.services;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -59,24 +61,28 @@ public class CampaignAudienceTargetingImplTest extends BackstageTestBase {
 
     @Test
     public void testReadContextualSegments() {
+        String accountId = "123";
+        String campaignId = "1";
         CampaignMultiTargetingCollection<Long> contextualMultiTargeting = generateDummyContextualMultiTargeting();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.readContextualSegments(auth.getToken().getAccessTokenForHeader(),"accountId", "1")).thenReturn(contextualMultiTargeting);
+        when(endpointMock.readContextualSegments(any(),eq(accountId), eq(campaignId))).thenReturn(contextualMultiTargeting);
 
-        CampaignMultiTargetingCollection<Long> actual = testInstance.readContextualSegments(auth, "accountId", "1");
+        CampaignMultiTargetingCollection<Long> actual = testInstance.readContextualSegments(auth, accountId, campaignId);
         assertEquals("Invalid contextual segment targeting", contextualMultiTargeting, actual);
-        verify(endpointMock, times(1)).readContextualSegments(auth.getToken().getAccessTokenForHeader(), "accountId", "1");
+        verify(endpointMock, times(1)).readContextualSegments(any(), eq(accountId), eq(campaignId));
     }
 
     @Test
     public void testUpdateContextualSegments() {
+        String accountId = "123";
+        String campaignId = "1";
         CampaignMultiTargetingCollection<Long> contextualMultiTargeting = generateDummyContextualMultiTargeting();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.updateContextualSegments(auth.getToken().getAccessTokenForHeader(),"accountId", "2", contextualMultiTargeting)).thenReturn(contextualMultiTargeting);
+        when(endpointMock.updateContextualSegments(any(),eq(accountId), eq(campaignId), eq(contextualMultiTargeting))).thenReturn(contextualMultiTargeting);
 
-        CampaignMultiTargetingCollection<Long> actual = testInstance.updateContextualSegments(auth, "accountId", "2", contextualMultiTargeting);
+        CampaignMultiTargetingCollection<Long> actual = testInstance.updateContextualSegments(auth, accountId, campaignId, contextualMultiTargeting);
         assertEquals("Invalid contextual segment targeting", contextualMultiTargeting, actual);
-        verify(endpointMock, times(1)).updateContextualSegments(auth.getToken().getAccessTokenForHeader(), "accountId", "2", contextualMultiTargeting);
+        verify(endpointMock, times(1)).updateContextualSegments(any(), eq(accountId), eq(campaignId), eq(contextualMultiTargeting));
     }
 
     @Test
