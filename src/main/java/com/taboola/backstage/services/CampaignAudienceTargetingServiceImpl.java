@@ -40,6 +40,19 @@ public class CampaignAudienceTargetingServiceImpl implements CampaignAudienceTar
     }
 
     @Override
+    public CampaignMultiTargetingCollection<Long> readContextualSegments(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return endpoint.readContextualSegments(auth.getToken().getAccessTokenForHeader(), accountId, campaignId);
+    }
+
+    @Override
+    public CampaignMultiTargetingCollection<Long> updateContextualSegments(BackstageAuthentication auth, String accountId, String campaignId, CampaignMultiTargetingCollection<Long> targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performClientValidations) {
+            FieldsValidator.validateCreateOperation(targeting);
+        }
+        return endpoint.updateContextualSegments(auth.getToken().getAccessTokenForHeader(), accountId, campaignId, targeting);
+    }
+
+    @Override
     public CampaignMultiTargetingCollection<Long> readCustomAudience(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         return endpoint.readCustomAudience(auth.getToken().getAccessTokenForHeader(), accountId, campaignId);
     }
