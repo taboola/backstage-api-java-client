@@ -8,6 +8,7 @@ import com.taboola.backstage.model.auth.ClientCredentialAuthenticationDetails;
 import com.taboola.backstage.model.auth.PasswordAuthenticationDetails;
 import com.taboola.backstage.model.auth.Token;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
+import com.taboola.backstage.model.dictionary.ContextualSegment;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.dictionary.Resource;
 import com.taboola.backstage.model.dynamic.DynamicField;
@@ -208,6 +209,10 @@ public abstract class BackstageTestBase {
         return factory.manufacturePojo(CampaignMultiTargetingCollection.class, Long.class.getGenericSuperclass());
     }
 
+    protected CampaignMultiTargetingCollection<Long> generateDummyContextualMultiTargeting() {
+        return factory.manufacturePojo(CampaignMultiTargetingCollection.class, Long.class.getGenericSuperclass());
+    }
+
     protected CampaignMultiTargetingCollection<Long> generateDummyCustomAudience() {
         return factory.manufacturePojo(CampaignMultiTargetingCollection.class, Long.class.getGenericSuperclass());
     }
@@ -260,6 +265,10 @@ public abstract class BackstageTestBase {
 
     protected AudienceSegment generateDummyAudienceSegment() {
         return factory.manufacturePojo(AudienceSegment.class);
+    }
+
+    protected ContextualSegment generateDummyContextualSegment() {
+        return factory.manufacturePojo(ContextualSegment.class);
     }
 
     protected LookalikeAudience generateDummyLookalikeAudiences() {

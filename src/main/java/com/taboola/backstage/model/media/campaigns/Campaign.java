@@ -38,7 +38,6 @@ public class Campaign {
     @Required
     protected String brandingText;
     protected String trackingCode;
-    @Required
     protected Double cpc;
     protected Double dailyCap;
     protected DailyAdDeliveryModel dailyAdDeliveryModel;
@@ -371,6 +370,10 @@ public class Campaign {
 
     public CampaignLearningState getLearningState() {
         return learningState;
+    }
+
+    public CampaignBidStrategy getBidStrategy() {
+        return bidStrategy;
     }
 
     public CampaignUnipRuleOptimizations getConversionRules() {

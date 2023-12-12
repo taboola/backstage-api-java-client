@@ -12,8 +12,6 @@ import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
 
-import java.util.List;
-
 /**
  * Accounts service allow fetching data regarding different account types (Partners, Publishers)
  *
@@ -57,9 +55,30 @@ public interface AccountsService {
      */
     Results<AudienceSegment> readAudienceSegments(BackstageAuthentication auth, String accountId, String countryCode) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
-    Results<ContextualSegment> readContextualSegments(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException;
+    /**
+     * Read contextual segments.
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link AudienceSegment} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @return Fully populated collection of {@link ContextualSegment}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<ContextualSegment> readContextualSegments(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
-    Results<ContextualSegment> readContextualSegments(BackstageAuthentication auth, String accountId, String... countryCodes) throws BackstageAPIUnauthorizedException;
+    /**
+     * Read contextual segments given a list of country codes (codes supplied by {@link DictionaryService#getCountries})
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link AudienceSegment} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @param countryCodes taken from {@link DictionaryService#getCountries}
+     * @return Fully populated collection of {@link ContextualSegment}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<ContextualSegment> readContextualSegments(BackstageAuthentication auth, String accountId, String... countryCodes) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      * Read all lookalike audiences

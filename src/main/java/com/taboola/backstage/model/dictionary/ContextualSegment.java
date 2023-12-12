@@ -1,9 +1,3 @@
-/*
- * Copyright 2023 InPowered. All Rights Reserved.
- *
- * This software is the proprietary information of InPowered.
- * Use is subject to license terms.
- */
 package com.taboola.backstage.model.dictionary;
 
 /**
@@ -119,4 +113,23 @@ public class ContextualSegment {
     public void setTaxonomyLabel(String taxonomyLabel) {
         this.taxonomyLabel = taxonomyLabel;
     }
+
+    @Override
+    public String toString() {
+        return "ContextualSegment{" +
+            "id=" + id +
+            ", provider='" + provider + '\'' +
+            ", label='" + label + '\'' +
+            ", description='" + description + '\'' +
+            ", taxonomy='" + taxonomy + '\'' +
+            ", allowedCountries='" + allowedCountries + '\'' +
+            ", size=" + size +
+            ", articles=" + articles +
+            ", isTargetable=" + isTargetable +
+            ", isBundle=" + isBundle +
+            ", isActive=" + isActive +
+            ", taxonomyLabel='" + taxonomyLabel + '\'' +
+            '}';
+    }
+
 }
