@@ -42,10 +42,6 @@ public interface CampaignAudienceTargetingService {
      */
     CampaignMultiTargetingCollection<Long> updateAudienceSegments(BackstageAuthentication auth, String accountId, String campaignId, CampaignMultiTargetingCollection<Long> targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
-    CampaignMultiTargetingCollection<Long> readContextualSegments(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
-
-    CampaignMultiTargetingCollection<Long> updateContextualSegments(BackstageAuthentication auth, String accountId, String campaignId, CampaignMultiTargetingCollection<Long> targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
-
     /**
      * Read contextual segments targeting.
      *
