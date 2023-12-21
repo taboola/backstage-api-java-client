@@ -11,6 +11,7 @@ import com.taboola.backstage.model.ReportFilter;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.media.reports.CampaignRealtimeDimensions;
 import com.taboola.backstage.model.media.reports.CampaignRealtimeOptionalFilters;
+import com.taboola.backstage.model.media.reports.CampaignRealtimeSummaryReport;
 import com.taboola.backstage.model.media.reports.CampaignSummaryDimensions;
 import com.taboola.backstage.model.media.reports.CampaignSummaryOptionalFilters;
 import com.taboola.backstage.model.media.reports.CampaignSummaryReport;
@@ -104,10 +105,10 @@ public class ReportsServiceImpl implements ReportsService {
     }
 
     @Override
-    public CampaignSummaryReport getCampaignRealtimeReport(BackstageAuthentication auth, String accountId, LocalDateTime startDate, LocalDateTime endDate, CampaignRealtimeDimensions dimension, Map<CampaignRealtimeOptionalFilters, String> filters) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+    public CampaignRealtimeSummaryReport getCampaignRealtimeReport(BackstageAuthentication auth, String accountId, LocalDateTime startDate, LocalDateTime endDate, CampaignRealtimeDimensions dimension, Map<CampaignRealtimeOptionalFilters, String> filters) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         //TODO verify correct use of filters based on spec and save HTTP call
-        CampaignSummaryReport report = realtimeReportsEndpoint.getCampaignSummary(accessToken, accountId, dimension.getName(),
+        CampaignRealtimeSummaryReport report = realtimeReportsEndpoint.getCampaignSummary(accessToken, accountId, dimension.getName(),
             DATE_TIME_FORMATTER.format(startDate),
             DATE_TIME_FORMATTER.format(endDate),
             formatOptionalFilters(filters));
