@@ -1,5 +1,9 @@
 package com.taboola.backstage.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Collection;
 
 /**
@@ -8,11 +12,18 @@ import java.util.Collection;
  * Time: 11:22 PM
  * By Taboola
  */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Report<T> {
 
+    @JsonProperty("last-used-rawdata-update-time")
     private String lastUsedRawdataUpdateTime;
+    @JsonProperty("last-used-rawdata-update-time-gmt-millisec")
+    private Long lastUsedRawdataUpdateTimeGmtMillisec;
     private String timezone;
     private Collection<T> results;
+    @JsonProperty("recordCount")
+    private Integer recordCount;
     private ColumnsMetadata metadata;
 
     public String getLastUsedRawdataUpdateTime() {
@@ -21,6 +32,14 @@ public class Report<T> {
 
     public void setLastUsedRawdataUpdateTime(String lastUsedRawdataUpdateTime) {
         this.lastUsedRawdataUpdateTime = lastUsedRawdataUpdateTime;
+    }
+
+    public Long getLastUsedRawdataUpdateTimeGmtMillisec() {
+        return lastUsedRawdataUpdateTimeGmtMillisec;
+    }
+
+    public void setLastUsedRawdataUpdateTimeGmtMillisec(Long lastUsedRawdataUpdateTimeGmtMillisec) {
+        this.lastUsedRawdataUpdateTimeGmtMillisec = lastUsedRawdataUpdateTimeGmtMillisec;
     }
 
     public String getTimezone() {
@@ -39,6 +58,14 @@ public class Report<T> {
         this.results = results;
     }
 
+    public Integer getRecordCount() {
+        return recordCount;
+    }
+
+    public void setRecordCount(Integer recordCount) {
+        this.recordCount = recordCount;
+    }
+
     public ColumnsMetadata getMetadata() {
         return metadata;
     }
@@ -50,10 +77,12 @@ public class Report<T> {
     @Override
     public String toString() {
         return "Report{" +
-                "lastUsedRawdataUpdateTime='" + lastUsedRawdataUpdateTime + '\'' +
-                ", timezone='" + timezone + '\'' +
-                ", results=" + results +
-                ", metadata=" + metadata +
-                '}';
+            "lastUsedRawdataUpdateTime='" + lastUsedRawdataUpdateTime + '\'' +
+            ", lastUsedRawdataUpdateTimeGmtMillisec=" + lastUsedRawdataUpdateTimeGmtMillisec +
+            ", timezone='" + timezone + '\'' +
+            ", results=" + results +
+            ", metadata=" + metadata +
+            '}';
     }
+
 }
