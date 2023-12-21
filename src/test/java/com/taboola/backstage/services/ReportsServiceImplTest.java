@@ -4,6 +4,7 @@ import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
+import com.taboola.backstage.internal.BackstageRealtimeReportsEndpoint;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dynamic.DynamicField;
@@ -38,14 +39,16 @@ public class ReportsServiceImplTest extends BackstageTestBase {
     private BackstagePublisherReportsEndpoint pubReportMock;
     private BackstageMediaReportsEndpoint advertiserReportMock;
     private BackstageInternalToolsImpl backstageInternalTools;
+    private BackstageRealtimeReportsEndpoint realtimeReportMock;
 
     @Before
     public void beforeTest() {
         pubReportMock = mock(BackstagePublisherReportsEndpoint.class);
         advertiserReportMock = mock(BackstageMediaReportsEndpoint.class);
+        realtimeReportMock = mock(BackstageRealtimeReportsEndpoint.class);
         backstageInternalTools = new BackstageInternalToolsImpl(mock(BackstageEndpointsFactory.class));
 
-        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, backstageInternalTools,true);
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, realtimeReportMock, backstageInternalTools,true);
         reset(pubReportMock);
         reset(advertiserReportMock);
     }
@@ -182,7 +185,7 @@ public class ReportsServiceImplTest extends BackstageTestBase {
 
     @Test
     public void campaignSummary_whenAttachDynamicMetadataFlagDisabled_expectingNullMetadataOnField() throws InstantiationException, IllegalAccessException {
-        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, backstageInternalTools, false);
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, realtimeReportMock, backstageInternalTools, false);
 
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         LocalDate date = LocalDate.of(2018, 1, 2);
@@ -211,7 +214,7 @@ public class ReportsServiceImplTest extends BackstageTestBase {
 
     @Test
     public void campaignSummary_whenAttachDynamicMetadataFlagEnabled_expectingMetadataOnField() throws InstantiationException, IllegalAccessException {
-        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, backstageInternalTools, true);
+        testInstance = new ReportsServiceImpl(advertiserReportMock, pubReportMock, realtimeReportMock, backstageInternalTools, true);
 
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
         LocalDate date = LocalDate.of(2018, 1, 2);

@@ -4,9 +4,17 @@ import com.taboola.backstage.exceptions.BackstageAPIConnectivityException;
 import com.taboola.backstage.exceptions.BackstageAPIRequestException;
 import com.taboola.backstage.exceptions.BackstageAPIUnauthorizedException;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
-import com.taboola.backstage.model.media.reports.*;
+import com.taboola.backstage.model.media.reports.CampaignRealtimeDimensions;
+import com.taboola.backstage.model.media.reports.CampaignRealtimeOptionalFilters;
+import com.taboola.backstage.model.media.reports.CampaignSummaryDimensions;
+import com.taboola.backstage.model.media.reports.CampaignSummaryOptionalFilters;
+import com.taboola.backstage.model.media.reports.CampaignSummaryReport;
+import com.taboola.backstage.model.media.reports.HistoryReport;
+import com.taboola.backstage.model.media.reports.TopCampaignContentOptionalFilters;
+import com.taboola.backstage.model.media.reports.TopCampaignContentReport;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -99,6 +107,9 @@ public interface AdvertiserReportsService {
      */
     CampaignSummaryReport getCampaignSummaryReport(BackstageAuthentication auth, String accountId, LocalDate startDate, LocalDate endDate,
                                                    CampaignSummaryDimensions dimension, Map<CampaignSummaryOptionalFilters, String> filters) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    CampaignSummaryReport getCampaignRealtimeReport(BackstageAuthentication auth, String accountId, LocalDateTime startDate, LocalDateTime endDate,
+                                                    CampaignRealtimeDimensions dimension, Map<CampaignRealtimeOptionalFilters, String> filters) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
      *  The "History" report is an advertiser report. This report provide insight into changes done on advertiser and its entities

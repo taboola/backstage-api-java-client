@@ -12,6 +12,7 @@ import com.taboola.backstage.internal.BackstageInternalToolsImpl;
 import com.taboola.backstage.internal.BackstageMediaReportsEndpoint;
 import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
+import com.taboola.backstage.internal.BackstageRealtimeReportsEndpoint;
 import com.taboola.backstage.internal.BackstageSharedBudgetEndpoint;
 import com.taboola.backstage.internal.factories.BackstageAPIExceptionFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
@@ -293,7 +294,9 @@ public class Backstage {
                     new UserServiceImpl(endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignItemsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageCampaignItemsEndpoint.class)),
                     new DictionaryServiceImpl(endpointsFactory.createEndpoint(BackstageDictionaryEndpoint.class)),
-                    new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class), endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class), internalTools, organizeDynamicColumns),
+                    new ReportsServiceImpl(endpointsFactory.createEndpoint(BackstageMediaReportsEndpoint.class),
+                        endpointsFactory.createEndpoint(BackstagePublisherReportsEndpoint.class),
+                        endpointsFactory.createEndpoint(BackstageRealtimeReportsEndpoint.class), internalTools, organizeDynamicColumns),
                     new AccountsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class)),
                     new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class)),
