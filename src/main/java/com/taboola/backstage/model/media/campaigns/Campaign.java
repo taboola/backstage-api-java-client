@@ -389,10 +389,6 @@ public class Campaign {
         return isSpendGuardActive;
     }
 
-    public void setIsSpendGuardActive(String isSpendGuardActive) {
-        this.isSpendGuardActive = isSpendGuardActive;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
