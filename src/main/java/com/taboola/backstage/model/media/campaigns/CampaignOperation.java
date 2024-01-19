@@ -223,4 +223,10 @@ public class CampaignOperation extends Campaign {
         this.conversionConfiguration = conversionConfiguration;
         return this;
     }
+
+    public CampaignOperation setSpendGuardStatus(boolean active) {
+        this.isSpendGuardActive = active ? "ACTIVE" : "DISABLE";
+        return this;
+    }
+
 }

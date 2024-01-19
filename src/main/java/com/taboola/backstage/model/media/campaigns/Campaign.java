@@ -109,6 +109,7 @@ public class Campaign {
     protected ExternalMetadata externalMetadata;
     protected CampaignUnipRuleOptimizations conversionRules;
     protected AttributionConfig conversionConfiguration;
+    protected String isSpendGuardActive;
 
     public String getId() {
         return id;
@@ -384,6 +385,14 @@ public class Campaign {
         return conversionConfiguration;
     }
 
+    public String getIsSpendGuardActive() {
+        return isSpendGuardActive;
+    }
+
+    public void setIsSpendGuardActive(String isSpendGuardActive) {
+        this.isSpendGuardActive = isSpendGuardActive;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -456,6 +465,7 @@ public class Campaign {
                 ", learningState=" + learningState +
                 ", conversionRules=" + conversionRules +
                 ", conversionConfiguration=" + conversionConfiguration +
+                ", isSpendGuardActive=" + isSpendGuardActive +
                 '}';
     }
 
