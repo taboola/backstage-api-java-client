@@ -266,6 +266,11 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setCommunicationInterceptor(CommunicationInterceptor communicationInterceptor) {
+            this.communicationInterceptor = communicationInterceptor;
+            return this;
+        }
+
         public Backstage build() {
             organizeState();
 
