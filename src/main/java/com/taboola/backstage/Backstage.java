@@ -42,6 +42,8 @@ import com.taboola.backstage.services.UserServiceImpl;
 import com.taboola.rest.api.RestAPIClient;
 import com.taboola.rest.api.internal.config.SerializationConfig;
 import com.taboola.rest.api.internal.serialization.SerializationMapperCreator;
+import com.taboola.rest.api.model.CommunicationInterceptor;
+import com.taboola.rest.api.model.NoOpCommunicationInterceptor;
 import com.taboola.rest.api.model.RequestHeader;
 
 import java.util.Collection;
@@ -182,9 +184,9 @@ public class Backstage {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
-        private static final String VERSION = "1.1.7";
+        private static final String VERSION = "1.1.8";
         private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
-
+        private static final CommunicationInterceptor DEFAULT_COMMUNICATION_INTERCEPTOR = new NoOpCommunicationInterceptor();
         private String baseUrl;
         private String authBaseUrl;
         private String userAgent;
@@ -198,6 +200,7 @@ public class Backstage {
         private Boolean organizeDynamicColumns;
         private SerializationConfig serializationConfig;
         private Collection<RequestHeader> headers;
+        private CommunicationInterceptor communicationInterceptor;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
@@ -264,6 +267,11 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setCommunicationInterceptor(CommunicationInterceptor communicationInterceptor) {
+            this.communicationInterceptor = communicationInterceptor;
+            return this;
+        }
+
         public Backstage build() {
             organizeState();
 
@@ -280,6 +288,7 @@ public class Backstage {
                     .setKeepAliveDurationMillis(keepAliveDurationMillis)
                     .setExceptionFactory(new BackstageAPIExceptionFactory(objectMapper))
                     .setUserAgentSuffix(userAgent)
+                    .setCommunicationInterceptor(communicationInterceptor)
                     .setDebug(debug);
 
             RestAPIClient backstageClient = restAPIClientBuilder.setBaseUrl(baseUrl).setUserAgentPrefix("Backstage").build();
@@ -323,6 +332,10 @@ public class Backstage {
 
             if (serializationConfig == null) {
                 serializationConfig = DEFAULT_SERIALIZATION_CONFIG;
+            }
+
+            if (communicationInterceptor == null) {
+                communicationInterceptor = DEFAULT_COMMUNICATION_INTERCEPTOR;
             }
         }
     }
