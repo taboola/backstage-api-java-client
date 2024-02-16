@@ -9,6 +9,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.ContextualSegment;
+import com.taboola.backstage.model.dictionary.CustomAudience;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
@@ -58,6 +59,12 @@ public class AccountsServiceImpl implements AccountsService {
     public Results<ContextualSegment> readContextualSegments(BackstageAuthentication auth, String accountId, String... countryCodes) throws BackstageAPIUnauthorizedException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getContextualSegments(accessToken, accountId, String.join(",", countryCodes));
+    }
+
+    @Override
+    public Results<CustomAudience> readCustomAudiences(BackstageAuthentication auth, String accountId, String searchText) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getCustomAudiences(accessToken, accountId, searchText);
     }
 
     @Override

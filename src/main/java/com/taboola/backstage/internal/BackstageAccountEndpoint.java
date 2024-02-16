@@ -5,6 +5,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.Account;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.ContextualSegment;
+import com.taboola.backstage.model.dictionary.CustomAudience;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
@@ -55,6 +56,12 @@ public interface BackstageAccountEndpoint {
     Results<ContextualSegment> getContextualSegments(@Header("Authorization") String accessToken,
                                                      @Path("account_id") String accountId,
                                                      @Query("countryCodes") String countryCodes) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/combined_audiences/resources/audiences")
+    @Headers("Content-Type: application/json")
+    Results<CustomAudience> getCustomAudiences(@Header("Authorization") String accessToken,
+                                               @Path("account_id") String accountId,
+                                               @Query("search_text") String searchText) throws BackstageAPIException;
 
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/dictionary/lookalike_audiences")
     @Headers("Content-Type: application/json")

@@ -8,6 +8,7 @@ import com.taboola.backstage.model.Results;
 import com.taboola.backstage.model.auth.BackstageAuthentication;
 import com.taboola.backstage.model.dictionary.AudienceSegment;
 import com.taboola.backstage.model.dictionary.ContextualSegment;
+import com.taboola.backstage.model.dictionary.CustomAudience;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
@@ -79,6 +80,34 @@ public interface AccountsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     Results<ContextualSegment> readContextualSegments(BackstageAuthentication auth, String accountId, String... countryCodes) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    /**
+     * Read custom audiences.
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link CustomAudience} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @return Fully populated collection of {@link CustomAudience}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    default Results<CustomAudience> readCustomAudiences(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return readCustomAudiences(auth, accountId, null);
+    }
+
+    /**
+     * Read custom audiences by given search text.
+     *
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @param accountId {@link com.taboola.backstage.model.Account Account} to which {@link CustomAudience} belongs. Taken from {@link com.taboola.backstage.model.Account#getAccountId Account.getAccountId()}
+     * @param searchText A free text search to filter the results
+     * @return Fully populated collection of {@link CustomAudience}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<CustomAudience> readCustomAudiences(BackstageAuthentication auth, String accountId, String searchText) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
 
     /**
      * Read all lookalike audiences
