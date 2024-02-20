@@ -83,4 +83,18 @@ public interface BackstageAudienceTargetingEndpoint {
     CampaignMultiTargetingCollection<String> readMarkingLabels(@Header("Authorization") String authToken,
                                                                @Path("account_id") String accountId,
                                                                @Path("campaign_id") String campaignId) throws BackstageAPIException;
+
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/targeting/my_audiences")
+    @Headers("Content-Type: application/json")
+    CampaignMultiTargetingCollection<Long> updateMyAudiences(@Header("Authorization") String accessToken,
+                                                                @Path("account_id") String accountId,
+                                                                @Path("campaign_id") String campaignId,
+                                                                @Body CampaignMultiTargetingCollection<Long> targeting) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}/targeting/my_audiences")
+    @Headers("Content-Type: application/json")
+    CampaignMultiTargetingCollection<Long> readMyAudiences(@Header("Authorization") String authToken,
+                                                           @Path("account_id") String accountId,
+                                                           @Path("campaign_id") String campaignId) throws BackstageAPIException;
+
 }

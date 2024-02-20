@@ -92,4 +92,18 @@ public class CampaignAudienceTargetingServiceImpl implements CampaignAudienceTar
 
         return endpoint.updateMarkingLabels(auth.getToken().getAccessTokenForHeader(), accountId, campaignId, targeting);
     }
+
+    @Override
+    public CampaignMultiTargetingCollection<Long> readMyAudiences(BackstageAuthentication auth, String accountId, String campaignId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return endpoint.readMyAudiences(auth.getToken().getAccessTokenForHeader(), accountId, campaignId);
+    }
+
+    @Override
+    public CampaignMultiTargetingCollection<Long> updateMyAudiences(BackstageAuthentication auth, String accountId, String campaignId, CampaignMultiTargetingCollection<Long> targeting) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        if(performClientValidations) {
+            FieldsValidator.validateCreateOperation(targeting);
+        }
+        return endpoint.updateMyAudiences(auth.getToken().getAccessTokenForHeader(), accountId, campaignId, targeting);
+    }
+
 }
