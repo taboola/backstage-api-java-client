@@ -11,6 +11,7 @@ import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 
+import com.taboola.backstage.model.universal_pixel.ConversionRule;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -67,6 +68,7 @@ public interface BackstageAccountEndpoint {
     @Headers("Content-Type: application/json")
     Results<LookalikeAudience> getLookalikeAudiences(@Header("Authorization") String accessToken,
                                                      @Path("account_id") String accountId) throws BackstageAPIException;
+
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/dictionary/lookalike_audiences/{country_code}")
     @Headers("Content-Type: application/json")
     Results<LookalikeAudience> getSpecificCountryLookalikeAudiences(@Header("Authorization") String accessToken,
@@ -89,4 +91,15 @@ public interface BackstageAccountEndpoint {
     AccountBlockedPublishersPatch patchAccountBlockedPublishers(@Header("Authorization") String accessToken,
                                                                 @Path("account_id") String accountId,
                                                                 @Body AccountBlockedPublishersPatch accountBlockedPublishersPatch) throws BackstageAPIException;
+
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/universal_pixel/conversion_rule")
+    @Headers("Content-Type: application/json")
+    Results<ConversionRule> getConversionRules(@Header("Authorization") String accessToken,
+                                               @Path("account_id") String accountId) throws BackstageAPIException;
+
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/universal_pixel/conversion_rule")
+    @Headers("Content-Type: application/json")
+    ConversionRule createConversionRule(@Header("Authorization") String accessToken,
+                                        @Path("account_id") String accountId,
+                                        @Body ConversionRule conversionRule) throws BackstageAPIException;
 }

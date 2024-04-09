@@ -12,6 +12,7 @@ import com.taboola.backstage.model.dictionary.CustomAudience;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
+import com.taboola.backstage.model.universal_pixel.ConversionRule;
 
 /**
  * Accounts service allow fetching data regarding different account types (Partners, Publishers)
@@ -169,5 +170,9 @@ public interface AccountsService {
      * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
      */
     AccountBlockedPublishersPatch patchAccountBlockedPublishers(BackstageAuthentication auth, String accountId, AccountBlockedPublishersPatch accountBlockedPublishersPatch) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    Results<ConversionRule> getConversionRules(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+    ConversionRule createConversionRule(BackstageAuthentication auth, String accountId, ConversionRule conversionRule) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
 }

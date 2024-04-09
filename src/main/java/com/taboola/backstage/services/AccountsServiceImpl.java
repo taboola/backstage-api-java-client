@@ -13,6 +13,7 @@ import com.taboola.backstage.model.dictionary.CustomAudience;
 import com.taboola.backstage.model.dictionary.LookalikeAudience;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishers;
 import com.taboola.backstage.model.media.account.AccountBlockedPublishersPatch;
+import com.taboola.backstage.model.universal_pixel.ConversionRule;
 import com.taboola.rest.api.internal.FieldsValidator;
 
 /**
@@ -100,8 +101,21 @@ public class AccountsServiceImpl implements AccountsService {
         if(performClientValidations) {
             FieldsValidator.validateCreateOperation(accountBlockedPublishersPatch);
         }
-
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.patchAccountBlockedPublishers(accessToken, accountId, accountBlockedPublishersPatch);
     }
+
+    @Override
+    public Results<ConversionRule> getConversionRules(BackstageAuthentication auth,
+                                                      String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return endpoint.getConversionRules(auth.getToken().getAccessTokenForHeader(), accountId);
+    }
+
+    @Override
+    public ConversionRule createConversionRule(BackstageAuthentication auth,
+                                               String accountId,
+                                               ConversionRule conversionRule) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return endpoint.createConversionRule(auth.getToken().getAccessTokenForHeader(), accountId, conversionRule);
+    }
+
 }
