@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.taboola</groupId>
     <artifactId>backstage-api-java-client</artifactId>
-    <version>1.1.8</version>
+    <version>1.1.9</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Backstage API Java Client</description>
@@ -53,7 +53,7 @@
         <log4j.core.version>2.17.1</log4j.core.version>
         <junit.version>4.13.1</junit.version>
         <mockito.all.version>1.10.19</mockito.all.version>
-        <api.java.client.core.version>1.0.5</api.java.client.core.version>
+        <api.java.client.core.version>1.0.6</api.java.client.core.version>
     </properties>
 
     <dependencies>
