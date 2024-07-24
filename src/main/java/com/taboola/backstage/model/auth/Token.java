@@ -16,7 +16,7 @@ public class Token {
     private String refreshToken;
     private String tokenType;
     private Integer expiresIn; //seconds
-    private final Long creationTimestamp;
+    private Long creationTimestamp;
 
     public Token() {
         this.creationTimestamp = System.currentTimeMillis();
@@ -58,9 +58,22 @@ public class Token {
         this.expiresIn = expiresIn;
     }
 
+    public Long getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(Long creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
     public boolean isExpired() {
         Objects.requireNonNull(expiresIn, "Expires in is null");
         return System.currentTimeMillis() >= (creationTimestamp + (expiresIn * MILLISECONDS_IN_SINGLE_SECOND));
+    }
+
+    public boolean isAboutToExpire(int safeIntervalSeconds) {
+        Objects.requireNonNull(expiresIn, "Expires in is null");
+        return System.currentTimeMillis() >= (creationTimestamp + (long) (expiresIn - safeIntervalSeconds) * MILLISECONDS_IN_SINGLE_SECOND);
     }
 
     @Override
