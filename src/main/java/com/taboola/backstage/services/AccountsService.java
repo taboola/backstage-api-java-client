@@ -175,4 +175,6 @@ public interface AccountsService {
 
     ConversionRule createConversionRule(BackstageAuthentication auth, String accountId, ConversionRule conversionRule) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
+    ConversionRule updateConversionRule(BackstageAuthentication auth, String accountId, ConversionRule conversionRule) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
 }

@@ -102,4 +102,11 @@ public interface BackstageAccountEndpoint {
     ConversionRule createConversionRule(@Header("Authorization") String accessToken,
                                         @Path("account_id") String accountId,
                                         @Body ConversionRule conversionRule) throws BackstageAPIException;
+
+    @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/universal_pixel/conversion_rule/{rule_id}")
+    @Headers("Content-Type: application/json")
+    ConversionRule updateConversionRule(@Header("Authorization") String accessToken,
+                                        @Path("account_id") String accountId,
+                                        @Path("rule_id") Long ruleId,
+                                        @Body ConversionRule conversionRule) throws BackstageAPIException;
 }

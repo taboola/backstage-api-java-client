@@ -24,13 +24,20 @@ public class ConversionRule {
         EVENT_BASED
     }
 
+    public enum Status {
+        ACTIVE,
+        DISABLED,
+        ARCHIVED
+    }
+
     private Long id;
     private String displayName;
     private Integer lookBackWindow;
     private Integer viewThroughLookBackWindow;
     @JsonProperty("category")
     private String categoryValue;
-    private String status;
+    @JsonProperty("status")
+    private String statusValue;
     @JsonProperty("type")
     private String typeValue;
     private String eventName;
@@ -93,12 +100,22 @@ public class ConversionRule {
         this.categoryValue = category.name();
     }
 
-    public String getStatus() {
-        return status;
+    public String getStatusValue() {
+        return statusValue;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusValue(String statusValue) {
+        this.statusValue = statusValue;
+    }
+
+    @JsonIgnore
+    public Status getStatus() {
+        return Status.valueOf(statusValue);
+    }
+
+    @JsonIgnore
+    public void setStatus(Status status) {
+        this.statusValue = status.name();
     }
 
     public String getTypeValue() {

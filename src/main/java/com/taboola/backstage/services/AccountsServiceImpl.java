@@ -118,4 +118,10 @@ public class AccountsServiceImpl implements AccountsService {
         return endpoint.createConversionRule(auth.getToken().getAccessTokenForHeader(), accountId, conversionRule);
     }
 
+    @Override
+    public ConversionRule updateConversionRule(BackstageAuthentication auth,
+                                               String accountId,
+                                               ConversionRule conversionRule) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        return endpoint.updateConversionRule(auth.getToken().getAccessTokenForHeader(), accountId, conversionRule.getId(), conversionRule);
+    }
 }
