@@ -1,5 +1,6 @@
 package com.taboola.backstage.internal.factories;
 
+import com.taboola.backstage.customclient.RestApiTrackingClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,10 +20,13 @@ public class BackstageEndpointsRetrofitFactory implements BackstageEndpointsFact
 
     private final RestAPIClient backstageClient;
     private final RestAPIClient authenticationClient;
+    private final RestApiTrackingClient trackClient;
 
-    public BackstageEndpointsRetrofitFactory(RestAPIClient backstageClient, RestAPIClient authenticationClient) {
+    public BackstageEndpointsRetrofitFactory(
+            RestAPIClient backstageClient, RestAPIClient authenticationClient, RestApiTrackingClient trackClient) {
         this.backstageClient = backstageClient;
         this.authenticationClient = authenticationClient;
+        this.trackClient = trackClient;
     }
 
     @Override
@@ -37,5 +41,12 @@ public class BackstageEndpointsRetrofitFactory implements BackstageEndpointsFact
         Objects.requireNonNull(clazz, "clazz");
         logger.debug("creating endpoint using retrofit for class [{}]", clazz::toString);
         return backstageClient.createRetrofitEndpoint(clazz);
+    }
+
+    @Override
+    public <E> E createTrackingEndpoint(Class<E> clazz) {
+        Objects.requireNonNull(clazz, "clazz");
+        logger.debug("creating tracking endpoint using retrofit for class [{}]", clazz::toString);
+        return trackClient.createRetrofitEndpoint(clazz);
     }
 }

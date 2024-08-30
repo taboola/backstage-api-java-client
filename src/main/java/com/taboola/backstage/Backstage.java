@@ -1,6 +1,7 @@
 package com.taboola.backstage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.taboola.backstage.customclient.RestApiTrackingClient;
 import com.taboola.backstage.internal.BackstageAccountEndpoint;
 import com.taboola.backstage.internal.BackstageAudienceTargetingEndpoint;
 import com.taboola.backstage.internal.BackstageAuthenticationEndpoint;
@@ -14,6 +15,7 @@ import com.taboola.backstage.internal.BackstagePostalTargetingEndpoint;
 import com.taboola.backstage.internal.BackstagePublisherReportsEndpoint;
 import com.taboola.backstage.internal.BackstageRealtimeReportsEndpoint;
 import com.taboola.backstage.internal.BackstageSharedBudgetEndpoint;
+import com.taboola.backstage.internal.BackstageTrackingEndpoint;
 import com.taboola.backstage.internal.factories.BackstageAPIExceptionFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsFactory;
 import com.taboola.backstage.internal.factories.BackstageEndpointsRetrofitFactory;
@@ -37,6 +39,8 @@ import com.taboola.backstage.services.ReportsService;
 import com.taboola.backstage.services.ReportsServiceImpl;
 import com.taboola.backstage.services.SharedBudgetService;
 import com.taboola.backstage.services.SharedBudgetServiceImpl;
+import com.taboola.backstage.services.TrackingService;
+import com.taboola.backstage.services.TrackingServiceImpl;
 import com.taboola.backstage.services.UserService;
 import com.taboola.backstage.services.UserServiceImpl;
 import com.taboola.rest.api.RestAPIClient;
@@ -102,6 +106,7 @@ public class Backstage {
     private final BackstageInternalTools internalTools;
     private final CampaignAudienceTargetingService campaignAudienceTargetingService;
     private final SharedBudgetService sharedBudgetService;
+    private final TrackingService trackingService;
 
     private Backstage(BackstageInternalTools internalTools, CampaignsService campaignsService,
                       AuthenticationService authenticationService, UserService userService,
@@ -109,7 +114,8 @@ public class Backstage {
                       ReportsService reportsService, AccountsService accountsService,
                       CampaignPostalTargetingService campaignPostalCodeTargetingService,
                       CampaignAudienceTargetingService campaignAudienceTargetingService,
-                      SharedBudgetService sharedBudgetService) {
+                      SharedBudgetService sharedBudgetService,
+                      TrackingService trackingService) {
 
         this.internalTools = internalTools;
         this.campaignsService = campaignsService;
@@ -122,6 +128,7 @@ public class Backstage {
         this.campaignPostalCodeTargetingService = campaignPostalCodeTargetingService;
         this.campaignAudienceTargetingService = campaignAudienceTargetingService;
         this.sharedBudgetService = sharedBudgetService;
+        this.trackingService = trackingService;
     }
 
     public static BackstageBuilder builder() {
@@ -176,6 +183,10 @@ public class Backstage {
         return sharedBudgetService;
     }
 
+    public TrackingService trackingService() {
+        return trackingService;
+    }
+
     public BackstageInternalTools internalTools() {
         return internalTools;
     }
@@ -183,12 +194,14 @@ public class Backstage {
     public static class BackstageBuilder {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
+        private static final String DEFAULT_TRACKING_BACKSTAGE_HOST = "https://trc.taboola.com/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
         private static final String VERSION = "1.1.8";
         private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
         private static final CommunicationInterceptor DEFAULT_COMMUNICATION_INTERCEPTOR = new NoOpCommunicationInterceptor();
         private String baseUrl;
         private String authBaseUrl;
+        private String trackingBaseUrl;
         private String userAgent;
         private Long writeTimeoutMillis;
         private Long connectionTimeoutMillis;
@@ -209,6 +222,11 @@ public class Backstage {
 
         public BackstageBuilder setAuthBaseUrl(String authBaseUrl) {
             this.authBaseUrl = authBaseUrl;
+            return this;
+        }
+
+        public BackstageBuilder setTrackingBaseUrl(String trackingBaseUrl) {
+            this.trackingBaseUrl = trackingBaseUrl;
             return this;
         }
 
@@ -294,7 +312,22 @@ public class Backstage {
             RestAPIClient backstageClient = restAPIClientBuilder.setBaseUrl(baseUrl).setUserAgentPrefix("Backstage").build();
             RestAPIClient authenticationClient = restAPIClientBuilder.setBaseUrl(authBaseUrl).setUserAgentPrefix("Authentication").build();
 
-            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(backstageClient, authenticationClient);
+            RestApiTrackingClient.RestAPIClientBuilder restAPITrackClientBuilder = RestApiTrackingClient.builder()
+                    .setObjectMapper(objectMapper)
+                    .setConnectionTimeoutMillis(connectionTimeoutMillis)
+                    .setMaxIdleConnections(maxIdleConnections)
+                    .setReadTimeoutMillis(readTimeoutMillis)
+                    .setWriteTimeoutMillis(writeTimeoutMillis)
+                    .setSerializationConfig(serializationConfig)
+                    .setKeepAliveDurationMillis(keepAliveDurationMillis)
+                    .setExceptionFactory(new BackstageAPIExceptionFactory(objectMapper))
+                    .setCommunicationInterceptor(communicationInterceptor)
+                    .setDebug(debug);
+
+            RestApiTrackingClient trackClient = restAPITrackClientBuilder.setBaseUrl(trackingBaseUrl).build();
+
+            BackstageEndpointsFactory endpointsFactory = new BackstageEndpointsRetrofitFactory(
+                    backstageClient, authenticationClient, trackClient);
             BackstageInternalToolsImpl internalTools = new BackstageInternalToolsImpl(endpointsFactory);
             return new Backstage(
                     internalTools,
@@ -309,7 +342,8 @@ public class Backstage {
                     new AccountsServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAccountEndpoint.class)),
                     new CampaignPostalTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstagePostalTargetingEndpoint.class)),
                     new CampaignAudienceTargetingServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageAudienceTargetingEndpoint.class)),
-                    new SharedBudgetServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageSharedBudgetEndpoint.class))
+                    new SharedBudgetServiceImpl(performClientValidations, endpointsFactory.createEndpoint(BackstageSharedBudgetEndpoint.class)),
+                    new TrackingServiceImpl(endpointsFactory.createTrackingEndpoint(BackstageTrackingEndpoint.class))
             );
         }
 
@@ -320,6 +354,10 @@ public class Backstage {
 
             if (authBaseUrl == null) {
                 authBaseUrl = DEFAULT_AUTH_BACKSTAGE_HOST;
+            }
+
+            if (trackingBaseUrl == null) {
+                trackingBaseUrl = DEFAULT_TRACKING_BACKSTAGE_HOST;
             }
 
             if (userAgent == null) {
