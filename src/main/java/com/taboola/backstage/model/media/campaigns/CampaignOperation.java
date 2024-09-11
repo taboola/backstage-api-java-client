@@ -1,11 +1,11 @@
 package com.taboola.backstage.model.media.campaigns;
 
-import java.util.Date;
-
 import com.taboola.backstage.model.media.campaigns.brandsafety.ExternalBrandSafety;
 import com.taboola.backstage.model.media.campaigns.scheduling.ActivitySchedule;
 import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
 import com.taboola.backstage.model.metadata.ExternalMetadata;
+
+import java.util.Date;
 
 /**
  * Created by vladi
@@ -226,6 +226,11 @@ public class CampaignOperation extends Campaign {
 
     public CampaignOperation setSpendGuardStatus(boolean active) {
         this.isSpendGuardActive = active ? "ACTIVE" : "DISABLE";
+        return this;
+    }
+
+    public CampaignOperation setCampaignsGroup(CampaignLinkedGroups group) {
+        this.campaignGroups = group;
         return this;
     }
 

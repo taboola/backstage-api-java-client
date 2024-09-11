@@ -99,8 +99,7 @@ public class Campaign {
     protected VerificationPixel verificationPixel;
     protected ViewabilityTag viewabilityTag;
     protected CampaignPolicyReview policyReview;
-    @ReadOnly
-    protected CampaignsGroup campaignGroups;
+    protected CampaignLinkedGroups campaignGroups;
     @ReadOnly
     protected CampaignType type;
     @ReadOnly
@@ -357,7 +356,7 @@ public class Campaign {
         return trafficAllocationAbTestEndDate;
     }
 
-    public CampaignsGroup getCampaignGroups() {
+    public CampaignLinkedGroups getCampaignGroups() {
         return campaignGroups;
     }
 
