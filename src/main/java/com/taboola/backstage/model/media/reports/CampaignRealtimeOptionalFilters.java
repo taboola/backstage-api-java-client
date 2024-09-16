@@ -17,6 +17,7 @@ public enum CampaignRealtimeOptionalFilters implements ReportFilter {
     PLATFORM("platform"),
     COUNTRY("country"),
     SITE("site_id"),
+    INCLUDE_MULTI_CONVERSIONS("include_multi_conversions"),
     FETCH_CONFIG("fetch_config")
     ;
 
