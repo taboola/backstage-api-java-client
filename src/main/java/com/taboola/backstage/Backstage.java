@@ -46,6 +46,7 @@ import com.taboola.rest.api.internal.serialization.SerializationMapperCreator;
 import com.taboola.rest.api.model.CommunicationInterceptor;
 import com.taboola.rest.api.model.NoOpCommunicationInterceptor;
 import com.taboola.rest.api.model.RequestHeader;
+import com.taboola.rest.api.model.RequestHeadersSupplier;
 
 /**
  * Backstage is the gateway object to all services.
@@ -183,7 +184,7 @@ public class Backstage {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
-        private static final String VERSION = "1.1.9";
+        private static final String VERSION = "1.1.10";
         private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
         private static final CommunicationInterceptor DEFAULT_COMMUNICATION_INTERCEPTOR = new NoOpCommunicationInterceptor();
         private String baseUrl;
@@ -199,6 +200,7 @@ public class Backstage {
         private Boolean organizeDynamicColumns;
         private SerializationConfig serializationConfig;
         private Collection<RequestHeader> headers;
+        private RequestHeadersSupplier headersSupplier;
         private CommunicationInterceptor communicationInterceptor;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
@@ -266,6 +268,11 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setHeadersSupplier(RequestHeadersSupplier headersSupplier){
+            this.headersSupplier = headersSupplier;
+            return this;
+        }
+
         public BackstageBuilder setCommunicationInterceptor(CommunicationInterceptor communicationInterceptor) {
             this.communicationInterceptor = communicationInterceptor;
             return this;
@@ -284,6 +291,7 @@ public class Backstage {
                     .setWriteTimeoutMillis(writeTimeoutMillis)
                     .setSerializationConfig(serializationConfig)
                     .setHeaders(headers)
+                    .setHeadersSupplier(headersSupplier)
                     .setKeepAliveDurationMillis(keepAliveDurationMillis)
                     .setExceptionFactory(new BackstageAPIExceptionFactory(objectMapper))
                     .setUserAgentSuffix(userAgent)
