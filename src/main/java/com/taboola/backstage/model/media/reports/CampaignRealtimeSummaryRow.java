@@ -21,6 +21,7 @@ public class CampaignRealtimeSummaryRow implements DynamicRow {
     private Double vcpm;
     private Double cpa;
     private Integer cpaActionsNum;
+    private Integer cpaActionsNumFromClicks;
     private Double spent;
     private Long campaignId;
     private String campaignName;
@@ -91,6 +92,14 @@ public class CampaignRealtimeSummaryRow implements DynamicRow {
 
     public void setCpaActionsNum(Integer cpaActionsNum) {
         this.cpaActionsNum = cpaActionsNum;
+    }
+
+    public Integer getCpaActionsNumFromClicks() {
+        return cpaActionsNumFromClicks;
+    }
+
+    public void setCpaActionsNumFromClicks(Integer cpaActionsNumFromClicks) {
+        this.cpaActionsNumFromClicks = cpaActionsNumFromClicks;
     }
 
     public Double getSpent() {
