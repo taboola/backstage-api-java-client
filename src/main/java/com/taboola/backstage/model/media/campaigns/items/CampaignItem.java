@@ -1,12 +1,12 @@
 package com.taboola.backstage.model.media.campaigns.items;
 
-import java.util.Objects;
-
 import com.taboola.backstage.model.media.campaigns.verifications.VerificationPixel;
 import com.taboola.backstage.model.media.campaigns.viewability.ViewabilityTag;
 import com.taboola.backstage.model.metadata.ExternalMetadata;
 import com.taboola.rest.api.annotations.ReadOnly;
 import com.taboola.rest.api.annotations.Required;
+
+import java.util.Objects;
 
 /**
  * Created by vladi
@@ -45,6 +45,7 @@ public class CampaignItem {
     protected CampaignItemLogo logo;
     protected CampaignItemDisclaimer disclaimer;
     protected ExternalMetadata externalMetadata;
+    protected CustomData customData;
 
     public String getId() {
         return id;
@@ -128,6 +129,14 @@ public class CampaignItem {
 
     public CampaignItemDisclaimer getDisclaimer() {
         return disclaimer;
+    }
+
+    public CustomData getCustomData() {
+        return customData;
+    }
+
+    public void setCustomData(CustomData customData) {
+        this.customData = customData;
     }
 
     @Override
