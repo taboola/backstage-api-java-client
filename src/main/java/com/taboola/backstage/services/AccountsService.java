@@ -33,6 +33,18 @@ public interface AccountsService {
     Results<Account> readPublishersUnderTaboolaNetwork(BackstageAuthentication auth) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
 
     /**
+     * Returns a list of all publishers on which the given account could be served
+     * @param auth Authentication object {@link BackstageAuthentication}
+     * @return Collection of {@link Account}
+     * @throws BackstageAPIUnauthorizedException {@link com.taboola.backstage.model.auth.Token Token} is expired or bad credentials
+     * @throws BackstageAPIConnectivityException Connectivity issues (HTTP status 5xx)
+     * @throws BackstageAPIRequestException Bad request (HTTP status 4xx)
+     */
+    Results<Account> readAllowedPublishers(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException;
+
+
+
+    /**
      * Read all audience segments
      *
      * @param auth Authentication object {@link BackstageAuthentication}

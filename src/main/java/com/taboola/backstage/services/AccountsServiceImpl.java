@@ -39,6 +39,12 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
+    public Results<Account> readAllowedPublishers(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
+        String accessToken = auth.getToken().getAccessTokenForHeader();
+        return endpoint.getAccountAllowedPublishers(accessToken, accountId);
+    }
+
+    @Override
     public Results<AudienceSegment> readAudienceSegments(BackstageAuthentication auth, String accountId) throws BackstageAPIUnauthorizedException, BackstageAPIConnectivityException, BackstageAPIRequestException {
         String accessToken = auth.getToken().getAccessTokenForHeader();
         return endpoint.getAllAudienceSegments(accessToken, accountId);

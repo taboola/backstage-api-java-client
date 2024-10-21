@@ -41,6 +41,11 @@ public interface BackstageAccountEndpoint {
     @Headers("Content-Type: application/json")
     Results<Account> getAvailablePublishersUnderTaboolaNetwork(@Header("Authorization") String accessToken) throws BackstageAPIException;
 
+    @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/allowed-publishers")
+    @Headers("Content-Type: application/json")
+    Results<Account> getAccountAllowedPublishers(@Header("Authorization") String accessToken,
+                                                 @Path("account_id") String accountId) throws BackstageAPIException;
+
     @GET(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/dictionary/audience_segments")
     @Headers("Content-Type: application/json")
     Results<AudienceSegment> getAllAudienceSegments(@Header("Authorization") String accessToken,

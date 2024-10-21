@@ -23,3 +23,7 @@ dependency-reduced-pom.xml
 # Mac OS
 
 .DS_Store
+
+*mvnw
+*mvnw.cmd
+.mvn/*
