@@ -19,6 +19,7 @@ public class Account {
     private List<PartnerType> partnerTypes;
     private List<CampaignType> campaignTypes;
     private String currency;
+    private String timeZoneName;
 
     public Long getId() {
         return id;
@@ -72,6 +73,14 @@ public class Account {
         this.currency = currency;
     }
 
+    public String getTimeZoneName() {
+        return timeZoneName;
+    }
+
+    public void setTimeZoneName(String timeZoneName) {
+        this.timeZoneName = timeZoneName;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", Account.class.getSimpleName() + "[", "]")
@@ -81,6 +90,7 @@ public class Account {
                 .add("type=" + type)
                 .add("partnerTypes=" + partnerTypes)
                 .add("campaignTypes=" + campaignTypes)
+                .add("timeZoneName=" + timeZoneName)
                 .add("currency='" + currency + "'")
                 .toString();
     }
@@ -100,11 +110,12 @@ public class Account {
                 type == account.type &&
                 Objects.equals(partnerTypes, account.partnerTypes) &&
                 Objects.equals(campaignTypes, account.campaignTypes) &&
+                Objects.equals(timeZoneName, account.timeZoneName) &&
                 Objects.equals(currency, account.currency);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, accountId, type, partnerTypes, campaignTypes, currency);
+        return Objects.hash(id, name, accountId, type, partnerTypes, campaignTypes, timeZoneName, currency);
     }
 }
