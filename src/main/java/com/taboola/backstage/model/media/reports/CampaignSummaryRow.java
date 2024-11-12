@@ -1,9 +1,9 @@
 package com.taboola.backstage.model.media.reports;
 
-import java.util.Objects;
-
 import com.taboola.backstage.model.dynamic.DynamicFields;
 import com.taboola.backstage.model.dynamic.DynamicRow;
+
+import java.util.Objects;
 
 /**
  * Created by vladi
@@ -52,6 +52,9 @@ public class CampaignSummaryRow implements DynamicRow {
     private String dma;
     private String platform;
     private String platformName;
+    private String osFamily;
+    private String osVersion;
+    private String browser;
     private BlockingLevelType blockingLevel;
     private Double roas;
     private String partnerName;
@@ -257,6 +260,33 @@ public class CampaignSummaryRow implements DynamicRow {
 
     public CampaignSummaryRow setPlatformName(String platformName) {
         this.platformName = platformName;
+        return this;
+    }
+
+    public String getOsFamily() {
+        return osFamily;
+    }
+
+    public CampaignSummaryRow setOsFamily(String osFamily) {
+        this.osFamily = osFamily;
+        return this;
+    }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
+
+    public CampaignSummaryRow setOsVersion(String osVersion) {
+        this.osVersion = osVersion;
+        return this;
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public CampaignSummaryRow setBrowser(String browser) {
+        this.browser = browser;
         return this;
     }
 
@@ -499,6 +529,9 @@ public class CampaignSummaryRow implements DynamicRow {
                 Objects.equals(dma, that.dma) &&
                 Objects.equals(platform, that.platform) &&
                 Objects.equals(platformName, that.platformName) &&
+                Objects.equals(osFamily, that.osFamily) &&
+                Objects.equals(osVersion, that.osVersion) &&
+                Objects.equals(browser, that.browser) &&
                 blockingLevel == that.blockingLevel &&
                 Objects.equals(roas, that.roas) &&
                 Objects.equals(partnerName, that.partnerName) &&
@@ -512,9 +545,10 @@ public class CampaignSummaryRow implements DynamicRow {
     public int hashCode() {
         return Objects.hash(impressions, visibleImpressions, conversionsValue, ctr, vctr, clicks, cpc, cpm, vcpm, cpa,
                 cpaClicks, cpaViews, cpaConversionRate, cpaConversionRateClicks, cpaConversionRateViews, cpaActionsNum,
-                cpaActionsNumFromClicks, cpaActionsNumFromViews, spent, currency, date, dateEndPeriod, hourOfDay, contentProvider,
-                contentProviderName, campaignsNum, campaign, campaignName, site, siteName, siteId, country, countryName, region, dma,
-                platform, platformName, blockingLevel, roas, partnerName, audienceName, dataPartnerAudienceId, impressionsPct, dynamicFields);
+                cpaActionsNumFromClicks, cpaActionsNumFromViews, spent, currency, date, dateEndPeriod, hourOfDay,
+                contentProvider, contentProviderName, campaignsNum, campaign, campaignName, site, siteName, siteId,
+                country, countryName, region, dma, platform, platformName, osFamily, blockingLevel, roas, partnerName,
+                audienceName, dataPartnerAudienceId, impressionsPct, dynamicFields, browser, osVersion);
     }
 
     @Override
@@ -557,6 +591,9 @@ public class CampaignSummaryRow implements DynamicRow {
                 ", dma='" + dma + '\'' +
                 ", platform='" + platform + '\'' +
                 ", platformName='" + platformName + '\'' +
+                ", osFamily='" + osFamily + '\'' +
+                ", osVersion='" + osVersion + '\'' +
+                ", browser='" + browser + '\'' +
                 ", blockingLevel=" + blockingLevel +
                 ", roas=" + roas +
                 ", partnerName='" + partnerName + '\'' +

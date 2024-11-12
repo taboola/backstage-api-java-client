@@ -19,6 +19,9 @@ public enum CampaignSummaryDimensions {
     REGION_BREAKDOWN("region_breakdown"),
     DMA_BREAKDOWN("dma_breakdown"),
     PLATFORM_BREAKDOWN("platform_breakdown"),
+    OS_FAMILY_BREAKDOWN("os_family_breakdown"),
+    OS_VERSION_BREAKDOWN("os_version_breakdown"),
+    BROWSER_BREAKDOWN("browser_breakdown"),
     CAMPAIGN_DAY_BREAKDOWN("campaign_day_breakdown"),
     CAMPAIGN_SITE_DATE_BREAKDOWN("campaign_site_day_breakdown"),
     USER_SEGMENT_BREAKDOWNM("user_segment_breakdown");
