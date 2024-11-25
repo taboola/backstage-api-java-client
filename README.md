@@ -91,6 +91,30 @@ try {
 }
 ```
 
+### 2.1. Example - Setting a campaign-specific conversion goal
+
+```
+Backstage backstage = Backstage.builder().build();
+BackstageAuthentication auth = backstage.authenticationService().clientCredentials("clientId_example", "clientSecret_example");
+
+CampaignUnipRuleOptimizations conversionRules = new CampaignUnipRuleOptimizations();
+UnipRuleConfiguration unipRule = new UnipRuleConfiguration();
+unipRule.setId(1L); //-> The ID which you would like the campaign to optimize towards
+conversionRules.setRules(Collections.singletonList(unipRule));
+
+CampaignOperation createCampaignOperation = CampaignOperation.create()
+        .setName("My Campaign")
+        .setStartDate(new Date())
+        .setCpc(1.0D)
+        .setBrandingText("My Branding Text")
+        .setSpendingLimit(100D)
+        .setSpendingLimitModel(SpendingLimitModel.ENTIRE)
+        .setConversionRules(conversionRules);
+
+Campaign campaign = backstage.campaignsService().create(auth, "demo_account_id", createCampaignOperation);
+//-> do something with the campaign...
+```
+
 ### 3. Authentication
 
 Supports:
