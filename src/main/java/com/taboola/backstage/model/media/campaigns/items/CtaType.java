@@ -22,5 +22,14 @@ public enum CtaType {
     TRY_NOW,
     NONE,
     SEARCH_NOW,
+    BOOK_NOW,
+    CONTACT_US,
+    WATCH_MORE,
+    LISTEN_NOW,
+    SUBSCRIBE,
+    PLAY_GAME,
+    DONATE_NOW,
+    ORDER_NOW,
+    JOIN_NOW,
     @JsonEnumDefaultValue UNSUPPORTED_BY_SDK_VALUE
 }
