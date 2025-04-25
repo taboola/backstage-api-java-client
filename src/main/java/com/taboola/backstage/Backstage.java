@@ -44,6 +44,7 @@ import com.taboola.rest.api.RestAPIClient;
 import com.taboola.rest.api.internal.config.SerializationConfig;
 import com.taboola.rest.api.internal.serialization.SerializationMapperCreator;
 import com.taboola.rest.api.model.CommunicationInterceptor;
+import com.taboola.rest.api.model.HttpLoggingLevel;
 import com.taboola.rest.api.model.NoOpCommunicationInterceptor;
 import com.taboola.rest.api.model.RequestHeader;
 import com.taboola.rest.api.model.RequestHeadersSupplier;
@@ -184,7 +185,7 @@ public class Backstage {
         private static final String DEFAULT_BACKSTAGE_HOST = "https://backstage.taboola.com/backstage/";
         private static final String DEFAULT_AUTH_BACKSTAGE_HOST = "https://authentication.taboola.com/authentication/";
         private static final String DEFAULT_USER_AGENT = "Taboola Java Client";
-        private static final String VERSION = "1.1.10";
+        private static final String VERSION = "1.1.11";
         private static final SerializationConfig DEFAULT_SERIALIZATION_CONFIG = new SerializationConfig();
         private static final CommunicationInterceptor DEFAULT_COMMUNICATION_INTERCEPTOR = new NoOpCommunicationInterceptor();
         private String baseUrl;
@@ -202,6 +203,7 @@ public class Backstage {
         private Collection<RequestHeader> headers;
         private RequestHeadersSupplier headersSupplier;
         private CommunicationInterceptor communicationInterceptor;
+        private HttpLoggingLevel loggingLevel;
 
         public BackstageBuilder setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
@@ -278,6 +280,11 @@ public class Backstage {
             return this;
         }
 
+        public BackstageBuilder setLoggingLevel(HttpLoggingLevel loggingLevel) {
+            this.loggingLevel = loggingLevel;
+            return this;
+        }
+
         public Backstage build() {
             organizeState();
 
@@ -296,6 +303,7 @@ public class Backstage {
                     .setExceptionFactory(new BackstageAPIExceptionFactory(objectMapper))
                     .setUserAgentSuffix(userAgent)
                     .setCommunicationInterceptor(communicationInterceptor)
+                    .setLoggingLevel(loggingLevel)
                     .setDebug(debug);
 
             RestAPIClient backstageClient = restAPIClientBuilder.setBaseUrl(baseUrl).setUserAgentPrefix("Backstage").build();
@@ -341,6 +349,9 @@ public class Backstage {
 
             if (communicationInterceptor == null) {
                 communicationInterceptor = DEFAULT_COMMUNICATION_INTERCEPTOR;
+            }
+            if (loggingLevel == null) {
+                loggingLevel = HttpLoggingLevel.BASIC;
             }
         }
     }
