@@ -8,6 +8,7 @@ import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 
+import retrofit2.Call;
 import retrofit2.http.*;
 
 /**
@@ -42,10 +43,10 @@ public interface BackstageCampaignsEndpoint {
 
     @POST(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/{campaign_id}")
     @Headers("Content-Type: application/json")
-    Campaign updateCampaign(@Header("Authorization") String accessToken,
-                                  @Path("account_id") String accountId,
-                                  @Path("campaign_id") String campaignId,
-                                  @Body Campaign campaign) throws BackstageAPIException;
+    Call<Campaign> updateCampaign(@Header("Authorization") String accessToken,
+                                 @Path("account_id") String accountId,
+                                 @Path("campaign_id") String campaignId,
+                                 @Body Campaign campaign) throws BackstageAPIException;
 
     @PUT(BackstagePaths.BACKSTAGE_API_PATH_PREFIX + "/{account_id}/campaigns/bulk")
     @Headers("Content-Type: application/json")

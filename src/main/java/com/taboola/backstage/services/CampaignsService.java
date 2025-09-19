@@ -12,6 +12,8 @@ import com.taboola.backstage.model.media.campaigns.CampaignPatch;
 import com.taboola.backstage.model.media.campaigns.CampaignTargetingCollection;
 import com.taboola.backstage.model.media.campaigns.CampaignsMassiveOperation;
 
+import java.io.IOException;
+
 /**
  * {@link Campaign} entity CRUD operations
  *

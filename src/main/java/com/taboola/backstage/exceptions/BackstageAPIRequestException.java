@@ -17,4 +17,16 @@ public class BackstageAPIRequestException extends BackstageAPIException {
     public BackstageAPIRequestException(int responseCode, APIError error) {
         super(error, "Failed to perform API call with response code [%d]", responseCode);
     }
+
+    public BackstageAPIRequestException(Throwable cause, String message, Object... params) {
+        super(cause, message, params);
+    }
+
+    public BackstageAPIRequestException(APIError error, String message, Object... params) {
+        super(error, message, params);
+    }
+
+    public BackstageAPIRequestException(APIError error, String message, Throwable t, Object... params) {
+        super(error, message, t, params);
+    }
 }

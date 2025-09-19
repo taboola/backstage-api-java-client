@@ -14,6 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 import com.taboola.backstage.BackstageTestBase;
 import com.taboola.backstage.model.media.campaigns.targeting.Type;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;
@@ -26,6 +28,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 
 /**
@@ -118,27 +121,49 @@ public class CampaignsServiceImplTest extends BackstageTestBase {
     }
 
     @Test
-    public void testUpdate() {
+    public void testUpdate() throws Exception {
         CampaignOperation campaignOperation = generateDummyCampaignOperation();
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.updateCampaign(auth.getToken().getAccessTokenForHeader(),"accountId", campaignOperation.getId(), campaignOperation)).thenReturn(campaignOperation);
+
+        @SuppressWarnings("unchecked")
+        Call<Campaign> callMock = (Call<Campaign>) mock(Call.class);
+
+        when(endpointMock.updateCampaign(any(), eq("accountId"),
+                eq(campaignOperation.getId()), eq(campaignOperation)))
+                .thenReturn(callMock);
+
+        when(callMock.execute()).thenReturn(Response.success(campaignOperation));
 
         Campaign actual = testInstance.update(auth, "accountId", campaignOperation.getId(), campaignOperation);
-        assertEquals("Invalid campaignOperation", campaignOperation, actual);
+
+        assertSame("Invalid campaignOperation", campaignOperation, actual);
+
         verify(endpointMock, times(1)).updateCampaign(any(), any(), any(), any());
+        verify(callMock, times(1)).execute();
     }
 
     @Test
-    public void testUpdate_notPerformingValidations() {
+    public void testUpdate_notPerformingValidations() throws Exception {
         testInstance = new CampaignsServiceImpl(false, endpointMock);
         CampaignOperation campaignOperation = generateDummyCampaignOperation();
         campaignOperation.setStartDate(new Date());
         BackstageAuthentication auth = generateDummyClientCredentialsBackstageAuth();
-        when(endpointMock.updateCampaign(auth.getToken().getAccessTokenForHeader(),"accountId", campaignOperation.getId(), campaignOperation)).thenReturn(campaignOperation);
+
+        @SuppressWarnings("unchecked")
+        Call<Campaign> callMock = (Call<Campaign>) mock(Call.class);
+
+        when(endpointMock.updateCampaign(any(), eq("accountId"),
+                eq(campaignOperation.getId()), eq(campaignOperation)))
+                .thenReturn(callMock);
+
+        when(callMock.execute()).thenReturn(Response.success(campaignOperation));
 
         Campaign actual = testInstance.update(auth, "accountId", campaignOperation.getId(), campaignOperation);
-        assertEquals("Invalid campaignOperation", campaignOperation, actual);
+
+        assertSame("Invalid campaignOperation", campaignOperation, actual);
+
         verify(endpointMock, times(1)).updateCampaign(any(), any(), any(), any());
+        verify(callMock, times(1)).execute();
     }
 
     @Test
